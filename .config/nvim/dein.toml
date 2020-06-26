@@ -1,0 +1,81 @@
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
+repo = 'sickill/vim-monokai'
+hook_add = '''
+colorscheme monokai
+'''
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+depends = ['denite-git']
+hook_add = '''
+augroup My_Denite
+    au!
+    au FileType denite call my_denite#settings()
+    au vimenter * call my_denite#openings()
+augroup END
+
+'''
+
+[[plugins]]
+repo = 'neoclide/denite-git'
+hook_add = '''
+augroup My_Denite_Git
+    au!
+    au vimenter * call my_denite_git#openings()
+augroup END
+'''
+
+[[plugins]]
+repo = 'rhysd/nyaovim-popup-tooltip'
+
+[[plugins]]
+repo = 'rhysd/nyaovim-markdown-preview'
+
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+depends = ['defx-icons', 'defx-git']
+hook_add = '''
+call my_defx#options()
+
+augroup My_Defx
+    au!
+    au FileType defx call my_defx#settings()
+    au vimenter * Defx
+augroup END
+'''
+
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+
+[[plugins]]
+repo = "kristijanhusak/defx-git"
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'cohama/agit.vim'
+
+[[plugins]]
+repo = 'rhysd/committia.vim'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+hook_add = '''
+call my_quickrun#options()
+'''
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+call my_lightline#options()
+'''
