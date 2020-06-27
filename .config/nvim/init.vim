@@ -14,6 +14,7 @@ syntax on
 " mapping
 let mapleader= "\<Space>" " for plugin mappings
 inoremap<silent> jj <ESC>
+nmap <Esc><Esc> :nohlsearch<CR>
 
 " encording
 set fileformats=unix,dos,mac
@@ -22,11 +23,14 @@ set fileencodings=utf-8,sjis
 " search
 set ignorecase
 set smartcase
+set incsearch
+set hlsearch
 
 " tabspace
 set shiftwidth=4
 set tabstop=4
 set expandtab
+set smartindent
 
 augroup MyTabGroup
   au!
@@ -41,3 +45,5 @@ augroup END
 " other options
 set number
 set ambiwidth=double
+set showmatch
+set wildmode=list:longest

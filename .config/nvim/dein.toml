@@ -43,8 +43,13 @@ call my_defx#options()
 augroup My_Defx
     au!
     au FileType defx call my_defx#settings()
-    au vimenter * Defx
 augroup END
+if argc()==0 || argc()==1
+    au vimenter * Defx
+else
+    au vimenter * argv()[1]
+endif
+
 '''
 
 [[plugins]]
