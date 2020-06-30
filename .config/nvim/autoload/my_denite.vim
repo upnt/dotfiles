@@ -11,6 +11,9 @@ function! my_denite#settings() abort
     \ denite#do_map('open_filter_buffer')
     nnoremap <silent><buffer><expr> <Space>
     \ denite#do_map('toggle_select').'j'
+    nnoremap <silent><buffer><expr> o
+    \ denite#do_map('toggle_select_all')
+    " for denite-git
     nnoremap <silent><buffer><expr> a
     \ denite#do_map('do_action', 'add')
     nnoremap <silent><buffer><expr> c
