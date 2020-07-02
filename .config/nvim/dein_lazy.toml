@@ -56,3 +56,11 @@ on_cmd = 'help'
 hook_add = '''
 set helplang=ja,en
 '''
+
+[[plugins]]
+repo = 'sudar/vim-arduino-syntax'
+on_ft = ['arduino']
+
+[[plugins]]
+repo = 'stevearc/vim-arduino'
+on_ft = ['arduino']

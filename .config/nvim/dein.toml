@@ -43,10 +43,14 @@ augroup My_Defx
     au!
     au FileType defx call my_defx#settings()
 augroup END
-if argc()==0 || argc()==1
+if argc()==0
+    au vimenter * Defx
+elseif argc()==1
+    au vimenter * bd
     au vimenter * Defx
 else
-    au vimenter * new argv()[1]
+    au vimenter * bd
+    au vimenter * bnext
 endif
 '''
 
