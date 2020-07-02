@@ -76,6 +76,12 @@ repo = 'cohama/agit.vim'
 repo = 'rhysd/committia.vim'
 
 [[plugins]]
+repo = 'simeji/winresizer'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
 call my_lightline#options()
