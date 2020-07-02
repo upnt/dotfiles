@@ -8,4 +8,6 @@
 
 `
 git clone https://github.com/upnt/dotfiles
+cd dotfiles
+./deploy.sh
 `
