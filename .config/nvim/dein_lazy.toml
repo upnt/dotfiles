@@ -64,3 +64,23 @@ on_ft = ['arduino']
 [[plugins]]
 repo = 'stevearc/vim-arduino'
 on_ft = ['arduino']
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+on_ft = ['python', 'c', 'cpp', 'object-c', 'object-cpp']
+depends = ['vim-lsp-settings', 'deoplete-vim-lsp']
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+on_ft = ['python', 'c', 'cpp', 'object-c', 'object-cpp']
+merge = 0
+
+[[plugins]]
+repo = 'lighttiger2505/deoplete-vim-lsp'
+on_ft = ['python', 'c', 'cpp', 'object-c', 'object-cpp']
+
+[[plugins]]
+repo = 'thomasfaingnaert/vim-lsp-snippets'
+
+[[plugins]]
+repo = 'thomasfaingnaert/vim-lsp-neosnippet'
