@@ -1,7 +1,7 @@
 " Add the dein installation directory into runtimepath
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-let s:init_dir='~/AppData/Local/nvim/'
+let s:init_dir='~/AppData/Local/nvim'
 
 if dein#load_state('~/.cache/dein')
   call dein#begin('~/.cache/dein')
