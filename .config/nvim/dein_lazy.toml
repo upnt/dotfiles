@@ -6,6 +6,10 @@ let g:plantuml_executable_script='plantuml.sh'
 '''
 
 [[plugins]]
+repo = 'previm/previm'
+on_ft = ['markdown']
+
+[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 on_i = 1
 depands = ['neosnippet.vim', 'deoplete-vim-lsp']

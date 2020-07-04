@@ -8,6 +8,21 @@ colorscheme monokai
 '''
 
 [[plugins]]
+repo = 'AlessandroYorba/Alduin'
+
+[[plugins]]
+repo = 'romainl/Apprentice'
+
+[[plugins]]
+repo = 'jacoborus/tender.vim'
+
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+
+[[plugins]]
 repo = 'Shougo/denite.nvim'
 depends = ['denite-git']
 hook_add = '''
