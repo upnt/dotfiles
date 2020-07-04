@@ -1,4 +1,7 @@
 # config
+export WORK="$HOME/OneDrive/workspace"
+export TERM="xterm-256color"
+
 if [ -d /home/linuxbrew ]; then
     export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"
     export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
