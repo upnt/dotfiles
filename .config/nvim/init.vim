@@ -47,3 +47,4 @@ set number
 set ambiwidth=double
 set showmatch
 set wildmode=list:longest
+set clipboard=unnamed
