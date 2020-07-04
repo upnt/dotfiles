@@ -29,12 +29,6 @@ augroup END
 '''
 
 [[plugins]]
-repo = 'rhysd/nyaovim-popup-tooltip'
-
-[[plugins]]
-repo = 'rhysd/nyaovim-markdown-preview'
-
-[[plugins]]
 repo = 'Shougo/defx.nvim'
 depends = ['defx-icons', 'defx-git']
 hook_add = '''
@@ -45,12 +39,6 @@ augroup My_Defx
 augroup END
 if argc()==0
     au vimenter * Defx
-elseif argc()==1
-    au vimenter * bd
-    au vimenter * Defx
-else
-    au vimenter * bd
-    au vimenter * bnext
 endif
 '''
 
@@ -86,3 +74,31 @@ repo = 'itchyny/lightline.vim'
 hook_add = '''
 call my_lightline#options()
 '''
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_add = '''
+function! s:on_lsp_buffer_enabled() abort
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+'''
+depends = ['vim-lsp-settings']
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+merge = 0
