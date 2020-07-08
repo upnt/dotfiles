@@ -3,7 +3,7 @@ let g:ruby_host_prog='C:\Ruby26-x64\bin\ruby.exe'
 
 " plugin settings
 if &compatible
-  set nocompatible
+    set nocompatible
 endif
 
 runtime! plug_manager.vim
@@ -32,14 +32,15 @@ set tabstop=4
 set expandtab
 set smartindent
 
-augroup MyTabGroup
-  au!
-  au FileType tex setlocal shiftwidth=2
-  au FileType tex setlocal tabstop=2
-  au FileType plaintex setlocal shiftwidth=2
-  au FileType plaintex setlocal tabstop=2
-  au FileType html setlocal shiftwidth=2
-  au FileType html setlocal tabstop=2
+augroup MyFileTypeSettings  
+    au!
+    au FileType tex setlocal shiftwidth=2
+    au FileType tex setlocal tabstop=2
+    au FileType plaintex setlocal shiftwidth=2
+    au FileType plaintex setlocal tabstop=2
+    au FileType html setlocal shiftwidth=2
+    au FileType html setlocal tabstop=2
+    au FileType tex setlocal nowrap
 augroup END
 
 " other options

@@ -10,6 +10,14 @@ repo = 'previm/previm'
 on_ft = ['markdown']
 
 [[plugins]]
+repo = 'godlygeek/tabular'
+on_ft = ['markdown']
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = ['markdown']
+
+[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 on_i = 1
 depands = ['neosnippet.vim', 'deoplete-vim-lsp']
@@ -57,6 +65,10 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 '''
+
+# [[plugins]]
+# repo = 'jackguo380/vim-lsp-cxx-highlight'
+# on_ft = ['c', 'cpp', 'objc', 'objcpp']
 
 [[plugins]]
 repo = 'cespare/vim-toml'
