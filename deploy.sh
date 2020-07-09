@@ -1,6 +1,8 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
-bash $SCRIPT_DIR/etc/deploy/vim.sh
 bash $SCRIPT_DIR/.config/deploy.sh
+if type "vim" > /dev/null 2>&1; then
+	bash $SCRIPT_DIR/etc/deploy/vim.sh
+fi
 if type "bash" > /dev/null 2>&1; then
     bash $SCRIPT_DIR/etc/deploy/bash.sh
 fi
