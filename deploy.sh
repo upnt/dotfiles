@@ -1,6 +1,6 @@
 #! /bin/bash
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
 if [ "$1" = "" ]; then
-    SCRIPT_DIR=$(cd $(dirname $0); pwd)
     if type "vim" > /dev/null 2>&1; then
         bash $SCRIPT_DIR/etc/deploy/vim.sh
     fi
