@@ -17,11 +17,11 @@ if [ "$1" = "" ]; then
 elif [ "$1" = "vim" ]; then
     bash $SCRIPT_DIR/etc/deploy/vim.sh
 elif [ "$1" = "nvim" ]; then
-    bash $SCRIPT_DIR/etc/deploy/vim.sh
+    bash $SCRIPT_DIR/etc/deploy/nvim.sh
 elif [ "$1" = "bash" ]; then
-    bash $SCRIPT_DIR/etc/deploy/vim.sh
+    bash $SCRIPT_DIR/etc/deploy/bash.sh
 elif [ "$1" = "tmux" ]; then
-    bash $SCRIPT_DIR/etc/deploy/vim.sh
+    bash $SCRIPT_DIR/etc/deploy/tmux.sh
 else
     echo "$1 can't install"
 fi
