@@ -1,0 +1,115 @@
+# terminal
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+hook_add = '''
+call my_deol#options()
+augroup My_Deol
+    au FileType deol set winblend=10
+augroup END
+
+if argc()==0 || argc()==1 && isdirectory(argv()[0])
+    au vimenter * Deol
+endif
+'''
+
+# file explorer
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+depends = ['denite-git']
+hook_add = '''
+call my_denite#options()
+
+augroup My_Denite
+    au!
+    au FileType denite call my_denite#mappings()
+    au FileType denite set winblend=10
+    au FileType denite-filter set winblend=10
+    au vimenter * call my_denite#openings()
+augroup END
+'''
+
+[[plugins]]
+repo = 'neoclide/denite-git'
+hook_add = '''
+augroup My_Denite_Git
+    au!
+    au vimenter * call my_denite_git#openings()
+augroup END
+'''
+
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+depends = ['defx-icons', 'defx-git']
+hook_add = '''
+call my_defx#options()
+augroup My_Defx
+    au!
+    au FileType defx call my_defx#settings()
+
+augroup END
+'''
+
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
+
+# complete
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_i = 1
+depands = ['neosnippet.vim']
+hook_source = '''
+call my_deoplete#settings()
+call my_neosnippet#settings()
+
+inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+        \ neosnippet#expandable_or_jumpable() ?
+        \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets']
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+
+# git support
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+# other support
+[[plugins]]
+repo = 'ncm2/float-preview.nvim'
+hook_add = '''
+let g:float_preview#docked = 1
+'''
+
+[[plugins]]
+repo = 'simeji/winresizer'
+
+# view
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+call my_lightline#options()
+'''
+
+[[plugins]]
+repo = 'sickill/vim-monokai'
+hook_add = '''
+colorscheme monokai
+'''
