@@ -123,3 +123,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+export PATH=/c/Users/upnt/workspace/dotfiles/bin:$PATH
+export PATH=/c/Users/upnt/workspace/dotfiles/bin:$PATH
+export PATH=/c/Users/upnt/workspace/dotfiles/bin:$PATH

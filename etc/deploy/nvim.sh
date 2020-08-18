@@ -16,4 +16,4 @@ fi
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 rm -rf $RC_DIR/nvim
-ln -sfnv $SCRIPT_DIR/../../nvim $RC_DIR/nvim
+ln -sfnv $SCRIPT_DIR/../../nvim $RC_DIR
