@@ -1,2 +1,2 @@
-#! /usr/bin/bash
+#! /bin/bash
 nvr -c "Denite $0"

@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /bin/bash
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 if [ "$1" = "all" ]; then
     if type "vim" > /dev/null 2>&1; then
