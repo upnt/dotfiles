@@ -1,6 +1,6 @@
 #! /bin/bash
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
-if [ "$1" = "" ]; then
+if [ "$1" = "all" ]; then
     if type "vim" > /dev/null 2>&1; then
         bash $SCRIPT_DIR/etc/deploy/vim.sh
     fi
@@ -22,6 +22,14 @@ elif [ "$1" = "bash" ]; then
     bash $SCRIPT_DIR/etc/deploy/bash.sh
 elif [ "$1" = "tmux" ]; then
     bash $SCRIPT_DIR/etc/deploy/tmux.sh
+elif [ "$1" = "help" ]; then
+    echo "command list"
+    echo "  all"
+    echo "  vim"
+    echo "  nvim"
+    echo "  bash"
+    echo "  tmux"
+    echo "  help"
 else
     echo "$1 can't install"
 fi
