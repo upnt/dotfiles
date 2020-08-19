@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /usr/bin/bash
 flag=1
 
 if [ $# == 0 ]; then
