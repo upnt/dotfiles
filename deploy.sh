@@ -20,6 +20,7 @@ elif [ "$1" = "nvim" ]; then
     bash $SCRIPT_DIR/etc/deploy/nvim.sh
 elif [ "$1" = "bash" ]; then
     bash $SCRIPT_DIR/etc/deploy/bash.sh
+    echo "export PATH=$SCRIPT_DIR/bin:\$PATH" >> $SCRIPT_DIR/.bashrc
 elif [ "$1" = "tmux" ]; then
     bash $SCRIPT_DIR/etc/deploy/tmux.sh
 elif [ "$1" = "help" ]; then
