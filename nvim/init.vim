@@ -10,9 +10,6 @@ augroup MyAutoCmd
     autocmd!
 augroup END
 
-let g:envs_path='C:\Users\shun\anaconda3\envs'
-let g:python_host_prog=g:envs_path . '\pynvim2\python.exe'
-let g:python3_host_prog=g:envs_path . '\pynvim3\python.exe'
 " Undo
 if has('persistent_undo')
   let undo_path = expand('~/.cache/undo')
