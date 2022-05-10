@@ -1,5 +1,6 @@
 let mapleader="\<Space>"
 let maplocalleader="m"
+set shell=bash
 inoremap <silent><C-;> <ESC>
 tnoremap <C-;> <C-\><C-n>
 nnoremap <silent>gr :tabprevious<CR>
