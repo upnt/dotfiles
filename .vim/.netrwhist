@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =3
-let g:netrw_dirhist_3='/c/Users/upnt/dotfiles/.config'
-let g:netrw_dirhist_2='/c/Users/upnt/OneDrive/Documents/workspace/settting_data/split'
-let g:netrw_dirhist_1='/c/Users/upnt/test'
