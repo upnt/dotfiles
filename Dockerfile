@@ -7,7 +7,7 @@ ENV LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
 COPY --from=upnt/neovim-docker:stable /usr/local/bin/nvim /usr/local/bin/nvim
-COPY ./ /root/.config/nvim
+COPY ./nvim /root/.config/nvim
 
 RUN apk add --no-cache libgcc
 CMD ["nvim"]
