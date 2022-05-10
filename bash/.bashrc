@@ -1,6 +1,7 @@
 # config
-export WORK="$HOME/OneDrive/workspace"
 export TERM="xterm-256color"
+export DENO_INSTALL="/$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 
 if [ -d /home/linuxbrew ]; then
     export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"
@@ -127,6 +128,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH=/c/Users/upnt/workspace/dotfiles/bin:$PATH
-export PATH=/c/Users/upnt/workspace/dotfiles/bin:$PATH
-export PATH=/c/Users/upnt/workspace/dotfiles/bin:$PATH
