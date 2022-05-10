@@ -1,48 +1,7 @@
 # config
 export TERM="xterm-256color"
 export DENO_INSTALL="/$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-if [ -d /home/linuxbrew ]; then
-    export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"
-    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-    export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
-fi
-
-if [ -d $HOME/.pyenv ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-    eval "$(pyenv init -)"
-fi
-
-if [ -d $HOME/.pyenv/plugins/pyenv-virtualenv ]; then
-    eval "$(pyenv virtualenv-init -)"
-fi
-if [ -d $HOME/warkspace/go ]; then
-    export GOPATH="$HOME/workspace/go"
-    export PATH="$GOPATH/bin:$PATH"
-fi
-
-
-
-# env
-[ -x /home/linuxbrew/.linuxbrew/bin/pyenv ] && eval "$(pyenv init -)"
-[ -x $HOME/.pyenv/shims/virtualenv ] && eval "$(pyenv virtualenv-init -)"
-[ -x /home/linuxbrew/.linuxbrew/bin/rbenv ] && eval "$(rbenv init -)"
-[ -x /home/linuxbrew/.linuxbrew/bin/nodenv ] && eval "$(nodenv init -)"
-# starship
-[ -x /home/linuxbrew/.linuxbrew/bin/starship ] && eval "$(starship init bash)"
-
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
-# If not running interactively, don't do anything
-# case $- in
-#     *i*) ;;
-#       *) return;;
-# esac
+export PATH="$PATH:$DENO_INSTALL/bin"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -80,34 +39,6 @@ esac
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
-
-PS1='\[\033]0;$TITLEPREFIX:$PWD\007\]' # set window title
-PS1="$PS1"'\n'                 # new line
-
-PS1="$PS1"'\[\033[36;47m\]'    # change to purple;green
-PS1="$PS1"'  \u '                 # current working directory
-PS1="$PS1"'\[\033[37;42m\]'    # change to green
-PS1="$PS1"$'\ue0b0'            # separator
-
-PS1="$PS1"'\[\033[37;42m\]'    # change to purple;green
-PS1="$PS1"' \W '               # current working directory
-PS1="$PS1"'\[\033[32m\]'       # change to green
-PS1="$PS1"$'\ue0b0'            # separator
-PS1="$PS1"'\[\033[32;46m\]'    # change to green;light bule
-PS1="$PS1"' '
-
-PS1="$PS1"'\[\033[37;46m\]'    # change to purple;light bule
-PS1="$PS1"'\t  '               # current working directory
-PS1="$PS1"'\[\033[36;46m\]'       # change to light bule
-PS1="$PS1"$'\ue0b0'            # separator
-PS1="$PS1"' '
-PS1="$PS1"'\[\033[0m\]'        # change to default color
-PS1="$PS1"'\[\033[36m\]'       # change to light bule
-PS1="$PS1"' '
-PS1="$PS1"'\n'                 # new line
-
-PS1="$PS1"'\[\033[0m\]'        # change to default color
-PS1="$PS1"'\$ '                # end PS1
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
