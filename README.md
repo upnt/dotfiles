@@ -1,5 +1,5 @@
 # dotfiles
-## contents
+## features
 This repository has below settings.
 - bash
 - vim
