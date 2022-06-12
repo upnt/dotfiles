@@ -6,6 +6,7 @@ tnoremap <C-;> <C-\><C-n>
 nnoremap <silent>gr :tabprevious<CR>
 nnoremap <silent><ESC><ESC> :nohlsearch<CR>
 
+let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
 
 augroup MyAutoCmd
