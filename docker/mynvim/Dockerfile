@@ -15,7 +15,7 @@ COPY --from=config /root/.config/nvim /root/.config/nvim
 ENV DENO_INSTALL /root/.deno
 ENV PATH $DENO_INSTALL/bin:$PATH
 RUN apt-get update \
- && apt-get install -y git curl wget unzip \
+ && apt-get install -y git curl wget unzip ripgrep \
  && curl -fsSL https://deno.land/install.sh | sh \
  && mkdir /root/workspace \
  && pip install pynvim \
