@@ -13,11 +13,14 @@ call dein#begin($HOME . '/.cache/dein')
 " Required:
 call dein#add($HOME . '/.cache/dein/repos/github.com/Shougo/dein.vim')
 
+let s:toml_dir = stdpath('config')
+
 " Add or remove your plugins here like this:
-call dein#load_toml(stdpath('config') . '/dein.toml', {'lazy': 0})
-call dein#load_toml(stdpath('config') . '/ddc.toml', {'lazy': 1})
-call dein#load_toml(stdpath('config') . '/colorscheme.toml', {'lazy': 0})
-"call dein#add('Shougo/neosnippet-snippets')
+call dein#load_toml(s:toml_dir . '/dein.toml',     {'lazy': 0})
+call dein#load_toml(s:toml_dir . '/deinlazy.toml', {'lazy': 1})
+call dein#load_toml(s:toml_dir . '/ddc.toml',      {'lazy': 1})
+call dein#load_toml(s:toml_dir . '/ddu.toml',      {'lazy': 1})
+call dein#load_toml(s:toml_dir . '/view.toml',     {'lazy': 0})
 
 " Required:
 call dein#end()

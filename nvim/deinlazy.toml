@@ -1,0 +1,11 @@
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+on_event = 'CursorHold'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hook_source = '''
+let g:context_filetype#ignore_patterns = {
+    \ 'toml': ['^\s*#\s*'],
+    \ }
+'''
