@@ -254,7 +254,6 @@ if = 'has("nvim")'
 depends = 'ddc.vim'
 hook_source = '''
 lua << EOF
-    require'lspconfig'.pyright.setup{}
     require("nvim-lsp-installer").setup{}
     require("lspconfig").pyright.setup{}
     local on_attach = function (client, bufnr)
