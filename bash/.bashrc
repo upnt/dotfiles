@@ -1,4 +1,7 @@
 # config
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 export TERM="xterm-256color"
 export DENO_INSTALL="/$HOME/.deno"
 export PATH="$PATH:$DENO_INSTALL/bin"
