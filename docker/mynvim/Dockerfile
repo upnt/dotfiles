@@ -13,10 +13,18 @@ COPY --from=python:slim-buster /usr/local/ /usr/local
 COPY --from=node:18-buster-slim /usr/local/ /usr/local
 COPY --from=config /root/.cache/dein /root/.cache/dein
 COPY --from=config /root/.config/nvim /root/.config/nvim
+COPY --from=config /root /root
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LC_CTYPE=en_US.UTF-8
+ENV TERM="xterm-256color"
+ENV DENO_INSTALL="/$HOME/.deno"
+ENV PATH="$PATH:$DENO_INSTALL/bin"
 RUN apt-get update \
  && apt-get install -y git curl wget unzip ripgrep locales \
  && locale-gen en_US.UTF-8 \
  && localedef -f UTF-8 -i en_US en_US.UTF-8 \
+ && source ~/.bashrc \
  && curl -fsSL https://deno.land/install.sh | sh \
  && mkdir /root/workspace \
  && pip install -U pip \
@@ -25,6 +33,5 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
  && nvim -c "call dein#install()" -c "q"
-COPY --from=config /root /root
 WORKDIR /root/workspace
 CMD nvim
