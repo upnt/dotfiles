@@ -8,7 +8,7 @@ RUN apk add --update --no-cache git curl \
   && sh ./installer.sh /root/.cache/dein
 
 FROM debian:buster-slim
-COPY --from=upnt/neovim-docker:v0.7.0-debian-release /usr/local/ /usr/local
+COPY --from=upnt/neovim-docker:v0.7.2-buster-slim-release /usr/local/ /usr/local
 COPY --from=python:slim-buster /usr/local/ /usr/local
 COPY --from=node:18-buster-slim /usr/local/ /usr/local
 COPY --from=config /root/.cache/dein /root/.cache/dein
