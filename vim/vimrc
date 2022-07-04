@@ -21,7 +21,6 @@ set noerrorbells
 
 " view
 set number
-set relativenumber
 set cursorline
 set hlsearch
 colorscheme desert
