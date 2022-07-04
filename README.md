@@ -3,9 +3,12 @@
 # dotfiles
 ## features
 This repository has below settings.
-- bash
-- vim
-- neovim
+- editor
+    - vim
+    - neovim
+- terminal
+    - bash
+    - powershell
 
 ## docker
 ### try to use
