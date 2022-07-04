@@ -11,8 +11,8 @@ This repository has below settings.
     - powershell
 
 ## docker
-### try to use
-### development
-This repository is developed using the following docker container.
-
-https://hub.docker.com/repository/docker/upnt/dotfiles-docker
+If you want to try this repository, you can use the following packages.
+- [myvim-docker](https://github.com/upnt/dotfiles/pkgs/container/myvim-docker)
+  - you can use vimrc
+- [mynvim-docker](https://github.com/upnt/dotfiles/pkgs/container/mynvim-docker)
+  - you can use neovim configs
