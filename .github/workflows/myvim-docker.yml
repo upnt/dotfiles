@@ -1,4 +1,4 @@
-name: Docker
+name: myvim
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -7,7 +7,7 @@ name: Docker
 
 on:
   schedule:
-    - cron: '45 1 * * *'
+    - cron: '0 6 * * *'
   push:
     branches: [ "main" ]
     # Publish semver tags as releases.
@@ -65,7 +65,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
-          context: ./docker/mynvim
+          context: ./docker/myvim
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
