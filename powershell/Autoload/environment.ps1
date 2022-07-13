@@ -1,22 +1,38 @@
 # python
 function python  {
-    $volume = (Convert-Path ./) + ':/root/workspace'
-    $linux_name = $args.Replace('\', '/')
-    docker run --rm -it -v $volume python:slim-buster python $filename
-}
-
-function python-shell {
-    $volume = (Convert-Path ./) + ':/root/workspace'
-    docker run --rm -it -w /root/workspace -v $volume python:slim-buster bash
-}
-
-function pipenv-shell {
-    $volume = (Convert-Path ./) + ':/root/workspace'
-    $name = "nvim-dev"
-    if (docker container ls -q -a -f name="$name") {
-        docker start -i $name
+    $container = 'pipenv'
+    $volume = (Convert-Path ~) + ':/root/mnt'
+    $workdir = '/root/mnt' + (Convert-Path .).Replace((Convert-Path ~), '').Replace('\', '/')
+    $args = args_to_linux($args)
+    if (docker container ls -q -a -f name=$container) {
+        docker start $container 1>$null
+        docker exec -w $workdir $container python $args
+        docker stop $container 1>$null
     } else {
-        docker run -v $volume --name $name -it upnt/pipenv:latest bash
+        docker run --name $container -v $volume -itd ghcr.io/upnt/pipenv:latest bash 1>$null
+        docker exec -w $workdir $container python $args
+        docker stop $container 1>$null
     }
 }
 
+function python-shell {
+    $volume = (Convert-Path ~) + ':/root/mnt'
+    $workdir = '/root/mnt' + (Convert-Path .).Replace((Convert-Path ~), '').Replace('\', '/')
+    docker run --rm -it -w $workdir -v $volume python:slim-buster bash
+}
+
+function pipenv {
+    $container = "pipenv"
+    $volume = (Convert-Path ~) + ':/root/mnt'
+    $workdir = '/root/mnt' + (Convert-Path .).Replace((Convert-Path ~), '').Replace('\', '/')
+    $linux_args = args_to_linux($args)
+    if (docker container ls -q -a -f name=$container) {
+        docker start $container 1>$null
+        docker exec -w $workdir $container pipenv $linux_args
+        docker stop $container 1>$null
+    } else {
+        docker run --name $container -v $volume -itd ghcr.io/upnt/pipenv:latest bash 1>$null
+        docker exec -w $workdir $container pipenv $linux_args
+        docker stop $container 1>$null
+    }
+}

@@ -1,11 +1,13 @@
 Set-Alias vim nvim
 
 function nvim {
+    $cache = (Convert-Path ~) + '\.cache\undo:/root/.cache/undo'
+    $volume = (Convert-Path ~) + ':/root/mnt'
+    $workdir = '/root/mnt' + (Convert-Path .).Replace((Convert-Path ~), '').Replace('\', '/')
     if ($args -ne $null)  {
         $linux_args = $args.Replace('\', '/')
     }
-    $volume = (Convert-Path ./) + ':/root/workspace'
-    docker run --rm -it -v $volume ghcr.io/upnt/mynvim-docker:latest nvim $linux_args
+    docker run --rm -w $workdir -it -v $volume -v $cache ghcr.io/upnt/mynvim-docker:latest nvim $linux_args
 }
 
 function dev-nvim {
