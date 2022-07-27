@@ -19,6 +19,7 @@ if [[ $# = 0 ]]; then
     echo "4: deno"
     echo "5: bash"
     echo "6: powershell"
+    echo "7: alacritty"
     echo -n "Chouse installation(ex. 2,3,4,5): "
     IFS="," read -a arr
 else
@@ -75,6 +76,20 @@ if in_array "${arr[*]}" 6; then
 	else
 		echo "PROFILE is not set"
 	fi
+fi
+
+# install alacritty
+if in_array "${arr[*]}" 7; then
+	if [[ -v $XDG_CONFIG_HOME ]]; then
+        echo "Installing alacritty configs..."
+        mkdir $XDG_CONFIG_HOME/alacritty
+		cp -r tmp/dotfiles/rc/alacritty/* $XDG_CONFIG_HOME/alacritty
+	else if [[ -v $APPDATA ]]; then
+        mkdir $APPDATA/alacritty
+		cp -r tmp/dotfiles/rc/alacritty/* $APPDATA/alacritty
+	else
+        echo "enable to find config directory"
+    fi
 fi
 
 # remove
