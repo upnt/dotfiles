@@ -38,14 +38,14 @@ git clone https://github.com/upnt/dotfiles.git tmp/dotfiles &> /dev/null
 if in_array "${arr[*]}" 1; then
     echo "Installing vimrc..."
     mkdir ~/.vim
-    cp tmp/dotfiles/vim/* ~/.vim
+    cp tmp/dotfiles/rc/vim/* ~/.vim
 fi
 
 # install neovimrc
 if in_array "${arr[*]}" 2; then
     echo "Installing neovimrc..."
     mkdir -p ~/.config/nvim
-    cp tmp/dotfiles/nvim/* ~/.config/nvim
+    cp tmp/dotfiles/rc/nvim/* ~/.config/nvim
 fi
 
 # install dein.vim
@@ -64,14 +64,14 @@ fi
 # install bash
 if in_array "${arr[*]}" 5; then
     echo "Installing bash configs..."
-    cp -a tmp/dotfiles/bash/. ~
+    cp -a tmp/dotfiles/rc/bash/. ~
 fi
 
 # install powershell
 if in_array "${arr[*]}" 6; then
 	if [[ -v $PROFILE ]]; then
         echo "Installing powershell configs..."
-		cp -r tmp/dotfiles/powershell/* `dirname $PROFILE`
+		cp -r tmp/dotfiles/rc/powershell/* `dirname $PROFILE`
 	else
 		echo "PROFILE is not set"
 	fi
