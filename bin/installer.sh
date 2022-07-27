@@ -20,6 +20,7 @@ if [[ $# = 0 ]]; then
     echo "5: bash"
     echo "6: powershell"
     echo "7: alacritty"
+    echo "8: wezterm"
     echo -n "Chouse installation(ex. 2,3,4,5): "
     IFS="," read -a arr
 else
@@ -90,6 +91,12 @@ if in_array "${arr[*]}" 7; then
 	else
         echo "enable to find config directory"
     fi
+fi
+
+# install wezterm
+if in_array "${arr[*]}" 8; then
+    echo "Installing alacritty configs..."
+	cp -r tmp/dotfiles/rc/wezterm/.wezterm.lua ~
 fi
 
 # remove
