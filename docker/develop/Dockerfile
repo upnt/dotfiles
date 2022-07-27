@@ -21,5 +21,5 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /root/workspace
-RUN ln -s /root/workspace/dotfiles/nvim/* /root/.config/nvim
+RUN ln -s /root/workspace/dotfiles/rc/nvim/* /root/.config/nvim
 CMD nvim
