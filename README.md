@@ -27,8 +27,8 @@ Enable to install following configrations:
 - [x] deno
 - [x] bash profile
 - [x] powershell profile
-- [] alacritty config
-- [] wezterm config
+- [ ] alacritty config
+- [ ] wezterm config
 
 ## docker
 If you want to try this repository, you can use the following packages.
