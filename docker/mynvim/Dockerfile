@@ -2,8 +2,8 @@ FROM alpine as config
 RUN apk add --update --no-cache git curl \
   && mkdir -p /root/.config/nvim \
   && git clone --depth 1 -b main https://github.com/upnt/dotfiles \
-  && mv dotfiles/nvim/* /root/.config/nvim \
-  && find dotfiles/bash -name ".*" | xargs -I FILE mv FILE -t /root/ \
+  && mv dotfiles/rc/nvim/* /root/.config/nvim \
+  && find dotfiles/rc/bash -name ".*" | xargs -I FILE mv FILE -t /root/ \
   && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh \
   && sh ./installer.sh /root/.cache/dein
 
