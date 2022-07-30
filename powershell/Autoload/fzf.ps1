@@ -37,3 +37,8 @@ function fbrm {
     $branch = ($branches | Select-String "HEAD" -NotMatch | Invoke-Fzf).Substring(2)
     git switch $branch
 }
+
+function fdiff {
+    $filename = (Get-ChildItem . -Recurse -Attributes !Directory | Invoke-Fzf)
+    git diff HEAD -- $filename
+}

@@ -3,14 +3,14 @@ function python  {
     $container = 'pipenv'
     $volume = (Convert-Path ~) + ':/root/mnt'
     $workdir = '/root/mnt' + (Convert-Path .).Replace((Convert-Path ~), '').Replace('\', '/')
-    $args = args_to_linux($args)
+    $linux_args = args_to_linux($args)
     if (docker container ls -q -a -f name=$container) {
         docker start $container 1>$null
-        docker exec -w $workdir $container python $args
+        docker exec -w $workdir $container python $linux_args
         docker stop $container 1>$null
     } else {
         docker run --name $container -v $volume -itd ghcr.io/upnt/pipenv:latest bash 1>$null
-        docker exec -w $workdir $container python $args
+        docker exec -w $workdir $container python $linux_args
         docker stop $container 1>$null
     }
 }

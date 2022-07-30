@@ -20,7 +20,12 @@ function args_to_linux {
     $result = @()
     if ($args.count -ne 0)  {
         foreach ($arg in $args) {
-            $result += $arg.Replace('\', '/')
+            if ([string]::IsNullOrEmpty($arg)) {
+                $result += $arg
+            }
+            else {
+                $result += $arg.Replace('\', '/')
+            }
         }
     }
     return $result
