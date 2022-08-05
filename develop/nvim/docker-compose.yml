@@ -1,0 +1,9 @@
+version: '3'
+services:
+  neovim:
+    build:
+      context: ../../release/mynvim
+    volumes:
+      - ../../rc/nvim:/root/.config/nvim
+    working_dir: /root/.config/nvim
+    tty: true
