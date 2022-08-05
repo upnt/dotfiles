@@ -3,7 +3,7 @@
 
 # dotfiles
 ## features
-This repository has below settings.
+This repository has below settings and makes it easy to set up windows and linux.
 - editor
     - vim
     - neovim
@@ -14,11 +14,33 @@ This repository has below settings.
     - alacritty
     - wezterm
 
-## install
-For Unix/Linux
+## installations
+### Windows
+
+Create a frequently used Windows environment using chocolatey.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+./setup/choco-installer.ps1
+cinst Boxstarter
+```
+
+Then enter `BOXSTARTERSHELL` to enter boxstarter shell and execute the following:
+
+```BOXSTARTERSHELL
+Install-BoxstarterPackage -PackageName https://gist.githubusercontent.com/upnt/64951a660a8d9ae23a8b224a2028475f/raw/boxstarter.ps1
+```
+
+Finally, execute the following to import the settings on powershell:
+```powershell
+./setup/rcinstaller.ps1
+```
+
+### Unix/Linux
+Install requirements and import settings.
 ```bash
 sudo apt update && sudo apt install curl unzip git
-./installer.sh
+./setup/rcinstaller.sh
 ```
 
 Enable to install following configrations:
