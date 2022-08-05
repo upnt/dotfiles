@@ -1,4 +1,6 @@
 #!/bin/bash
+cd `dirname $0`
+cd ../
 
 in_array() {
     local arr
@@ -12,6 +14,7 @@ in_array() {
 	return 1
 }
 
+
 if [[ $# = 0 ]]; then
     echo "1: vim config"
     echo "2: neovim config"
@@ -21,39 +24,40 @@ if [[ $# = 0 ]]; then
     echo "6: alacritty"
     echo "7: wezterm"
     echo -n "Chouse installation(ex. 2,3,4,5): "
-    IFS="," read -a arr
+    read selector
 else
-    arr=$@
+    selector=$1
 fi
+
+IFS=" ,"
+arr=($selector)
+echo ${arr[@]}
 
 if [[ ${#arr[@]} = 0 ]]; then
 	exit 0
 fi
 
-# setup
-mkdir tmp
-git clone https://github.com/upnt/dotfiles.git tmp/dotfiles &> /dev/null
-
-
 # install vimrc
 if in_array "${arr[*]}" 1; then
     echo "Installing vimrc..."
     mkdir ~/.vim
-    cp tmp/dotfiles/rc/vim/* ~/.vim
+    cp ./rc/vim/* ~/.vim
 fi
 
 # install neovimrc
 if in_array "${arr[*]}" 2; then
     echo "Installing neovimrc..."
     mkdir -p ~/.config/nvim
-    cp tmp/dotfiles/rc/nvim/* ~/.config/nvim
+    cp ./rc/nvim/* ~/.config/nvim
 fi
 
 # install dein.vim
 if in_array "${arr[*]}" 3; then
     echo "Installing dein.vim..."
+    mkdir tmp
 	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > tmp/installer.sh
-	sh tmp/installer.sh ~/.cache/dein &> /dev/null
+	sh tmp/installer.sh ~/.cache/dein
+    rm -rf tmp
 fi
 
 # install deno
@@ -65,7 +69,7 @@ fi
 # install bash
 if in_array "${arr[*]}" 5; then
     echo "Installing bash configs..."
-    cp -a tmp/dotfiles/rc/bash/. ~
+    cp -a ./rc/bash/. ~
 fi
 
 # install alacritty
@@ -73,10 +77,10 @@ if in_array "${arr[*]}" 6; then
 	if [[ -v $XDG_CONFIG_HOME ]]; then
         echo "Installing alacritty configs..."
         mkdir $XDG_CONFIG_HOME/alacritty
-		cp -r tmp/dotfiles/rc/alacritty/* $XDG_CONFIG_HOME/alacritty
-	else if [[ -v $APPDATA ]]; then
+		cp -r ./rc/alacritty/* $XDG_CONFIG_HOME/alacritty
+	elif [[ -v $APPDATA ]]; then
         mkdir $APPDATA/alacritty
-		cp -r tmp/dotfiles/rc/alacritty/* $APPDATA/alacritty
+		cp -r ./rc/alacritty/* $APPDATA/alacritty
 	else
         echo "enable to find config directory"
     fi
@@ -85,8 +89,5 @@ fi
 # install wezterm
 if in_array "${arr[*]}" 7; then
     echo "Installing alacritty configs..."
-	cp -r tmp/dotfiles/rc/wezterm/.wezterm.lua ~
+	cp -r ./rc/wezterm/.wezterm.lua ~
 fi
-
-# remove
-rm -rf tmp
