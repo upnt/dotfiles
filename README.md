@@ -14,6 +14,15 @@ This repository has below settings and makes it easy to set up windows and linux
     - wezterm
 
 ## installations
+Enable to install following configrations and dependences:
+- [x] vim configuration
+- [x] neovim configuration
+- [x] dein.vim
+- [x] deno
+- [x] terminal profile
+- [x] alacritty configuration
+- [x] wezterm configuration
+
 ### Windows
 
 Create a frequently used Windows environment using chocolatey.
@@ -41,16 +50,6 @@ Install requirements and import settings.
 sudo apt update && sudo apt install curl unzip git
 ./setup/rcinstaller.sh
 ```
-
-Enable to install following configrations:
-- [x] small vim configuration
-- [x] neovim configuration
-- [x] dein.vim
-- [x] deno
-- [x] bash profile
-- [x] powershell profile
-- [x] alacritty config
-- [x] wezterm config
 
 ## docker
 If you want to try this repository, you can use the following packages.
