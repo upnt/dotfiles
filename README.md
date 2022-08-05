@@ -1,6 +1,5 @@
 [![docker](https://github.com/upnt/dotfiles/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/upnt/dotfiles/actions/workflows/docker-publish.yml)
-[![installer](https://github.com/upnt/dotfiles/actions/workflows/installer.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/installer.yml)
-
+[![rcinstaller](https://github.com/upnt/dotfiles/actions/workflows/rcinstaller.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/rcinstaller.yml)
 # dotfiles
 ## features
 This repository has below settings and makes it easy to set up windows and linux.
