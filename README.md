@@ -21,7 +21,7 @@ Create a frequently used Windows environment using chocolatey.
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
-./setup/choco-installer.ps1
+.\setup\choco-installer.ps1
 cinst Boxstarter
 ```
 
@@ -33,7 +33,7 @@ Install-BoxstarterPackage -PackageName https://gist.githubusercontent.com/upnt/6
 
 Finally, execute the following to import the settings on powershell:
 ```powershell
-./setup/rcinstaller.ps1
+.\setup\rcinstaller.ps1
 ```
 
 ### Unix/Linux
@@ -50,8 +50,8 @@ Enable to install following configrations:
 - [x] deno
 - [x] bash profile
 - [x] powershell profile
-- [ ] alacritty config
-- [ ] wezterm config
+- [x] alacritty config
+- [x] wezterm config
 
 ## docker
 If you want to try this repository, you can use the following packages.

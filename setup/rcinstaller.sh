@@ -17,10 +17,9 @@ if [[ $# = 0 ]]; then
     echo "2: neovim config"
     echo "3: dein"
     echo "4: deno"
-    echo "5: bash"
-    echo "6: powershell"
-    echo "7: alacritty"
-    echo "8: wezterm"
+    echo "5: powershell"
+    echo "6: alacritty"
+    echo "7: wezterm"
     echo -n "Chouse installation(ex. 2,3,4,5): "
     IFS="," read -a arr
 else
@@ -69,18 +68,8 @@ if in_array "${arr[*]}" 5; then
     cp -a tmp/dotfiles/rc/bash/. ~
 fi
 
-# install powershell
-if in_array "${arr[*]}" 6; then
-	if [[ -v $PROFILE ]]; then
-        echo "Installing powershell configs..."
-		cp -r tmp/dotfiles/rc/powershell/* `dirname $PROFILE`
-	else
-		echo "PROFILE is not set"
-	fi
-fi
-
 # install alacritty
-if in_array "${arr[*]}" 7; then
+if in_array "${arr[*]}" 6; then
 	if [[ -v $XDG_CONFIG_HOME ]]; then
         echo "Installing alacritty configs..."
         mkdir $XDG_CONFIG_HOME/alacritty
@@ -94,7 +83,7 @@ if in_array "${arr[*]}" 7; then
 fi
 
 # install wezterm
-if in_array "${arr[*]}" 8; then
+if in_array "${arr[*]}" 7; then
     echo "Installing alacritty configs..."
 	cp -r tmp/dotfiles/rc/wezterm/.wezterm.lua ~
 fi
