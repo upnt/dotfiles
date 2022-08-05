@@ -20,13 +20,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: install dependences and apps
-        run: choco install curl git unzip neovim
+        run: choco install git
 
-      - name: build
+      - name: import configs
         run: .\setup\rcinstaller.ps1 1 2 3 4 5 6 7
-        
-      - name: test
-        run: nvim --version
 
   linux-test:
     runs-on: ubuntu-latest
@@ -34,15 +31,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: install dependences
-        run: sudo apt-get update && sudo apt-get install curl git unzip
+        run: sudo apt-get update && sudo apt-get install curl git
 
-      - name: install apps
+      - name: import configs
         run: |
-            wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb
-            sudo apt-get install ./nvim-linux64.deb
-
-      - name: build
-        run: ./setup/rcinstaller.sh 1 2 3 4 5 6 7
-        
-      - name: test
-        run: nvim --version
+          chmod u+x ./setup/rcinstaller.sh
+          ./setup/rcinstaller.sh 1 2 3 4 5 6 7
