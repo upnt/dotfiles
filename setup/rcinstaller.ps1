@@ -73,6 +73,6 @@ if ($arr.Contains('6')) {
 
 # install wezterm
 if ($arr.Contains('7')) {
-    Write-Host "Installing alacritty configs..."
+    Write-Host "Installing wezterm configs..."
 	Copy-Item -Recurse $project_path/rc/wezterm/.wezterm.lua ~
 }

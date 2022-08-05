@@ -86,6 +86,6 @@ fi
 
 # install wezterm
 if in_array "${arr[*]}" 7; then
-    echo "Installing alacritty configs..."
+    echo "Installing wezterm configs..."
 	cp -r ./rc/wezterm/.wezterm.lua ~
 fi
