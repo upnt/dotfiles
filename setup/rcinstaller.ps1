@@ -59,15 +59,16 @@ if ($arr.Contains('5')) {
 
 # install alacritty
 if ($arr.Contains('6')) {
+    Write-Host "Installing alacritty configs..."
     if ([string]::IsNullOrEmpty($XDG_CONFIG_HOME)) {
-        Write-Host "Installing alacritty configs..."
         New-Item $XDG_CONFIG_HOME/alacritty
 		Copy-Item -Recurse $project_path/rc/alacritty/* $XDG_CONFIG_HOME/alacritty
     } elseif ([string]::IsNullOrEmpty($APPDATA)) {
         New-Item $APPDATA/alacritty -ItemType Directory
 		Copy-Item -Recurse $project_path/rc/alacritty/* $APPDATA/alacritty
 	} else {
-        Write-Host "enable to find config directory"
+        New-Item ~/.config/alacritty -ItemType Directory
+		Copy-Item -Recurse $project_path/rc/alacritty/* ~/.config/alacritty
     }
 }
 

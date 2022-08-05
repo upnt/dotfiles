@@ -72,15 +72,16 @@ fi
 
 # install alacritty
 if in_array "${arr[*]}" 6; then
+    echo "Installing alacritty configs..."
 	if [[ -v $XDG_CONFIG_HOME ]]; then
-        echo "Installing alacritty configs..."
         mkdir $XDG_CONFIG_HOME/alacritty
 		cp -r ./rc/alacritty/* $XDG_CONFIG_HOME/alacritty
 	elif [[ -v $APPDATA ]]; then
         mkdir $APPDATA/alacritty
 		cp -r ./rc/alacritty/* $APPDATA/alacritty
 	else
-        echo "enable to find config directory"
+        mkdir ~/.config/alacritty
+		cp -r ./rc/alacritty/* ~/.config/alacritty
     fi
 fi
 
