@@ -223,6 +223,13 @@ repo = 'Shougo/ddc-nvim-lsp'
 on_source = 'nvim-lspconfig'
 
 [[plugins]]
+repo ='williamboman/nvim-lsp-installer'
+on_source = 'nvim-lspconfig'
+hook_source = '''
+lua require("nvim-lsp-installer").setup{}
+'''
+
+[[plugins]]
 repo = 'Shougo/ddc-matcher_head'
 on_source = 'ddc.vim'
 
@@ -254,8 +261,6 @@ if = 'has("nvim")'
 depends = 'ddc.vim'
 hook_source = '''
 lua << EOF
-    require("nvim-lsp-installer").setup{}
-    require("lspconfig").pyright.setup{}
     local on_attach = function (client, bufnr)
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
         local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
