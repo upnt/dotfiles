@@ -23,7 +23,7 @@ jobs:
         run: choco install git
 
       - name: import configs
-        run: .\setup\rcinstaller.ps1 1 2 3 4 5 6 7
+        run: .\setup\rcinstaller.ps1 "1,2, 3 4   5 , 6 ,7"
 
   linux-test:
     runs-on: ubuntu-latest
@@ -36,4 +36,4 @@ jobs:
       - name: import configs
         run: |
           chmod u+x ./setup/rcinstaller.sh
-          ./setup/rcinstaller.sh 1 2 3 4 5 6 7
+          ./setup/rcinstaller.sh "1,2, 3 4   5 , 6 ,7"

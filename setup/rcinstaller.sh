@@ -31,7 +31,6 @@ fi
 
 IFS=" ,"
 arr=($selector)
-echo ${arr[@]}
 
 if [[ ${#arr[@]} = 0 ]]; then
 	exit 0
