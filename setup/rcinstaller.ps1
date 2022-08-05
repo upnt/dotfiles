@@ -1,103 +1,78 @@
-#!/bin/bash
+Param( [string]$selector )
 
-in_array() {
-    local arr
-    eval arr=(${1})
-	local i
-	for i in "${arr[@]}"; do
-		if [[ ${i} = ${2} ]]; then
-			return 0
-		fi
-	done
-	return 1
+$project_path = Split-Path -parent (Split-Path -parent $MyInvocation.MyCommand.Path)
+
+if ([string]::IsNullOrEmpty($selector)) {
+    Write-Host "1: vim config"
+    Write-Host "2: neovim config"
+    Write-Host "3: dein"
+    Write-Host "4: deno"
+    Write-Host "5: bash"
+    Write-Host "6: powershell"
+    Write-Host "7: alacritty"
+    Write-Host "8: wezterm"
+    $selector = Read-Host "Chouse installation(ex. 2,3,4,5)"
 }
 
-if [[ $# = 0 ]]; then
-    echo "1: vim config"
-    echo "2: neovim config"
-    echo "3: dein"
-    echo "4: deno"
-    echo "5: bash"
-    echo "6: powershell"
-    echo "7: alacritty"
-    echo "8: wezterm"
-    echo -n "Chouse installation(ex. 2,3,4,5): "
-    IFS="," read -a arr
-else
-    arr=$@
-fi
-
-if [[ ${#arr[@]} = 0 ]]; then
-	exit 0
-fi
-
-# setup
-mkdir tmp
-git clone https://github.com/upnt/dotfiles.git tmp/dotfiles &> /dev/null
-
-
+$arr = $selector -split ' *[, ] *'
+if ($arr.Length -eq 0) {
+    exit 0
+}
 # install vimrc
-if in_array "${arr[*]}" 1; then
-    echo "Installing vimrc..."
-    mkdir ~/.vim
-    cp tmp/dotfiles/rc/vim/* ~/.vim
-fi
+if ($arr.Contains('1')) {
+    Write-Host "Installing vimrc..."
+    New-Item ~/.vim -ItemType Directory
+    Copy-Item -Recurse $project_path/rc/vim/* ~/.vim
+}
 
 # install neovimrc
-if in_array "${arr[*]}" 2; then
-    echo "Installing neovimrc..."
-    mkdir -p ~/.config/nvim
-    cp tmp/dotfiles/rc/nvim/* ~/.config/nvim
-fi
+if ($arr.Contains('2')) {
+    Write-Host "Installing neovimrc..."
+    New-Item -p ~/.config/nvim -ItemType Directory
+    Copy-Item -Recurse $project_path/rc/nvim/* ~/.config/nvim
+}
 
 # install dein.vim
-if in_array "${arr[*]}" 3; then
-    echo "Installing dein.vim..."
-	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > tmp/installer.sh
-	sh tmp/installer.sh ~/.cache/dein &> /dev/null
-fi
+if ($arr.Contains('3')) {
+    Write-Host "Installing dein.vim..."
+    Invoke-WebRequest https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.ps1 -OutFile installer.ps1
+    # For example, we just use `~/.cache/dein` as installation directory
+    .\installer.ps1 ~/.cache/dein
+    Remove-Item installer.ps1
+}
 
 # install deno
-if in_array "${arr[*]}" 4; then
-    echo "Installing deno..."
-    curl -fsSL https://deno.land/install.sh | sh
-fi
- 
-# install bash
-if in_array "${arr[*]}" 5; then
-    echo "Installing bash configs..."
-    cp -a tmp/dotfiles/rc/bash/. ~
-fi
+if ($arr.Contains('4')) {
+    Write-Host "Installing deno..."
+    Invoke-WebRequest https://deno.land/x/install/install.ps1 -useb | Invoke-Expression
+}
 
 # install powershell
-if in_array "${arr[*]}" 6; then
-	if [[ -v $PROFILE ]]; then
-        echo "Installing powershell configs..."
-		cp -r tmp/dotfiles/rc/powershell/* `dirname $PROFILE`
-	else
-		echo "PROFILE is not set"
-	fi
-fi
+if ($arr.Contains('5')) {
+    if ([string]::IsNullOrEmpty($PROFILE)) {
+        Write-Host "Installing powershell configs..."
+		Copy-Item -Recurse $project_path/rc/powershell/* `dirname $PROFILE`
+	} else {
+		Write-Host "PROFILE is not set"
+    }
+}
 
 # install alacritty
-if in_array "${arr[*]}" 7; then
-	if [[ -v $XDG_CONFIG_HOME ]]; then
-        echo "Installing alacritty configs..."
-        mkdir $XDG_CONFIG_HOME/alacritty
-		cp -r tmp/dotfiles/rc/alacritty/* $XDG_CONFIG_HOME/alacritty
-	else if [[ -v $APPDATA ]]; then
-        mkdir $APPDATA/alacritty
-		cp -r tmp/dotfiles/rc/alacritty/* $APPDATA/alacritty
-	else
-        echo "enable to find config directory"
-    fi
-fi
+if ($arr.Contains('6')) {
+    if ([string]::IsNullOrEmpty($XDG_CONFIG_HOME)) {
+        Write-Host "Installing alacritty configs..."
+        New-Item $XDG_CONFIG_HOME/alacritty
+		Copy-Item -Recurse $project_path/rc/alacritty/* $XDG_CONFIG_HOME/alacritty
+    } elseif ([string]::IsNullOrEmpty($APPDATA)) {
+        New-Item $APPDATA/alacritty -ItemType Directory
+		Copy-Item -Recurse $project_path/rc/alacritty/* $APPDATA/alacritty
+	} else {
+        Write-Host "enable to find config directory"
+    }
+}
 
 # install wezterm
-if in_array "${arr[*]}" 8; then
-    echo "Installing alacritty configs..."
-	cp -r tmp/dotfiles/rc/wezterm/.wezterm.lua ~
-fi
-
-# remove
-rm -rf tmp
+if ($arr.Contains('7')) {
+    Write-Host "Installing alacritty configs..."
+	Copy-Item -Recurse $project_path/rc/wezterm/.wezterm.lua ~
+}

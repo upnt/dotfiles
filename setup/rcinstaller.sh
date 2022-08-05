@@ -54,10 +54,9 @@ fi
 # install dein.vim
 if in_array "${arr[*]}" 3; then
     echo "Installing dein.vim..."
-    mkdir tmp
-	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > tmp/installer.sh
-	sh tmp/installer.sh ~/.cache/dein
-    rm -rf tmp
+	curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+	sh ./installer.sh ~/.cache/dein
+    rm installer.sh
 fi
 
 # install deno
