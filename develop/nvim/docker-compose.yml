@@ -2,8 +2,9 @@ version: '3'
 services:
   neovim:
     build:
-      context: ../../release/mynvim
+      context: ../../
+      dockerfile: ./release/mynvim/Dockerfile
     volumes:
-      - ../../rc/nvim:/root/.config/nvim
+      - ./rc/nvim:/root/.config/nvim
     working_dir: /root/.config/nvim
     tty: true
