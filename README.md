@@ -1,9 +1,11 @@
+# dotfiles
 [![myvim](https://github.com/upnt/dotfiles/actions/workflows/myvim-publish.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/myvim-publish.yml)
 [![mynvim](https://github.com/upnt/dotfiles/actions/workflows/mynvim-publish.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/mynvim-publish.yml)
 [![rcinstaller](https://github.com/upnt/dotfiles/actions/workflows/rcinstaller.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/rcinstaller.yml)
-# dotfiles
-## features
+
 This repository has below settings and makes it easy to set up windows and linux.
+
+## features
 - editor
     - vim
     - neovim
