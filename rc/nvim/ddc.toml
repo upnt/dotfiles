@@ -173,11 +173,7 @@ repo = 'vim-skk/skkeleton'
 on_map = {ic = '<Plug>(skkeleton-toggle)'}
 depends = 'denops.vim'
 hook_add = '''
-    imap <C-s>e <Plug>(skkeleton-enable)
-    imap <C-s>d <Plug>(skkeleton-disable)
     imap <C-j>  <Plug>(skkeleton-toggle)
-    cmap <C-s>e <Plug>(skkeleton-enable)
-    cmap <C-s>d <Plug>(skkeleton-disable)
     cmap <C-j>  <Plug>(skkeleton-toggle)
 '''
 hook_source = '''

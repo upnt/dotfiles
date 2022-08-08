@@ -39,8 +39,8 @@ lua << EOF
             vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, bufopts)
             vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
             vim.keymap.set('n', 'gx', vim.lsp.diagnostic.show_line_diagnostics, bufopts)
-            vim.keymap.set('n', 'g[', vim.lsp.diagnostic.goto_prev, bufopts)
-            vim.keymap.set('n', 'g]', vim.lsp.diagnostic.goto_next, bufopts)
+            vim.keymap.set('n', 'gp', vim.lsp.diagnostic.goto_prev, bufopts)
+            vim.keymap.set('n', 'gn', vim.lsp.diagnostic.goto_next, bufopts)
         end
         nvim_lsp[server_name].setup(opts)
     end })
@@ -54,4 +54,13 @@ hook_add = '''
 let g:context_filetype#ignore_patterns = {
     \ 'toml': ['^\s*#\s*'],
     \ }
+'''
+
+[[plugins]]
+repo = 'folke/which-key.nvim'
+hook_add = '''
+lua << EOF
+    require("which-key").setup {
+    }
+EOF
 '''

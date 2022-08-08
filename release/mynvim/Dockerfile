@@ -9,7 +9,8 @@ ENV DENO_INSTALL $HOME/.deno
 ENV PATH $PATH:$DENO_INSTALL/bin
 ENV LANG ja_JP.UTF-8
 RUN apt-get update \
- && apt-get install -y git curl wget unzip ripgrep locales \
+ && apt-get install -y git curl wget gzip unzip ripgrep locales \
+        build-essential \
  && sed -i -e 's/# \(ja_JP.UTF-8\)/\1/' /etc/locale.gen \
  && sed -i -e 's/# \(ja_JP.EUC-JP\)/\1/' /etc/locale.gen \
  && locale-gen \
@@ -27,7 +28,7 @@ RUN apt-get update \
  && apt-get clean \
  && rm installer.sh \
  && apt-get clean -y \
- && rm -rf /var/lib/apt/lists/* \
- && nvim -c "call dein#install()" -c "q"
+ && rm -rf /var/lib/apt/lists/*
+RUN nvim -c "call dein#install()" -c "q"
 WORKDIR /root/workspace
 CMD nvim
