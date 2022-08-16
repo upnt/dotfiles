@@ -7,10 +7,9 @@ if ([string]::IsNullOrEmpty($selector)) {
     Write-Host "2: neovim config"
     Write-Host "3: dein"
     Write-Host "4: deno"
-    Write-Host "5: bash"
-    Write-Host "6: powershell"
-    Write-Host "7: alacritty"
-    Write-Host "8: wezterm"
+    Write-Host "5: powershell"
+    Write-Host "6: alacritty"
+    Write-Host "7: wezterm"
     $selector = Read-Host "Chouse installation(ex. 2,3,4,5)"
 }
 
