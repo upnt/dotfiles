@@ -1,5 +1,7 @@
 Install-WindowsUpdate -AcceptEula
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowFileExtensions
+Disable-BingSearch
+Set-BoxstarterTaskbarOptions -Size Small -Dock Bottom -MultiMonitorOff
 wsl --install -d ubuntu
 
 cinst busybox
