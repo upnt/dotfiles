@@ -39,7 +39,13 @@ cinst Boxstarter
 Then enter `BOXSTARTERSHELL` to enter boxstarter shell and execute the following:
 
 ```BOXSTARTERSHELL
-Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/upnt/dotfiles/main/setup/boxstarter.ps1
+Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/upnt/dotfiles/main/setup/boxstarter/boxstarter.ps1
+```
+
+If you want to use your computer for gaming, execute the following:
+
+```BOXSTARTERSHELL
+Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/upnt/dotfiles/main/setup/boxstarter/hobby.ps1
 ```
 
 Finally, execute the following to import the settings on powershell:
