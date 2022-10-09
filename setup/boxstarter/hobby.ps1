@@ -2,10 +2,12 @@ cinst logitech-camera-settings
 cinst lghub
 cinst wacom-drivers
 
-cinst steam
+# battle.net
+cinst steam-client
 cinst epicgameslauncher
-cinst obs-studio
+cinst ubisoft-connect
 
+cinst obs-studio
 cinst foobar2000
 cinst mp3tag
 
