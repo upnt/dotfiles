@@ -1,5 +1,4 @@
 cinst logitech-camera-settings
-cinst lghub
 cinst wacom-drivers
 
 # battle.net
