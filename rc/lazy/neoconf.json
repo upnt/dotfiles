@@ -1,0 +1,14 @@
+{
+	"local_settings": ".neoconf.json",
+	"global_settings": "neoconf.json",
+	"live_reload": true,
+	"plugins": {
+		"lspconfig": {
+			"enabled": true
+		},
+		"lua_ls": {
+			"enabled": false,
+			"enabled_for_neovim_config": true
+		}
+	}
+}
