@@ -50,6 +50,7 @@ return {
         "stylua",
         "pyright",
         "black",
+        "isort",
         "flake8",
       },
     },
@@ -78,8 +79,6 @@ return {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
-            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-            -- this way you will only jump inside the snippet region
           elseif luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
           elseif has_words_before() then
@@ -117,5 +116,13 @@ return {
         },
       },
     },
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      table.insert(opts.sources, nls.builtins.formatting.isort)
+      table.insert(opts.sources, nls.builtins.formatting.black)
+    end,
   },
 }
