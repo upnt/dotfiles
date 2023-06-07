@@ -20,4 +20,7 @@ return {
       end,
     },
   },
+  {
+    "vim-jp/vimdoc-ja",
+  },
 }

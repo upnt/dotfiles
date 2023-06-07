@@ -52,6 +52,12 @@ return {
         "black",
         "isort",
         "flake8",
+        "texlab",
+        "latexindent",
+        "codelldb",
+        "clangd",
+        "clang-format",
+        "cpplint",
       },
     },
   },
@@ -114,6 +120,28 @@ return {
             },
           },
         },
+        texlab = {
+          settings = {
+            texlab = {
+              build = {
+                executable = "latexmk",
+                args = { "-pdfdvi", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                forwardSearchAfter = false,
+                onSave = true,
+              },
+              chktex = {
+                onEdit = false,
+                onOpenAndSave = true,
+              },
+              diagnosticsDelay = 300,
+              formatterLineLength = 80,
+              latexFormatter = "latexindent",
+              latexindent = {
+                modifyLineBreaks = false,
+              },
+            },
+          },
+        },
       },
     },
   },
@@ -123,6 +151,7 @@ return {
       local nls = require("null-ls")
       table.insert(opts.sources, nls.builtins.formatting.isort)
       table.insert(opts.sources, nls.builtins.formatting.black)
+      table.insert(opts.sources, nls.builtins.diagnostics.chktex)
     end,
   },
 }
