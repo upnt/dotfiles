@@ -78,8 +78,7 @@ case "$TERM" in
 esac
 
 force_color_prompt=yes
-PS1='\n${debian_chroot:+($debian_chroot)}\[\e[01;33m\]\u@\h \[\e[01;36m\]\w\[\e[01;37m\]\n> '
-
+PS1=$'\\n${debian_chroot:+($debian_chroot)}\[\\e[01;31m\]\u@\h \[\\e[00;36m\]\w\\n\[\\e[00;37m\]\u232A\[\\e[m\]'
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
