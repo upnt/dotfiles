@@ -33,7 +33,7 @@ if [ -x /usr/bin/fzf ]; then
     }
     
     function fe {
-        local file=`find . -t f -p --color=always | 
+        local file=`find . -t f -p --hidden --color=always | 
             sed -e 's#\\\\#/#g' |
             fzf --ansi --reverse --preview 'bat --color=always {}' --preview-window=up:60%`
         if [ -n "$file" ]; then
@@ -42,7 +42,7 @@ if [ -x /usr/bin/fzf ]; then
     }
     
     function fdiff {
-        local file=`find . -t f -p --color=always | 
+        local file=`find . -t f -p --hidden --color=always | 
             sed -e 's#\\\\#/#g' |
             fzf --ansi --reverse --preview "git diff $@ {}" --preview-window=up:60%`
         if [ -n "$file" ]; then
