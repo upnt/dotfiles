@@ -1,49 +1,12 @@
-# config
-export LANG=ja_JP.UTF-8
-export TERM="xterm-256color"
-export DENO_INSTALL="/$HOME/.deno"
-export PATH="$PATH:$DENO_INSTALL/bin"
-
-if [ -d /home/linuxbrew ]; then
-    export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/llvm/lib -Wl,-rpath,/home/linuxbrew/.linuxbrew/opt/llvm/lib"
-    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-    export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
-fi
-
-if [ -d $HOME/.pyenv ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-    eval "$(pyenv init -)"
-fi
-
-if [ -d $HOME/.pyenv/plugins/pyenv-virtualenv ]; then
-    eval "$(pyenv virtualenv-init -)"
-fi
-if [ -d $HOME/warkspace/go ]; then
-    export GOPATH="$HOME/workspace/go"
-    export PATH="$GOPATH/bin:$PATH"
-fi
-
-
-
-# env
-[ -x /home/linuxbrew/.linuxbrew/bin/pyenv ] && eval "$(pyenv init -)"
-[ -x $HOME/.pyenv/shims/virtualenv ] && eval "$(pyenv virtualenv-init -)"
-[ -x /home/linuxbrew/.linuxbrew/bin/rbenv ] && eval "$(rbenv init -)"
-[ -x /home/linuxbrew/.linuxbrew/bin/nodenv ] && eval "$(nodenv init -)"
-# starship
-[ -x /home/linuxbrew/.linuxbrew/bin/starship ] && eval "$(starship init bash)"
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
 # If not running interactively, don't do anything
-# case $- in
-#     *i*) ;;
-#       *) return;;
-# esac
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -60,6 +23,17 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+function set_branch {
+    GIT_BRANCH=`git branch --contains 2>/dev/null | cut -d " " -f 2`
+    if [ -n "$GIT_BRANCH" ]; then
+        GIT_BRANCH_VIEW=`echo -e '\u16CB'`
+        GIT_BRANCH_VIEW+=" ${GIT_BRANCH}"
+        GIT_BRANCH_VIEW+=$'\n'
+    else
+        GIT_BRANCH_VIEW=""
+    fi
+}
+PROMPT_COMMAND="set_branch"
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
@@ -77,8 +51,52 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-force_color_prompt=yes
-PS1=$'\\n${debian_chroot:+($debian_chroot)}\[\\e[01;31m\]\u@\h \[\\e[00;36m\]\w\\n\[\\e[00;37m\]\u232A\[\\e[m\]'
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='\n'
+    PS1+='${debian_chroot:+($debian_chroot)}'
+    PS1+='\[\e[01;31m\]\u@\h '
+    PS1+='\[\e[00;36m\]\w\n'
+    PS1+='\[\e[00;32m\]${GIT_BRANCH_VIEW}'
+    PS1+=$'\[\\e[00;37m\]\u232A\[\\e[m\]'
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -93,3 +111,5 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+. "$HOME/.cargo/env"
