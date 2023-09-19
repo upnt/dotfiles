@@ -10,9 +10,9 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
-alias cat=bat.exe
-alias grep=rg.exe
-alias find=fd.exe
+alias cat=bat
+alias grep=rg
+alias find=fd
 alias ls='lsd'
 alias ll='ls -alF'
 alias la='ls -A'
@@ -22,7 +22,7 @@ alias pd='pushd 1>/dev/null'
 alias pop='popd 1>/dev/null'
 
 if [ -x /usr/bin/fzf ]; then
-    function fd {
+    function ff {
         local dir=`find . -t d -p --color=always | 
             sed -e 's#\\\\#/#g' |
             fzf --ansi --reverse --preview 'lsd -l --color=always {}' --preview-window=up:60%`
