@@ -37,10 +37,14 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 prompt_precmd() {
-    local magenta=$'\e[35m' cyan=$'\e[36m' reset=$'\e[m'
+    local green=$'\e[32m' magenta=$'\e[35m' cyan=$'\e[36m' reset=$'\e[m'
     local branch_icon=$'\ue725'
     local branch="$(git branch --show-current 2> /dev/null)"
-    PROMPT=$'\n'"%B%{${cyan}%}%~%{${reset}%}%b"
+    PROMPT=$'\n'
+    if [ -n "$VIRTUAL_ENV_PROMPT" ]; then
+        PROMPT+="%B%{${green}%}${VIRTUAL_ENV_PROMPT}%{${reset}%}%b"$'\n'
+    fi
+    PROMPT+="%B%{${cyan}%}%~%{${reset}%}%b"
     if [ -n "$branch" ]; then
         PROMPT+=" on %B%{${magenta}%}${branch_icon} ${branch}%{${reset}%}%b"
     fi
@@ -87,9 +91,9 @@ alias pop='popd 1>/dev/null'
 
 if [ -x /usr/bin/fzf ]; then
     function ff {
-        local dir=`find . -t d -p --color=always | 
-            sed -e 's#\\\\#/#g' |
-            fzf --ansi --reverse --preview 'lsd -l --color=always {}' --preview-window=up:60%`
+        local dir=$'\e[34m'"../"$'\e[0m'$'\n'
+        dir+=`fd . --hidden -t d -p --color=always --maxdepth=1 | sed -e 's#\\\\#/#g'`
+        dir=`echo $dir | fzf --ansi --reverse --preview 'lsd -l --color=always {}' --preview-window=up:60%`
         if [ -n "$dir" ]; then
             echo $dir
             pd $dir
@@ -106,7 +110,7 @@ if [ -x /usr/bin/fzf ]; then
     }
     
     function fdiff {
-        local file=`find . -t f -p --hidden --color=always | 
+        local file=`find . -t f -p --hidden --color=always --exclude=".git/" | 
             sed -e 's#\\\\#/#g' |
             fzf --ansi --reverse --preview "git diff $@ {}" --preview-window=up:60%`
         if [ -n "$file" ]; then
@@ -123,3 +127,7 @@ fi
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+export GUROBI_HOME="/opt/gurobi912/linux64"
+export PATH="${PATH}:${GUROBI_HOME}/bin"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
