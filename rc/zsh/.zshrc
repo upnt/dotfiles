@@ -1,4 +1,5 @@
 # Set up the prompt
+zsh --version
 
 autoload -Uz promptinit
 promptinit
@@ -81,7 +82,7 @@ fi
 alias cat=bat
 alias grep=rg
 alias find=fd
-alias ls='lsd'
+alias ls='lsd --color=always'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -105,7 +106,7 @@ if [ -x /usr/bin/fzf ]; then
     }
     
     function fe {
-        local file=`find . -t f -p --hidden --color=always | 
+        local file=`find . -t f -p --hidden --exclude=".git/" --color=always | 
             sed -e 's#\\\\#/#g' |
             fzf --ansi --reverse --preview 'bat --color=always {}' --preview-window=up:60%`
         if [ -n "$file" ]; then
@@ -135,3 +136,4 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 export GUROBI_HOME="/opt/gurobi912/linux64"
 export PATH="${PATH}:${GUROBI_HOME}/bin"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
+export LESS='-R'
