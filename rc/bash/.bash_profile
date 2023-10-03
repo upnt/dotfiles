@@ -1,10 +1,15 @@
 # Load anyenv automatically by adding
 # the following to ~/.bash_profile:
 
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
-
-if [[ -f ~/.bashrc ]]; then
-    . ~/.bashrc
+if [[ -d $HOME/.anyenv ]]; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
 fi
-. "$HOME/.cargo/env"
+
+if [[ -f $HOME/.bashrc ]]; then
+    . "$HOME/.bashrc"
+fi
+
+if [[ -d $HOME/.cargo ]]; then
+    . "$HOME/.cargo/env"
+fi
