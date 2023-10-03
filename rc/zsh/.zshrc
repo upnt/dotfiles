@@ -93,7 +93,7 @@ alias pop='popd 1>/dev/null'
 if [ -x /usr/bin/fzf ]; then
     function ff {
         local dir
-        dir+=$'\e[34m'"./"$'\e[0m'$'\n'
+        # dir+=$'\e[34m'"./"$'\e[0m'$'\n'
         dir+=$'\e[34m'"../"$'\e[0m'$'\n'
         dir+=`fd . --hidden -t d -p --color=always --maxdepth=1 | sed -e 's#\\\\#/#g'`
         dir=`echo -n $dir | fzf --ansi --reverse --preview 'lsd -l --color=always {}' --preview-window=up:60%`
