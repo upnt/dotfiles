@@ -1,3 +1,6 @@
+" keybind
+inoremap jj <ESC>
+
 " basic
 set autoindent
 set smartindent

@@ -111,3 +111,10 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+local gurobi=/opt/gurobi912/linux64
+if [ -d "$gurobi" ]; then
+    export GUROBI_HOME=$gurobi
+    export PATH=$PATH:$GUROBI_HOME/bin
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GUROBI_HOME/lib
+fi
