@@ -112,7 +112,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-local gurobi=/opt/gurobi912/linux64
+gurobi=/opt/gurobi912/linux64
 if [ -d "$gurobi" ]; then
     export GUROBI_HOME=$gurobi
     export PATH=$PATH:$GUROBI_HOME/bin

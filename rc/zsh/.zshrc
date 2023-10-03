@@ -1,6 +1,4 @@
 # Set up the prompt
-zsh --version
-
 autoload -Uz promptinit
 promptinit
 prompt adam1
@@ -38,7 +36,9 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 prompt_precmd() {
-    local green=$'\e[32m' magenta=$'\e[35m' cyan=$'\e[36m' reset=$'\e[m'
+    local red=$'\e[31m' green=$'\e[32m' yellow=$'\e[33m'
+    local blue=$'\e[34m' magenta=$'\e[35m'
+    local cyan=$'\e[36m' reset=$'\e[m'
     local branch_icon=$'\ue725'
     local branch="$(git branch --show-current 2> /dev/null)"
     PROMPT=$'\n'
@@ -47,7 +47,7 @@ prompt_precmd() {
     fi
     PROMPT+="%B%{${cyan}%}%~%{${reset}%}%b"
     if [ -n "$branch" ]; then
-        PROMPT+=" on %B%{${magenta}%}${branch_icon} ${branch}%{${reset}%}%b"
+        PROMPT+=" on %B%{${red}%}${branch_icon} ${branch}%{${reset}%}%b"
     fi
     PROMPT+=$'\n'"%B"$'\u232A'"%b"
 }
@@ -137,3 +137,21 @@ export GUROBI_HOME="/opt/gurobi912/linux64"
 export PATH="${PATH}:${GUROBI_HOME}/bin"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 export LESS='-R'
+
+if [[ ! -n $TMUX && $- == *l* ]]; then
+	# get the IDs
+	ID="`tmux list-sessions`"
+	if [[ -z "$ID" ]]; then
+	  tmux new-session
+	fi
+	create_new_session="Create New Session"
+	ID="$ID\n${create_new_session}:"
+	ID="`echo $ID | fzf | cut -d: -f1`"
+	if [[ "$ID" = "${create_new_session}" ]]; then
+	  tmux new-session
+	elif [[ -n "$ID" ]]; then
+	  tmux attach-session -t "$ID"
+	else
+	  : 
+	fi
+fi
