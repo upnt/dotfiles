@@ -145,14 +145,14 @@ if [[ ! -n $TMUX && $- == *l* ]]; then
 	# get the IDs
 	ID="`tmux list-sessions`"
 	if [[ -z "$ID" ]]; then
-	  tmux new-session
+	    tmux new-session
     else
 	    create_new_session="n"
 	    ID="`echo "$ID\n${create_new_session}: Create New Session" | fzf | cut -d: -f1`"
 	    if [[ "$ID" = "${create_new_session}" ]]; then
-	      tmux new-session
+	        tmux new-session
 	    elif [[ -n "$ID" ]]; then
-	      tmux attach-session -t "$ID"
+	        tmux attach-session -t "$ID"
 	    fi
     fi
 fi
