@@ -55,18 +55,6 @@ prompt_precmd() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_precmd
 
-# Load anyenv automatically by adding
-# the following to ~/.bash_profile:
-
-if [[ -d ~/.anyenv ]]; then
-    export PATH="$HOME/.anyenv/bin:$PATH"
-    eval "$(anyenv init -)"
-fi
-
-if [[ -d ~/.cargo ]]; then
-    . "$HOME/.cargo/env"
-fi
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -133,6 +121,7 @@ fi
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+export PATH="${PATH}:${HOME}/.llvm-project/build/bin"
 export GUROBI_HOME="/opt/gurobi912/linux64"
 export PATH="${PATH}:${GUROBI_HOME}/bin"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
@@ -141,18 +130,18 @@ export LESS='-R'
 fpath+=~/.zfunc
 autoload -Uz compinit && compinit
 
-if [[ ! -n $TMUX && $- == *l* ]]; then
-	# get the IDs
-	ID="`tmux list-sessions`"
-	if [[ -z "$ID" ]]; then
-	    tmux new-session
-    else
-	    create_new_session="n"
-	    ID="`echo "$ID\n${create_new_session}: Create New Session" | fzf | cut -d: -f1`"
-	    if [[ "$ID" = "${create_new_session}" ]]; then
-	        tmux new-session
-	    elif [[ -n "$ID" ]]; then
-	        tmux attach-session -t "$ID"
-	    fi
-    fi
-fi
+# if [[ ! -n $TMUX && $- == *l* ]]; then
+# 	# get the IDs
+# 	ID="`tmux list-sessions`"
+# 	if [[ -z "$ID" ]]; then
+# 	    tmux new-session
+#     else
+# 	    create_new_session="n"
+# 	    ID="`echo "$ID\n${create_new_session}: Create New Session" | fzf | cut -d: -f1`"
+# 	    if [[ "$ID" = "${create_new_session}" ]]; then
+# 	        tmux new-session
+# 	    elif [[ -n "$ID" ]]; then
+# 	        tmux attach-session -t "$ID"
+# 	    fi
+#     fi
+# fi
