@@ -55,9 +55,6 @@ prompt_precmd() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_precmd
 
-# Load anyenv automatically by adding
-# the following to ~/.bash_profile:
-
 if [[ -d ~/.anyenv ]]; then
     export PATH="$HOME/.anyenv/bin:$PATH"
     eval "$(anyenv init -)"
@@ -65,6 +62,12 @@ fi
 
 if [[ -d ~/.cargo ]]; then
     . "$HOME/.cargo/env"
+fi
+
+if [[ -d /usr/local/go ]]; then
+    export GOPATH=$HOME/go
+    export GOBIN=$GOPATH/bin
+    export PATH=$PATH:/usr/local/go/bin:$GOBIN
 fi
 
 # enable color support of ls and also add handy aliases
@@ -146,7 +149,8 @@ fi
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-export GUROBI_HOME="/opt/gurobi912/linux64"
+export PATH="${PATH}:${HOME}/.llvm-project/build/bin"
+export GUROBI_HOME="/opt/gurobi1100/linux64"
 export PATH="${PATH}:${GUROBI_HOME}/bin"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 export LESS='-R'
