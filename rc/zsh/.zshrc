@@ -79,10 +79,22 @@ if [ -x /usr/bin/dircolors ]; then
   alias egrep='egrep --color=auto'
 fi
 
-alias cat=bat
-alias grep=rg
-alias find=fd
-alias ls='lsd --color=always'
+# cargo install bat
+if type "bat" > /dev/null 2>&1; then
+	alias cat='bat'
+fi
+# cargo install ripgrep
+if type "rg" > /dev/null 2>&1; then
+    alias grep='rg'
+fi
+# cargo install fd-find
+if type "fd" > /dev/null 2>&1; then
+	alias find='fd'
+fi
+# cargo install lsd
+if type "lsd" > /dev/null 2>&1; then
+	alias ls='lsd --color=always'
+fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -90,7 +102,8 @@ alias l='ls -CF'
 alias pd='pushd 1>/dev/null'
 alias pop='popd 1>/dev/null'
 
-if [ -x /usr/bin/fzf ]; then
+# sudo apt install fzf
+if type "fzf" > /dev/null 2>&1; then
     function ff {
         local dir
         # dir+=$'\e[34m'"./"$'\e[0m'$'\n'
