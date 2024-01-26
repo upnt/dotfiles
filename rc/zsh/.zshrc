@@ -140,8 +140,10 @@ if type "fzf" > /dev/null 2>&1; then
     }
     
     function gclone {
-        local repo=`gh repo list -L 1000 | fzf --ansi --reverse | cut -f 1`
-        gh repo clone $repo
+	local repo=`gh repo list --json "name" | jq -r '.[]["name"]' | fzf --ansi --reverse | cut -f 1`
+        if [ ! "$repo" = "" ]; then
+            gh repo clone "$repo"
+	fi
     }
 fi
 
