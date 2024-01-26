@@ -29,7 +29,7 @@ set hlsearch
 colorscheme desert
 syntax on
 
-" Undo                                                                                                                                                                                                                                
+" Undo
 if has('persistent_undo')
   let undo_path = expand('~/.cache/undo')
   if !isdirectory(undo_path)
