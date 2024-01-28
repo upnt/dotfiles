@@ -27,7 +27,7 @@ vim.cmd("colorscheme desert")
 
 -- Undo
 if vim.fn.has("persistent_undo") == 1 then
-  local undo_path = vim.fn.expand("~/.cache/undo")
+  local undo_path = vim.fn.expand("~/.cache/undo/nvim")
   if vim.fn.isdirectory(undo_path) == 1 then
     vim.fn.mkdir(undo_path, "p")
   end
