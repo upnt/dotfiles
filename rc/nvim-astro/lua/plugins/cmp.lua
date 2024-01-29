@@ -19,6 +19,7 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lsp",
+      "Exafunction/codeium.vim",
     },
     event = "InsertEnter",
     opts = function()
@@ -105,7 +106,7 @@ return {
           end, { "i", "s" }),
         },
         sources = cmp.config.sources {
-          { name = "cmp_tabnine", priority = 1000 },
+          { name = "codeium", priority = 1000 },
           { name = "nvim_lsp", priority = 900 },
           { name = "nvim_lua", priority = 800 },
           { name = "luasnip", priority = 700 },

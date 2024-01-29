@@ -18,11 +18,11 @@ return {
             end
             dap.adapters.python = {
               type = "executable",
-              command = read_exec_path("python"),
+              command = read_exec_path "python",
               args = {
                 "-m",
                 "debugpy.adapter",
-              }
+              },
             }
             dap.configurations.python = {
               {
@@ -33,7 +33,7 @@ return {
               },
             }
           end,
-        }
+        },
       },
     },
     {
