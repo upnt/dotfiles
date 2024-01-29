@@ -72,6 +72,7 @@ return {
               "vim-language-server",
               "json-lsp",
               "pyright",
+              "taplo",
               -- formatter
               "prettierd",
               "stylua",
