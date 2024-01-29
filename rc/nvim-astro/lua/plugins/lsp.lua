@@ -78,6 +78,7 @@ return {
               "black",
               "isort",
               -- Linter
+              "mypy",
               "pyproject-flake8",
               -- dap
               "debugpy",
@@ -106,7 +107,11 @@ return {
       },
     },
     event = "User AstroFile",
-    opts = function() return { on_attach = require("astronvim.utils.lsp").on_attach } end,
+    opts = function()
+      return {
+        on_attach = require("astronvim.utils.lsp").on_attach,
+      }
+    end,
   },
   {
     "stevearc/aerial.nvim",
