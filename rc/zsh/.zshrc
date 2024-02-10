@@ -80,6 +80,12 @@ if [[ -d /usr/local/go ]]; then
     export PATH=$PATH:/usr/local/go/bin:$GOBIN
 fi
 
+if [[ -d /usr/local/texlive ]]; then
+    export PATH=$PATH:/usr/local/texlive/2023/bin/x86_64-linux
+    export MANPATH=$MANPATH:/usr/local/texlive/2023/texmf-dist/doc/man
+    export INFOPATH=$INFOPATH:/usr/local/texlive/2023/texmf-dist/doc/info
+fi
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
