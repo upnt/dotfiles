@@ -155,12 +155,25 @@ if type "fzf" > /dev/null 2>&1; then
             git diff $@ $file
         fi
     }
+
+    function get_repos {
+	    local repo=`gh repo list $1 --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
+        echo $repo
+    }
     
     function gclone {
-	local repo=`gh repo list --json "name" | jq -r '.[]["name"]' | fzf --ansi --reverse | cut -f 1`
+	    local repos=`get_repos`
+        for i in `gh org list`
+        do
+            local buf=`get_repos $i`
+            if [ ! "$buf" = "" ]; then
+                repos="${repos}\n${buf}"
+            fi
+        done
+        local repo=`echo $repos | fzf --ansi --reverse | cut -f 1`
         if [ ! "$repo" = "" ]; then
-            gh repo clone "$repo"
-	fi
+            gh repo clone "$repo" $@
+	    fi
     }
 fi
 
