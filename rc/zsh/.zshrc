@@ -86,6 +86,8 @@ if [[ -d /usr/local/texlive ]]; then
     export INFOPATH=$INFOPATH:/usr/local/texlive/2023/texmf-dist/doc/info
 fi
 
+export PATH=$PATH:~/.local/bin
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
