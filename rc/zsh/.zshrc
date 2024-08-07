@@ -55,6 +55,7 @@ prompt_precmd() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_precmd
 
+export PATH="/opt/nvim-linux64/bin:$PATH"
 if [[ -d ~/.anyenv ]]; then
     export PATH="$HOME/.anyenv/bin:$PATH"
     eval "$(anyenv init -)"
