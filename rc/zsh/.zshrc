@@ -75,16 +75,17 @@ if [[ -d /opt/gurobi1100 ]] then
     export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 fi
 
-if [[ -d /usr/local/go ]]; then
-    export GOPATH=$HOME/go
-    export GOBIN=$GOPATH/bin
-    export PATH=$PATH:/usr/local/go/bin:$GOBIN
-fi
 
-if [[ -d /usr/local/texlive ]]; then
+if [[ -d /usr/local/texlive/2023 ]]; then
     export PATH=$PATH:/usr/local/texlive/2023/bin/x86_64-linux
     export MANPATH=$MANPATH:/usr/local/texlive/2023/texmf-dist/doc/man
     export INFOPATH=$INFOPATH:/usr/local/texlive/2023/texmf-dist/doc/info
+fi
+
+if [[ -d /usr/local/texlive/2024 ]]; then
+    export PATH=$PATH:/usr/local/texlive/2024/bin/x86_64-linux
+    export MANPATH=$MANPATH:/usr/local/texlive/2024/texmf-dist/doc/man
+    export INFOPATH=$INFOPATH:/usr/local/texlive/2024/texmf-dist/doc/info
 fi
 
 export PATH=$PATH:~/.local/bin
@@ -94,6 +95,8 @@ if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
   alias lt='ls --tree'
+  alias rls='ls --color=auto | shuf | head -n 1'
+  alias rcd='cd $(ls --color=never | shuf | head -n 1)'
   alias dir='dir --color=auto'
   alias vdir='vdir --color=auto'
 
