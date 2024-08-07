@@ -125,6 +125,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+
 alias pd='pushd 1>/dev/null'
 alias pop='popd 1>/dev/null'
 
@@ -192,18 +193,3 @@ export LESS='-R'
 fpath+=~/.zfunc
 autoload -Uz compinit && compinit
 
-# if [[ ! -n $TMUX && $- == *l* ]]; then
-# 	# get the IDs
-# 	ID="`tmux list-sessions`"
-# 	if [[ -z "$ID" ]]; then
-# 	    tmux new-session
-#     else
-# 	    create_new_session="n"
-# 	    ID="`echo "$ID\n${create_new_session}: Create New Session" | fzf | cut -d: -f1`"
-# 	    if [[ "$ID" = "${create_new_session}" ]]; then
-# 	        tmux new-session
-# 	    elif [[ -n "$ID" ]]; then
-# 	        tmux attach-session -t "$ID"
-# 	    fi
-#     fi
-# fi
