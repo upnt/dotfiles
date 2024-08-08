@@ -1,7 +1,7 @@
 $latex = 'latex %O -kanji=utf8 -no-guess-input-enc -synctex=1 -interaction=nonstopmode %S';
 $pdflatex = 'pdflatex %O -synctex=1 -interaction=nonstopmode %S';
-$lualatex = 'lualatex %O -synctex=1 -interaction=nonstopmode %S';
-$xelatex = 'xelatex %O -synctex=1 -interaction=nonstopmode %S';
+$lualatex = 'lualatex %O -synctex=1 -halt-on-error %S';
+$xelatex = 'xelatex %O -synctex=1 -halt-on-error %S';
 $biber = 'biber %O --bblencoding=utf8 -u -U --output_safechars %B';
 $bibtex = 'bibtex %O %B';
 $makeindex = 'mendex %O -o %D %S';
