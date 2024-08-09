@@ -92,22 +92,22 @@ export PATH=$PATH:~/.local/bin
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-  alias lt='ls --tree'
-  alias rls='ls --color=auto | shuf | head -n 1'
-  alias rcd='cd $(ls --color=never | shuf | head -n 1)'
-  alias dir='dir --color=auto'
-  alias vdir='vdir --color=auto'
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias lt='ls --tree'
+    alias rls='ls --color=auto | shuf | head -n 1'
+    alias rcd='cd $(ls --color=never | shuf | head -n 1)'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
-  alias grep='grep --color=auto'
-  alias fgrep='fgrep --color=auto'
-  alias egrep='egrep --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
 # cargo install bat
 if type "bat" > /dev/null 2>&1; then
-	alias cat='bat'
+    alias cat='bat'
 fi
 # cargo install ripgrep
 if type "rg" > /dev/null 2>&1; then
@@ -115,15 +115,18 @@ if type "rg" > /dev/null 2>&1; then
 fi
 # cargo install fd-find
 if type "fd" > /dev/null 2>&1; then
-	alias find='fd'
+    alias find='fd'
 fi
 # cargo install lsd
 if type "lsd" > /dev/null 2>&1; then
-	alias ls='lsd --color=always'
+    alias ls='lsd -l --blocks "git,user,group,name"'
+    alias la='ls -A'
+    alias ll='lsd -alF'
+else
+    alias ll = 'ls -alF'
+    alias la='ls -A'
 fi
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+
 
 
 alias pd='pushd 1>/dev/null'
@@ -144,32 +147,32 @@ if type "fzf" > /dev/null 2>&1; then
             fi
         fi
     }
-    
+
     function fe {
-        local file=`find . -t f -p --hidden --exclude=".git/" --color=always | 
-            sed -e 's#\\\\#/#g' |
-            fzf --ansi --reverse --preview 'bat --color=always {}' --preview-window=up:60%`
+        local file=`find . -t f -p --hidden --exclude=".git/" --color=always |
+        sed -e 's#\\\\#/#g' |
+        fzf --ansi --reverse --preview 'bat --color=always {}' --preview-window=up:60%`
         if [ -n "$file" ]; then
             vim $file
         fi
     }
-    
+
     function fdiff {
-        local file=`find . -t f -p --hidden --color=always --exclude=".git/" | 
-            sed -e 's#\\\\#/#g' |
-            fzf --ansi --reverse --preview "git diff $@ {}" --preview-window=up:60%`
+        local file=`find . -t f -p --hidden --color=always --exclude=".git/" |
+        sed -e 's#\\\\#/#g' |
+        fzf --ansi --reverse --preview "git diff $@ {}" --preview-window=up:60%`
         if [ -n "$file" ]; then
             git diff $@ $file
         fi
     }
 
     function get_repos {
-	    local repo=`gh repo list $1 --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
+        local repo=`gh repo list $1 --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
         echo $repo
     }
-    
+
     function gclone {
-	    local repos=`get_repos`
+        local repos=`get_repos`
         for i in `gh org list`
         do
             local buf=`get_repos $i`
@@ -180,7 +183,7 @@ if type "fzf" > /dev/null 2>&1; then
         local repo=`echo $repos | fzf --ansi --reverse | cut -f 1`
         if [ ! "$repo" = "" ]; then
             gh repo clone "$repo" $@
-	    fi
+        fi
     }
 fi
 
@@ -192,4 +195,3 @@ export LESS='-R'
 
 fpath+=~/.zfunc
 autoload -Uz compinit && compinit
-
