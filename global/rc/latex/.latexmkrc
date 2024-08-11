@@ -11,5 +11,4 @@ $ps2pdf = 'ps2pdf %O %S %D';
 $pdf_mode = 3;
 $max_repeat = 10;
 $pdf_update_method = 2;
-# sudo apt install mupdf mupdf-tools
 $pdf_previewer = 'mupdf';
