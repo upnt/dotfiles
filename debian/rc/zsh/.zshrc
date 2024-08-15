@@ -123,7 +123,7 @@ if type "lsd" > /dev/null 2>&1; then
     alias la='ls -A'
     alias ll='lsd -alF'
 else
-    alias ll = 'ls -alF'
+    alias ll='ls -alF'
     alias la='ls -A'
 fi
 

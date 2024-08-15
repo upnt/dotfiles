@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
 .PHONY: all
-all: nvim zsh tmux
+all: nvim zsh tmux latex requirements
 
 nvim:
 	-git clone https://github.com/upnt/nvim-myastro ~/.config/nvim 
@@ -13,10 +13,18 @@ tmux:
 	-ln -s $(abspath ${CURDIR})/rc/tmux/.tmux.conf $(abspath ${HOME})/.tmux.conf
 	
 latex:
-	-ln -s $(abspath ${CURDIR}/../global)/rc/latex/.latexmkrc $(abspath ${HOME})/.latexmkrc
+	-ln -s $(abspath ${CURDIR})/rc/latex/.latexmkrc $(abspath ${HOME})/.latexmkrc
+	
+requirements:
+	sudo apt install build-essential zlib1g-dev libncurses5-dev \
+		libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
+		libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
+		libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt-dev \
+		libbz2-dev libsqlite3-dev python3-tk liblzma-dev libyaml-dev ccache \
+		wget xdg-utils cmake zathura xdotool zsh fzf tmux jq zathura
 	
 .PHONY: install
-install: requirements anyenv-install
+install: anyenv-install
 	@echo
 	@echo "Please reload your profile (exec $$SHELL -l) or open a new session.	"
 	@echo "If you want envs, you exec (make install-envs)"
@@ -28,15 +36,8 @@ install-envs: anyenv-install-envs
 	@echo "If you want packages, you exec (make install-packages)"
 
 .PHONY: install-packages
-install-package: goenv-install-package luaenv-install-package nodenv-install-package plenv-install-package pyenv-install-package rbenv-install-package
+install-package: goenv-install-package luaenv-install-package nodenv-install-package plenv-install-package pyenv-install-package rbenv-install-package phpenv-install-package jenv-install-package
 
-requirements:
-	sudo apt install build-essential zlib1g-dev libncurses5-dev \
-		libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
-		libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
-		libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt-dev \
-		wget xdg-utils cmake zathura xdotool
-	
 anyenv-install:
 	-git clone https://github.com/anyenv/anyenv ~/.anyenv
 	-~/.anyenv/bin/anyenv init
@@ -57,7 +58,13 @@ anyenv-install-envs:
 	-curl https://sh.rustup.rs -sSf | sh
 	
 goenv-install-package:
-	goenv install 1.22.6
+	-goenv install 1.22.6
+	goenv global 1.22.6
+	
+jenv-install-package:
+	sudo apt install openjdk-17-jdk
+	-jenv add /usr/lib/jvm/java-17-openjdk-amd64
+	-jenv global 17
 
 luaenv-install-package:
 	-git clone https://github.com/Sharparam/luaenv-update.git $(shell luaenv root)/plugins/luaenv-update
@@ -65,11 +72,10 @@ luaenv-install-package:
 	-luaenv install 5.1.5
 	luaenv global 5.1.5
 	-luaenv luarocks 2.4.3 
-	-luaenv luarocks 2.4.3 
 	
 nodenv-install-package:
 	-nodenv install 22.5.1	
-	noenv global 22.5.1
+	nodenv global 22.5.1
 	
 phpenv-install-package:
 	-phpenv install 8.3.8
