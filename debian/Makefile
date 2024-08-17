@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
 .PHONY: all
-all: nvim zsh tmux latex requirements
+all: nvim zsh tmux latex zathura requirements
 
 nvim:
 	-git clone https://github.com/upnt/nvim-myastro ~/.config/nvim 
@@ -14,6 +14,10 @@ tmux:
 	
 latex:
 	-ln -s $(abspath ${CURDIR})/rc/latex/.latexmkrc $(abspath ${HOME})/.latexmkrc
+
+zathura:
+	-mkdir $(abspath ${HOME})/.config/zathura
+	-ln -s $(abspath ${CURDIR})/rc/zathura/zathurarc $(abspath ${HOME})/.config/zathura
 	
 requirements:
 	sudo apt install build-essential zlib1g-dev libncurses5-dev \
