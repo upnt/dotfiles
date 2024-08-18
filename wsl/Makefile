@@ -110,3 +110,5 @@ clean:
 	$(RM) -r ~/.config/nvim
 	$(RM) ~/.zshrc
 	$(RM) ~/.tmux.conf
+	$(RM) ~/.latexmkrc
+	$(RM) -r ~/.config/zathura
