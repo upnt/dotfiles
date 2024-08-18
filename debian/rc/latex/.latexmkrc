@@ -1,4 +1,4 @@
-$pdf_mode = 5;
+$pdf_mode = 4;
 $latex = 'latex -synctex=1 -file-line-error -halt-on-error %O %S';
 $pdflatex = 'pdflatex -synctex=1 -file-line-error -halt-on-error %O %S';
 $lualatex = 'lualatex -synctex=1 -file-line-error -halt-on-error %O %S';
@@ -14,7 +14,7 @@ $bibtex_use = 1;
 $bibtex = 'bibtex %O %S';
 $biber = 'biber %O --bblencoding=utf8 -u -U --output_safechars %O %S';
 
-$makeindex = 'makeindex %O -o %D %S';
+$makeindex = 'makeindex -s german -g %S';
 
 $pdf_previewer = 'zathura %S';
 $pdf_update_method = 3;
