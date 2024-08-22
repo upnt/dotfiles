@@ -193,5 +193,5 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 export LESS='-R'
 
-fpath+=~/.zfunc
+fpath+=~/.zsh_functions
 autoload -Uz compinit && compinit

@@ -8,6 +8,7 @@ nvim:
 
 zsh:
 	-ln -s $(abspath ${CURDIR})/rc/zsh/.zshrc $(abspath ${HOME})/.zshrc
+	-ln -s $(abspath ${CURDIR})/rc/zsh/.zsh_functions $(abspath ${HOME})/.zsh_functions
 
 tmux:
 	-ln -s $(abspath ${CURDIR})/rc/tmux/.tmux.conf $(abspath ${HOME})/.tmux.conf
@@ -63,6 +64,7 @@ anyenv-install-envs:
 	-anyenv install rbenv
 	-anyenv install phpenv
 	-curl https://sh.rustup.rs -sSf | sh
+	-cargo install lsd bat ripgrep alacritty
 	
 goenv-install-package:
 	-goenv install 1.22.6
