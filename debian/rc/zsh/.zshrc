@@ -173,13 +173,15 @@ if type "fzf" > /dev/null 2>&1; then
 
     function gclone {
         local repos=`get_repos`
-        for i in `gh org list`
-        do
-            local buf=`get_repos $i`
-            if [ ! "$buf" = "" ]; then
-                repos="${repos}\n${buf}"
-            fi
-        done
+        if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
+            for i in `gh org list`
+            do
+                local buf=`get_repos $i`
+                if [ ! "$buf" = "" ]; then
+                    repos="${repos}\n${buf}"
+                fi
+            done
+        fi
         local repo=`echo $repos | fzf --ansi --reverse | cut -f 1`
         if [ ! "$repo" = "" ]; then
             gh repo clone "$repo" $@
