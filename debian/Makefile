@@ -17,11 +17,13 @@ latex:
 	-ln -s $(abspath ${CURDIR})/rc/latex/.latexmkrc $(abspath ${HOME})/.latexmkrc
 
 zathura:
-	-mkdir $(abspath ${HOME})/.config/zathura
-	-ln -s $(abspath ${CURDIR})/rc/zathura/zathurarc $(abspath ${HOME})/.config/zathura
+	-ln -s $(abspath ${CURDIR})/rc/zathura $(abspath ${HOME})/.config
 
 git:
 	-ln -s $(abspath ${CURDIR})/rc/git/.gitconfig $(abspath ${HOME})/.gitconfig
+
+alacritty:
+	-ln -s $(abspath ${CURDIR})/rc/alacritty $(abspath ${HOME})/.config
 	
 requirements:
 	sudo apt install build-essential zlib1g-dev libncurses5-dev \
