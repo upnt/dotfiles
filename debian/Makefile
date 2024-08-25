@@ -12,6 +12,9 @@ zsh:
 
 tmux:
 	-ln -s $(abspath ${CURDIR})/rc/tmux/.tmux.conf $(abspath ${HOME})/.tmux.conf
+	-mkdir ~/.tmux
+	-mkdir ~/.tmux/plugins
+	-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	
 latex:
 	-ln -s $(abspath ${CURDIR})/rc/latex/.latexmkrc $(abspath ${HOME})/.latexmkrc
