@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
 .PHONY: all
-all: nvim zsh tmux latex zathura git requirements
+all: nvim zsh tmux latex zathura git alacritty requirements
 
 nvim:
 	-git clone https://github.com/upnt/nvim-myastro ~/.config/nvim 
