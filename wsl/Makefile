@@ -24,7 +24,7 @@ requirements:
 		libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
 		libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
 		libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt-dev \
-		libbz2-dev libsqlite3-dev python3-tk liblzma-dev libyaml-dev ccache \
+		libbz2-dev libsqlite3-dev tk-dev liblzma-dev libyaml-dev ccache \
 		wget xdg-utils cmake zathura xdotool zsh fzf tmux jq zathura
 	
 .PHONY: install
