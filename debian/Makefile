@@ -1,9 +1,18 @@
 SHELL=/bin/bash
 
 .PHONY: all
-all: nvim zsh tmux latex zathura git alacritty requirements
+all: astronvim zsh tmux latex zathura git alacritty requirements
 
+vim:
+	-git clone https://github.com/upnt/vimrc ~/.vim
+	
 nvim:
+	-git clone https://github.com/upnt/nvim ~/.config/nvim 
+
+nvim-dein:
+	-git clone https://github.com/upnt/nvim-dein ~/.config/nvim 
+
+astronvim:
 	-git clone https://github.com/upnt/nvim-myastro ~/.config/nvim 
 
 zsh:
