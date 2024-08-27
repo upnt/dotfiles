@@ -1,10 +1,12 @@
+LICENSE
+README.md
 {{ if (eq .chezmoi.os "windows") }}
-~/.config
-~/.gitconfig
-~/.latexmkrc
-~/.tmux.conf
-~/.zsh_functions
-~/.zshrc
+dot_config/
+dot_gitconfig
+dot_latexmkrc
+dot_tmux.conf
+dot_zsh_functions/
+dot_zshrc
 {{ else }}
-~/powershell
+powershell/
 {{ end }}
