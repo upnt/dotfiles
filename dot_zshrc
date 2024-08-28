@@ -56,13 +56,17 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_precmd
 
 export PATH="/opt/nvim-linux64/bin:$PATH"
-if [[ -d ~/.anyenv ]]; then
-    export PATH="$HOME/.anyenv/bin:$PATH"
-    eval "$(anyenv init -)"
-fi
 
-if [[ -d ~/.cargo ]]; then
-    . "$HOME/.cargo/env"
+if [[ -d ~/.asdf ]]; then
+    . "$HOME/.asdf/asdf.sh"
+    fpath=(${ASDF_DIR}/completions $fpath)
+    autoload -Uz compinit && compinit
+    if [[ -d ~/.asdf/plugins/java ]]; then
+        . ~/.asdf/plugins/java/set-java-home.zsh
+    fi
+    if [[ -d ~/.asdf/plugins/golang ]]; then
+        . ~/.asdf/plugins/golang/set-env.zsh
+    fi
 fi
 
 if [[ -d ~/.llvm-project ]] then

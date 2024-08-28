@@ -1,18 +1,5 @@
 #!/bin/bash
 
-sudo apt update
-sudo apt upgrade -yq
-sudo apt install build-essential zlib1g-dev libncurses5-dev \
-	libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
-	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
-	libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt-dev \
-	libbz2-dev libsqlite3-dev tk-dev liblzma-dev libyaml-dev ccache \
-	wget xdg-utils cmake zathura xdotool zsh fzf tmux jq zathura
-	
-git clone https://github.com/anyenv/anyenv ~/.anyenv
-curl https://sh.rustup.rs -sSf | sh -s -- -y
-cargo install lsd bat ripgrep alacritty
-
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -20,70 +7,51 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
 sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt upgrade -yq
 
+sudo apt install -y build-essential zlib1g-dev libncurses5-dev \
+	libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
+	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
+	libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt-dev \
+	libbz2-dev libsqlite3-dev tk-dev liblzma-dev libyaml-dev ccache \
+	autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake \
+	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
+	zathura xdotool zsh fzf tmux jq zathura
+	
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.1
+. "$HOME/.asdf/asdf.sh"
 
-# anyenv-install-envs:
-# 	mkdir -p $(shell anyenv root)/plugins
-# 	-git clone https://github.com/znz/anyenv-update.git $(shell anyenv root)/plugins/anyenv-update
-# 	-git clone https://github.com/znz/anyenv-git.git $(shell anyenv root)/plugins/anyenv-git
-# 	-anyenv install goenv
-# 	-anyenv install jenv
-# 	-anyenv install luaenv
-# 	-anyenv install nodenv
-# 	-anyenv install plenv
-# 	-anyenv install pyenv
-# 	-anyenv install rbenv
-# 	-anyenv install phpenv
-# 	
-# goenv-install-package:
-# 	-goenv install 1.22.6
-# 	goenv global 1.22.6
-# 	
-# jenv-install-package:
-# 	sudo apt install openjdk-17-jdk
-# 	-jenv add /usr/lib/jvm/java-17-openjdk-amd64
-# 	-jenv global 17
-# 
-# luaenv-install-package:
-# 	-git clone https://github.com/Sharparam/luaenv-update.git $(shell luaenv root)/plugins/luaenv-update
-# 	-git clone https://github.com/xpol/luaenv-luarocks.git $(shell luaenv root)/plugins/luaenv-luarocks
-# 	-luaenv install 5.1.5
-# 	luaenv global 5.1.5
-# 	-luaenv luarocks 2.4.3 
-# 	
-# nodenv-install-package:
-# 	-nodenv install 22.5.1	
-# 	nodenv global 22.5.1
-# 	
-# phpenv-install-package:
-# 	-phpenv install 8.3.8
-# 	phpenv global 8.3.8
-# 	
-# plenv-install-package:
-# 	-plenv install 5.40.0
-# 	plenv global 5.40.0
-# 	
-# pyenv-install-package:
-# 	-mkdir -p $(shell pyenv root)/plugins
-# 	-git clone https://github.com/pyenv/pyenv-virtualenv.git $(shell pyenv root)/plugins/pyenv-virtualenv
-# 	-git clone https://github.com/pyenv/pyenv-ccache.git $(shell pyenv root)/plugins/pyenv-ccache
-# 	-git clone https://github.com/pyenv/pyenv-update.git $(shell pyenv root)/plugins/pyenv-update
-# 	-pyenv install 2
-# 	-pyenv install 3.10
-# 	pyenv global 3.10
-# 
-# rbenv-install-package:
-# 	-rbenv install 3.3.4
-# 	rbenv global 3.3.4
-# 
-# .PHONY: test
-# test: 
-# 
-# .PHONY: clean
-# clean:
-# 	$(RM) -r ~/.config/nvim
-# 	$(RM) ~/.zshrc
-# 	$(RM) ~/.tmux.conf
-# 
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+asdf plugin add lua    https://github.com/Stratus3D/asdf-lua
+asdf plugin add python https://github.com/danhper/asdf-python
+asdf plugin add go     https://github.com/asdf-community/asdf-golang
+asdf plugin add perl   https://github.com/ouest/asdf-perl
+asdf plugin add rust   https://github.com/code-lever/asdf-rust
+asdf plugin add ruby   https://github.com/asdf-vm/asdf-ruby
+asdf plugin add java   https://github.com/halcyon/asdf-java
+
+asdf install nodejs 20.17.0
+asdf install lua    5.1
+asdf install python 3.10.14
+asdf install go     latest
+asdf install perl 	latest
+asdf install rust 	latest
+asdf install ruby 	latest
+asdf install java 	openjdk-21
+
+asdf reshim
+
+pip install -U pip
+pip install poetry
+pip install pynvim
+gem install neovim
+npm install -g @devcontainers/cli
+npm install -g neovim
+cpanm -n Neovim::Ext
+cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli
+go install github.com/dundee/gdu/v5/cmd/gdu@latest
+go install github.com/jesseduffield/lazygit@latest
+
+asdf reshim
