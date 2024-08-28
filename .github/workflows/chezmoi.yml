@@ -20,7 +20,7 @@ jobs:
       - name: install apps
         run: |
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
-          ~/.local/bin/chezmoi init https://github.com/$GITHUB_USERNAME/dotfiles.git
+          ~/.local/bin/chezmoi init https://github.com/upnt/dotfiles.git
           ~/.local/bin/chezmoi apply -v
         
       - name: test
