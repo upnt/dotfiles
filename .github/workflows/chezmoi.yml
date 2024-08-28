@@ -18,12 +18,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: install apps
-        run: iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
+        run: |
+          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
+          chezmoi init https://github.com/$GITHUB_USERNAME/dotfiles.git
+          chezmoi apply -v
         
       - name: test
         run: echo 'none'
 
-  linux-test:
+  ubuntu-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
