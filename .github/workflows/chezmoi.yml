@@ -19,7 +19,8 @@ jobs:
     steps:
       - name: install apps
         run: |
-          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
+          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
+          $ENV:Path="~/.local/bin;"+$ENV:Path
           chezmoi init https://github.com/$GITHUB_USERNAME/dotfiles.git
           chezmoi apply -v
         
