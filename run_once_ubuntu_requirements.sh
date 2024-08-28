@@ -1,5 +1,7 @@
-!#/bin/bash
+#!/bin/bash
 
+sudo apt update
+sudo apt upgrade -yq
 sudo apt install build-essential zlib1g-dev libncurses5-dev \
 	libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
 	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
@@ -8,8 +10,19 @@ sudo apt install build-essential zlib1g-dev libncurses5-dev \
 	wget xdg-utils cmake zathura xdotool zsh fzf tmux jq zathura
 	
 git clone https://github.com/anyenv/anyenv ~/.anyenv
-~/.anyenv/bin/anyenv init
-~/.anyenv/bin/anyenv install --init
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+cargo install lsd bat ripgrep alacritty
+
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
 
 # anyenv-install-envs:
 # 	mkdir -p $(shell anyenv root)/plugins
@@ -23,8 +36,6 @@ git clone https://github.com/anyenv/anyenv ~/.anyenv
 # 	-anyenv install pyenv
 # 	-anyenv install rbenv
 # 	-anyenv install phpenv
-# 	-curl https://sh.rustup.rs -sSf | sh
-# 	-cargo install lsd bat ripgrep alacritty
 # 	
 # goenv-install-package:
 # 	-goenv install 1.22.6

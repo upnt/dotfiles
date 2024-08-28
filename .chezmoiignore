@@ -1,12 +1,14 @@
 LICENSE
 README.md
-{{ if (eq .chezmoi.os "windows") }}
+{{ if ne .chezmoi.os "linux" }}
 dot_config/
 dot_gitconfig
 dot_latexmkrc
 dot_tmux.conf
 dot_zsh_functions/
 dot_zshrc
-{{ else }}
+run_once_ubuntu_requirements.sh
+{{ end }}
+{{ if ne .chezmoi.os "windows" }}
 powershell/
 {{ end }}
