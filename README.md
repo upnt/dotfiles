@@ -15,7 +15,6 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 ### install
 ```powershell
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
-          $ENV:Path="~/.local/bin;"+$ENV:Path
-          chezmoi init https://github.com/$GITHUB_USERNAME/dotfiles.git
-          chezmoi apply -v
+~/.local/bin/chezmoi init https://github.com/$GITHUB_USERNAME/dotfiles.git
+~/.local/bin/chezmoi apply -v
 ```
