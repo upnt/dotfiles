@@ -17,10 +17,8 @@ jobs:
   windows-test:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: install apps
-        run: echo 'none'
+        run: iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
         
       - name: test
         run: echo 'none'
