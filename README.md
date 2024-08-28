@@ -1,11 +1,11 @@
 # dotfiles
-## zsh on Ubuntu
-```zsh
+## Ubuntu or wsl
+```bash
 cd ~/.local
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 ```
 
-## powershell
+## Powershell on Windows
 ```powershell
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
           $ENV:Path="~/.local/bin;"+$ENV:Path
