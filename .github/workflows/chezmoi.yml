@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: rcinstaller
+name: chezmoi
 
 # Controls when the action will run. 
 on:
@@ -19,21 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: install dependences and apps
-        run: choco install git
-
-      - name: import configs
-        run: .\setup\rcinstaller.ps1 "1,2, 3 4   5 , 6 ,7"
+      - name: none
+        run: echo 'none'
 
   linux-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: install dependences
-        run: sudo apt-get update && sudo apt-get install curl git
-
-      - name: import configs
-        run: |
-          chmod u+x ./setup/rcinstaller.sh
-          ./setup/rcinstaller.sh "1,2, 3 4   5 , 6 ,7"
+      - name: install apps
+        run: mkdir ~/.local && cd ~/.local/ && sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
