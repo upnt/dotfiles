@@ -17,15 +17,16 @@ jobs:
   windows-test:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: install apps
-        run: echo 'none'
+        run: |
+          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
+          ~/.local/bin/chezmoi init https://github.com/upnt/dotfiles.git
+          ~/.local/bin/chezmoi apply -v
         
       - name: test
         run: echo 'none'
 
-  linux-test:
+  ubuntu-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
