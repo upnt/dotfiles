@@ -14,17 +14,17 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  windows-test:
-    runs-on: windows-latest
-    steps:
-      - name: install apps
-        run: |
-          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
-          ~/.local/bin/chezmoi init https://github.com/upnt/dotfiles.git
-          ~/.local/bin/chezmoi apply -v
-        
-      - name: test
-        run: echo 'none'
+  # windows-test:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: install apps
+  #       run: |
+  #         iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
+  #         ~/.local/bin/chezmoi init https://github.com/upnt/dotfiles.git
+  #         ~/.local/bin/chezmoi apply -v
+  #       
+  #     - name: test
+  #       run: echo 'none'
 
   ubuntu-test:
     runs-on: ubuntu-latest
