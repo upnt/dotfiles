@@ -16,7 +16,7 @@ $makeindex = 'makeindex -s german -g %S';
 $pdf_mode = 4;
 $max_repeat = 10;
 $emulate_aux = 1;
-$aux_dir = ".tex_intermediates"
+$aux_dir = ".tex_intermediates";
 
 $pdf_previewer = 'zathura %S';
 $pdf_update_method = 3;

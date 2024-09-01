@@ -56,6 +56,7 @@ pip install poetry
 pip install pynvim
 gem install neovim
 npm install -g @devcontainers/cli
+npm install -g prettier
 npm install -g neovim
 cpanm -n Neovim::Ext
 cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli git-delta
