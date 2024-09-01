@@ -16,7 +16,7 @@ sudo apt install -y build-essential zlib1g-dev libncurses5-dev \
 	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
 	libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt-dev \
 	libbz2-dev libsqlite3-dev tk-dev liblzma-dev libyaml-dev ccache \
-	autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake \
+	autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake scdoc \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
 	zathura xdotool zsh fzf tmux jq zathura
 	
@@ -50,7 +50,7 @@ gem install neovim
 npm install -g @devcontainers/cli
 npm install -g neovim
 cpanm -n Neovim::Ext
-cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli
+cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli git-delta
 go install github.com/dundee/gdu/v5/cmd/gdu@latest
 go install github.com/jesseduffield/lazygit@latest
 
