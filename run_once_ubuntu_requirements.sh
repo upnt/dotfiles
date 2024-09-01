@@ -8,6 +8,8 @@ echo \
   $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+sudo add-apt-repository ppa:git-core/ppa
+
 sudo apt update
 sudo apt upgrade -yq
 
@@ -16,7 +18,7 @@ sudo apt install -y build-essential zlib1g-dev libncurses5-dev \
 	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
 	libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt-dev \
 	libbz2-dev libsqlite3-dev tk-dev liblzma-dev libyaml-dev ccache \
-	autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake scdoc \
+	autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake scdoc git \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
 	zathura xdotool zsh fzf tmux jq zathura
 	
