@@ -29,8 +29,6 @@ jobs:
   ubuntu-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: install apps
         run: cd ~/.local/ && sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 
