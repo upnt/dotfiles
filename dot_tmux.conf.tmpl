@@ -21,9 +21,9 @@ set-option -g status-position top
 set -g set-clipboard off
 {{ if eq .chezmoi.os "linux" }}
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-set -s copy-command 'wl-clip'
+# set -s copy-command 'wl-clip'
 {{   else }}
-set -s copy-command 'xclip -sel clipboard'
+# set -s copy-command 'xclip -sel clipboard'
 {{   end }}
 {{ end }}
 
@@ -31,6 +31,7 @@ set -g @tmux_power_theme 'sky'
 
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'wfxr/tmux-power'
 
 # Press prefix + I to fetch the plugin
