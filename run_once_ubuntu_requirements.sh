@@ -22,6 +22,8 @@ sudo apt install -y build-essential zlib1g-dev libncurses5-dev \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
 	zathura xdotool zsh fzf tmux jq zathura
 	
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux64.tar.gz
