@@ -21,7 +21,7 @@ jobs:
         uses: Cyberboss/install-winget@v1
 
       - name: install chezmoi
-        run: winget install twpayne.chezmoi
+        run: winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements twpayne.chezmoi
 
       - name: install pkgs
         run: |
