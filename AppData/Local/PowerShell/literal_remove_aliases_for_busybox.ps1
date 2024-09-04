@@ -1,0 +1,12 @@
+Remove-Alias cat
+Remove-Alias clear
+Remove-Alias cp
+Remove-Alias echo
+Remove-Alias kill
+Remove-Alias ls
+Remove-Alias man
+Remove-Alias mv
+Remove-Alias ps
+Remove-Alias pwd
+Remove-Alias rm
+Remove-Alias rmdir

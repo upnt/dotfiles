@@ -6,10 +6,15 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Exit
   }
 }
+
+git clone https://github.com/upnt/nvim-dein $HOME/AppData/Local/nvim
 winget install --id "Neovim.Neovim"
 winget install --id "TheBrowserCompany.Arc"
 winget install --id "Microsoft.PowerShell"
 winget install --id "GitHub.cli"
 winget install --id "Git.Git"
 winget install --id "7zip.7zip"
+winget install --id "lsd-rs.lsd"
+winget install --id "sharkdp.bat"
+winget install --id "dandavison.delta"
 winget install "Password Manager SafeInCloud" -s msstore
