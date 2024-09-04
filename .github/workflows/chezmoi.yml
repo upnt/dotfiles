@@ -14,23 +14,22 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # windows-test:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - name: install apps
-  #       run: |
-  #         iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
-  #         ~/.local/bin/chezmoi init https://github.com/upnt/dotfiles.git
-  #         ~/.local/bin/chezmoi apply -v
-  #       
-  #     - name: test
-  #       run: echo 'none'
+  windows-test:
+    runs-on: windows-latest
+    steps:
+      - name: Install winget
+        uses: Cyberboss/install-winget@v1
 
+      - name: install chezmoi
+        run: winget install twpayne.chezmoi
+
+      - name: install pkgs
+        run: |
+          ~/.local/bin/chezmoi init upnt
+          ~/.local/bin/chezmoi apply -v
+        
   ubuntu-test:
     runs-on: ubuntu-latest
     steps:
-      - name: install apps
+      - name: Install pkgs
         run: cd ~/.local/ && sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
-
-      - name: test
-        run: echo 'none'
