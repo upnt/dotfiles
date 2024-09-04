@@ -8,8 +8,6 @@ echo \
   $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-sudo add-apt-repository -y ppa:git-core/ppa
-
 sudo apt update
 sudo apt upgrade -yq
 
