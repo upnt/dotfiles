@@ -1,14 +1,21 @@
 LICENSE
 README.md
-{{ if ne .chezmoi.os "linux" }}
-dot_config/
-dot_gitconfig
-dot_latexmkrc
-dot_tmux.conf
-dot_zsh_functions/
-dot_zshrc
-run_once_ubuntu_requirements.sh
-{{ end }}
-{{ if ne .chezmoi.os "windows" }}
-powershell/
-{{ end }}
+
+{{- if ne .chezmoi.os "linux" }}
+
+*.sh
+.config/
+.gitconfig
+.latexmkrc
+.tmux.conf
+.zsh_functions/
+.zshrc
+
+{{- end }}
+
+{{- if ne .chezmoi.os "windows" }}
+
+*.ps1
+AppData/
+
+{{- end }}
