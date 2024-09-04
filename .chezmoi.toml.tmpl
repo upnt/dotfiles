@@ -7,3 +7,9 @@
   command = "delta"
   exclude = ["scripts"]
   args = ["--pager=0", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+
+{{ if eq .chezmoi.os "windows" }}
+[cd]
+  command = "pwsh.exe"
+
+{{ end }}
