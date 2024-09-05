@@ -21,7 +21,7 @@ jobs:
         uses: Cyberboss/install-winget@v1
       - name: Install chezmoi
         run: |
-          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b './bin'"
+          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$((Get-Item .).FullName)/bin'"
           echo 'PATH=$((Get-Item .).FullName)/bin;$Env:PATH' | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         shell: pwsh
       - name: Install packages
@@ -37,7 +37,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install chezmoi
-        run: cd ~/.local && sh -c "$(curl -fsLS get.chezmoi.io)" && echo "PATH=$PATH; $HOME/.local/bin" > $GITHUB_ENV;
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
+          echo "PATH=$PATH; $HOME/.local/bin" > $GITHUB_ENV;
       - name: Install packages
         run: chezmoi init
       - name: Apply configrations
