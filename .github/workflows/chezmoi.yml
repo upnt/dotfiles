@@ -27,16 +27,12 @@ jobs:
           echo "$binDir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         shell: pwsh
 
-      - name: Initialize chezmoi
+      - name: Install packages
         run: |
-          chezmoi init upnt
           winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "dandavison.delta"
           [System.Environment]::GetEnvironmentVariable("Path","Machine") | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           [System.Environment]::GetEnvironmentVariable("Path","User") | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-        shell: pwsh
-        
-      - name: Install packages
-        run: chezmoi apply -v
+          chezmoi init --apply upnt
         shell: pwsh
 
   ubuntu-test:
@@ -48,7 +44,4 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           
       - name: Initialize chezmoi
-        run: chezmoi init upnt
-
-      - name: Install packages
-        run: chezmoi apply -v
+        run: chezmoi init --apply upnt
