@@ -22,9 +22,12 @@ jobs:
 
       - name: Install chezmoi
         run: |
-          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$((Get-Item .).FullName)/bin'"
-          $Env:PATH='$((Get-Item .).FullName)/bin;$Env:PATH'
-          ls '$((Get-Item .).FullName)/bin'
+          $binDir = "$((Get-Item -Path '.').FullName)\bin"
+          New-Item -Path $binDir -ItemType Directory -Force
+          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$binDir'"
+          $Env:PATH="$binDir;$Env:PATH"
+          Write-Output "Updated PATH: $Env:PATH"
+          Get-ChildItem -Path $binDir
         shell: pwsh
 
       - name: Initialize chezmoi
