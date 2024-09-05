@@ -21,8 +21,8 @@ jobs:
         run: |
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
           $ENV:Path="~/bin" + $ENV:Path
-          chezmoi init upnt
-          chezmoi apply -v
+          chezmoi.exe init upnt
+          chezmoi.exe apply -v
         shell: powershell
         
   ubuntu-test:
