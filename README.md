@@ -16,6 +16,5 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 ### install
 ```powershell
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
-~/.local/bin/chezmoi init upnt
-~/.local/bin/chezmoi apply -v
+~/.local/bin/chezmoi init --apply upnt
 ```
