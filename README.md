@@ -1,7 +1,9 @@
 # dotfiles
+
+[![Windows PowerShell](https://github.com/upnt/dotfiles/actions/workflows/powershell-installation.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/powershell-installation.yml)
+[![Ubuntu](https://github.com/upnt/dotfiles/actions/workflows/ubuntu-installation.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/ubuntu-installation.yml)
+
 dotfiles managed by chezmoi
-[![Windows PowerShell](https://github.com/upnt/dotfiles/actions/workflows/chezmoi.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/powershell-installation.yml)
-[![Ubuntu](https://github.com/upnt/dotfiles/actions/workflows/chezmoi.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/ubuntu-installation.yml)
 
 ## Linux
 ### support
