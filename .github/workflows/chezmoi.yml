@@ -19,22 +19,29 @@ jobs:
     steps:
       - name: Install winget
         uses: Cyberboss/install-winget@v1
-      - name: Install packages
+
+      - name: Install chezmoi
         run: |
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$((Get-Item .).FullName)/bin'"
           $Env:PATH='$((Get-Item .).FullName)/bin;$Env:PATH'
           ls '$((Get-Item .).FullName)/bin'
+        shell: pwsh
+
+      - name: Initialize chezmoi
+        run: |
           chezmoi init upnt
-          $Env:PATH='[System.Environment]::GetEnvironmentVariable("Path","Machine"); [System.Environment]::GetEnvironmentVariable("Path","User")'
           chezmoi apply -v
         shell: pwsh
 
   ubuntu-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install packages
+      - name: Install chezmoi
         run: |
           sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
-          echo "${HOME}/.local/bin" >> $GITHUB_PATH
-          chezmoi init
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          
+      - name: Initialize chezmoi
+        run: |
+          chezmoi init upnt
           chezmoi apply -v
