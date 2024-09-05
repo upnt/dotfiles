@@ -51,6 +51,7 @@ asdf plugin add go https://github.com/asdf-community/asdf-golang
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 asdf plugin add tinytex https://github.com/Fbrisset/asdf-tinytex.git
 asdf plugin add php https://github.com/asdf-community/asdf-php.git
+asdf plugin add julia https://github.com/rkyleg/asdf-julia.git
 
 asdf install lua 5.1
 asdf install python 3.10.14
@@ -62,6 +63,7 @@ asdf install go 1.23.0
 asdf install nodejs 20.17.0
 asdf install tinytex 2024.09
 asdf install php 8.3.11
+asdf install julia 1.10.5
 
 asdf reshim
 
