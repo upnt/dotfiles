@@ -7,3 +7,4 @@ java openjdk-21
 go 1.23.0
 nodejs 20.17.0
 tinytex 2024.09
+php 8.3.11

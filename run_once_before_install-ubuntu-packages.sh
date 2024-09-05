@@ -61,6 +61,7 @@ asdf install java openjdk-21
 asdf install go 1.23.0
 asdf install nodejs 20.17.0
 asdf install tinytex 2024.09
+asdf install php 8.3.11
 
 asdf reshim
 
