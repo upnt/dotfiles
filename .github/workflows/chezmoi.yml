@@ -17,6 +17,8 @@ jobs:
   windows-test:
     runs-on: windows-latest
     steps:
+      - name: Install winget
+        uses: Cyberboss/install-winget@v1
       - name: install pkgs
         run: |
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
