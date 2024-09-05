@@ -27,7 +27,7 @@ jobs:
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$binDir'"
           $Env:PATH="$binDir;$Env:PATH"
           Write-Output "Updated PATH: $Env:PATH"
-          Get-ChildItem -Path $binDir
+          Get-Command chezmoi
         shell: pwsh
 
       - name: Initialize chezmoi
