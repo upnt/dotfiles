@@ -19,23 +19,26 @@ jobs:
     steps:
       - name: Install winget
         uses: Cyberboss/install-winget@v1
-      - name: install pkgs
+      - name: Install chezmoi
         run: |
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b './bin'"
-          echo '$((Get-Item .).FullName)/bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo 'PATH=$((Get-Item .).FullName)/bin;$Env:PATH' | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         shell: pwsh
-      - name: install pkgs
+      - name: Install packages
         run: |
           chezmoi init upnt
-          echo '[System.Environment]::GetEnvironmentVariable("Path","Machine")' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          echo '[System.Environment]::GetEnvironmentVariable("Path","User")' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo 'PATH=[System.Environment]::GetEnvironmentVariable("Path","Machine"); [System.Environment]::GetEnvironmentVariable("Path","User")' | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         shell: pwsh
-      - name: apply settings
+      - name: Apply configurations
         run: chezmoi apply -v
         shell: pwsh
 
   ubuntu-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install pkgs
-        run: cd ~/.local/ && sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
+      - name: Install chezmoi
+        run: cd ~/.local && sh -c "$(curl -fsLS get.chezmoi.io)" && echo "PATH=$PATH; $HOME/.local/bin" > $GITHUB_ENV;
+      - name: Install packages
+        run: chezmoi init
+      - name: Apply configrations
+        run: chezmoi apply -v
