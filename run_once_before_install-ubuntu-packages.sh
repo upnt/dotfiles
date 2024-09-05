@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# docker
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -8,6 +9,13 @@ echo \
   $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" |
 	sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
+# github cli
+(type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y))
+sudo mkdir -p -m 755 /etc/apt/keyrings
+wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
+sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+
 sudo apt update
 sudo apt upgrade -yq
 
@@ -15,8 +23,10 @@ sudo apt install -y build-essential zlib1g-dev libncurses5-dev \
 	libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
 	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
 	libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt-dev \
-	libbz2-dev libsqlite3-dev tk-dev liblzma-dev libyaml-dev ccache zip unzip \
-	autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake scdoc git \
+	bison gettext libgd-dev libedit-dev libicu-dev libmysqlclient-dev \
+	libpng-dev libpq-dev pkg-config re2c libbz2-dev libsqlite3-dev tk-dev \
+	liblzma-dev libyaml-dev ccache zip unzip autoconf automake openssl \
+	gpg dirmngr gawk xdg-utils wget cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
 	zathura xdotool zsh fzf tmux jq zathura
 
@@ -31,35 +41,41 @@ git clone https://github.com/upnt/nvim-myastro ~/.config/nvim
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.1
 . "$HOME/.asdf/asdf.sh"
 
-asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 asdf plugin add lua https://github.com/Stratus3D/asdf-lua
 asdf plugin add python https://github.com/danhper/asdf-python
-asdf plugin add go https://github.com/asdf-community/asdf-golang
 asdf plugin add perl https://github.com/ouest/asdf-perl
-asdf plugin add rust https://github.com/code-lever/asdf-rust
 asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby
+asdf plugin add rust https://github.com/code-lever/asdf-rust
 asdf plugin add java https://github.com/halcyon/asdf-java
+asdf plugin add go https://github.com/asdf-community/asdf-golang
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+asdf plugin add tinytex https://github.com/Fbrisset/asdf-tinytex.git
+asdf plugin add php https://github.com/asdf-community/asdf-php.git
 
-asdf install nodejs 20.17.0
 asdf install lua 5.1
 asdf install python 3.10.14
-asdf install go latest
-asdf install perl latest
-asdf install rust latest
-asdf install ruby latest
+asdf install perl 5.40.0
+asdf install ruby 3.3.4
+asdf install rust 1.80.1
 asdf install java openjdk-21
+asdf install go 1.23.0
+asdf install nodejs 20.17.0
+asdf install tinytex 2024.09
 
 asdf reshim
 
-pip install -U pip
 pip install poetry
-pip install pynvim
+
+mkdir -p "$HOME/.local/share/pynvim"
+python3 -m venv "$HOME/.local/share/pynvim/.venv"
+"$HOME/.local/share/pynvim/.venv/bin/pip" install -U pip
+"$HOME/.local/share/pynvim/.venv/bin/pip" install -U pynvim
 gem install neovim
 npm install -g @devcontainers/cli
 npm install -g prettier
 npm install -g neovim
 cpanm -n Neovim::Ext
-cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli git-delta
+cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli git-delta fd-find
 go install github.com/dundee/gdu/v5/cmd/gdu@latest
 go install github.com/jesseduffield/lazygit@latest
 

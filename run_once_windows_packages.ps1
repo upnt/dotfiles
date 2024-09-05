@@ -16,5 +16,6 @@ winget install --id "Git.Git"
 winget install --id "7zip.7zip"
 winget install --id "lsd-rs.lsd"
 winget install --id "sharkdp.bat"
+winget install --id "sharkdp.fd"
 winget install --id "dandavison.delta"
 winget install "Password Manager SafeInCloud" -s msstore
