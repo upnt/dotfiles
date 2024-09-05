@@ -27,7 +27,9 @@ jobs:
         shell: pwsh
 
       - name: Initialize chezmoi
-        run: chezmoi init upnt
+        run: |
+          chezmoi init upnt
+          winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "dandavison.delta"
         shell: pwsh
         
       - name: Install packages
