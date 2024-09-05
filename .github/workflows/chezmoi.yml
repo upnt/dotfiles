@@ -23,7 +23,7 @@ jobs:
         run: |
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$((Get-Item .).FullName)/bin'"
           $Env:PATH='$((Get-Item .).FullName)/bin;$Env:PATH'
-          ls $((Get-Item .).FullName)/bin
+          ls '$((Get-Item .).FullName)/bin'
           chezmoi init upnt
           $Env:PATH='[System.Environment]::GetEnvironmentVariable("Path","Machine"); [System.Environment]::GetEnvironmentVariable("Path","User")'
           chezmoi apply -v
