@@ -22,7 +22,8 @@ jobs:
       - name: install pkgs
         run: |
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
-          echo '~/bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo '$HOME/bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo $Env:PATH
           chezmoi init upnt
           echo '[System.Environment]::GetEnvironmentVariable("Path","Machine")' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo '[System.Environment]::GetEnvironmentVariable("Path","User")' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
