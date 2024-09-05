@@ -35,7 +35,7 @@ jobs:
       - name: Install packages
         run: |
           sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
-          echo "PATH=$PATH; $HOME/.local/bin" > $GITHUB_ENV;
+          PATH="$PATH; $HOME/.local/bin"
           ls $HOME/.local/bin
           chezmoi init
           chezmoi apply -v
