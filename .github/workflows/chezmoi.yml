@@ -24,7 +24,7 @@ jobs:
         run: |
           $binDir = "$((Get-Item -Path '.').FullName)\bin"
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$binDir'"
-          echo '$binDir' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "$binDir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         shell: pwsh
 
       - name: Initialize chezmoi
