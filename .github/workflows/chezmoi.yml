@@ -23,11 +23,8 @@ jobs:
       - name: Install chezmoi
         run: |
           $binDir = "$((Get-Item -Path '.').FullName)\bin"
-          New-Item -Path $binDir -ItemType Directory -Force
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$binDir'"
-          $Env:PATH="$binDir;$Env:PATH"
-          Write-Output "Updated PATH: $Env:PATH"
-          Get-Command chezmoi
+          echo $binDir | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         shell: pwsh
 
       - name: Initialize chezmoi
