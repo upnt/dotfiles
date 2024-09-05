@@ -15,3 +15,4 @@ gsudo winget install --allow-reboot --silent --accept-package-agreements --accep
 
 git clone https://github.com/upnt/nvim-dein "$HOME/AppData/Local/nvim"
 
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
