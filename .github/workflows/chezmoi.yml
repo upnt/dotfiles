@@ -22,15 +22,16 @@ jobs:
 
       - name: Install chezmoi
         run: |
-          $binDir = "$((Get-Item -Path '.').FullName)\bin"
-          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$binDir'"
-          echo $binDir | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$((Get-Item -Path '.').FullName)\bin'"
+          echo '$((Get-Item -Path '.').FullName)\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         shell: pwsh
 
       - name: Initialize chezmoi
-        run: |
-          chezmoi init upnt
-          chezmoi apply -v
+        run: chezmoi init upnt
+        shell: pwsh
+        
+      - name: Install packages
+        run: chezmoi apply -v
         shell: pwsh
 
   ubuntu-test:
@@ -42,6 +43,7 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           
       - name: Initialize chezmoi
-        run: |
-          chezmoi init upnt
+        run: chezmoi init upnt
+
+      - name: Install packages
           chezmoi apply -v
