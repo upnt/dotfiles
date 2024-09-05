@@ -25,8 +25,8 @@ jobs:
 
       - name: install pkgs
         run: |
-          ~/.local/bin/chezmoi init upnt
-          ~/.local/bin/chezmoi apply -v
+          chezmoi init upnt
+          chezmoi apply -v
         
   ubuntu-test:
     runs-on: ubuntu-latest
