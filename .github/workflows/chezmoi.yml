@@ -20,9 +20,8 @@ jobs:
       - name: install pkgs
         run: |
           iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
-          $ENV:Path="~/bin" + $ENV:Path
-          chezmoi.exe init upnt
-          chezmoi.exe apply -v
+          ~/bin/chezmoi.exe init upnt
+          ~/bin/chezmoi.exe apply -v
         shell: powershell
         
   ubuntu-test:
