@@ -7,15 +7,17 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   }
 }
 
-git clone https://github.com/upnt/nvim-dein $HOME/AppData/Local/nvim
-winget install --id "Neovim.Neovim"
-winget install --id "TheBrowserCompany.Arc"
-winget install --id "Microsoft.PowerShell"
-winget install --id "GitHub.cli"
-winget install --id "Git.Git"
-winget install --id "7zip.7zip"
-winget install --id "lsd-rs.lsd"
-winget install --id "sharkdp.bat"
-winget install --id "sharkdp.fd"
-winget install --id "dandavison.delta"
-winget install "Password Manager SafeInCloud" -s msstore
+git clone https://github.com/upnt/nvim-dein "$HOME/AppData/Local/nvim"
+
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "Neovim.Neovim"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "TheBrowserCompany.Arc"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "Microsoft.PowerShell"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "GitHub.cli"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "Git.Git"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "7zip.7zip"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "lsd-rs.lsd"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "sharkdp.bat"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "sharkdp.fd"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --id "dandavison.delta"
+winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements "Password Manager SafeInCloud" -s msstore
+
