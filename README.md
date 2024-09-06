@@ -8,7 +8,6 @@ dotfiles managed by chezmoi
 ## Linux
 ### support
 - Ubuntu
-- wsl
 ### install
 ```bash
 mkdir -p ~/.local
