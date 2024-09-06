@@ -16,9 +16,7 @@ cd ~/.local
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 ```
 
-## Windows
-### support
-- Powershell
+## Windows PowersShell
 ### install
 ```powershell
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
