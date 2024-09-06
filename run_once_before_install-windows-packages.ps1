@@ -15,7 +15,7 @@ gsudo winget install --allow-reboot --silent --accept-package-agreements --accep
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
-[string] $filePath = "$(Get-Location '.')\neovide.msi"
+[string] $filePath = "$(Get-Location)\neovide.msi"
 [string] $uri = "https://github.com/neovide/neovide/releases/latest/download/neovide.msi"
 Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
 cmd /c "msiexec.exe /i $filePath"
