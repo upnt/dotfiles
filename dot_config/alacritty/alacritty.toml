@@ -2,8 +2,6 @@ import = [
 "~/.config/alacritty/themes/monokai_pro.toml"
 ]
 
-working_directory = "~/workspace"
-
 [shell]
 program = "/bin/zsh"
 args = ["-l"]
