@@ -35,7 +35,7 @@ sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux64.tar.gz
 rm nvim-linux64.tar.gz
 
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.1
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --single-branch -b v0.14.1
 . "$HOME/.asdf/asdf.sh"
 
 asdf plugin add lua https://github.com/Stratus3D/asdf-lua
