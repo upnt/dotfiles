@@ -82,9 +82,9 @@ go install github.com/jesseduffield/lazygit@latest
 
 asdf reshim
 
-git clone https://github.com/alacritty/alacritty.git ~/alacritty
+git clone https://github.com/alacritty/alacritty.git ~/alacritty --single-branch -b master --depth 1
 
-sudo ln -s $(which alacritty) /usr/local/bin
+sudo ln -s "$(which alacritty)" /usr/local/bin
 sudo cp ~/alacritty/extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
 sudo desktop-file-install ~/alacritty/extra/linux/Alacritty.desktop
 sudo update-desktop-database

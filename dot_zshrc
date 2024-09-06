@@ -67,6 +67,10 @@ if [[ -d ~/.asdf ]]; then
     if [[ -d ~/.asdf/plugins/golang ]]; then
         . ~/.asdf/plugins/golang/set-env.zsh
     fi
+    if [[ -d ~/.asdf/plugins/python ]]; then
+        export PYENV_ROOT="$HOME/.asdf/plugins/python/pyenv"
+        export PATH="$PATH:$PYENV_ROOT/bin"
+    fi
 fi
 
 if [[ -d ~/.llvm-project ]] then
