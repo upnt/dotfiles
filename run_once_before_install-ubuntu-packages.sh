@@ -70,6 +70,7 @@ mkdir -p "$HOME/.local/share/pynvim"
 python3 -m venv "$HOME/.local/share/pynvim/.venv"
 "$HOME/.local/share/pynvim/.venv/bin/pip" install -U pip
 "$HOME/.local/share/pynvim/.venv/bin/pip" install -U pynvim
+"$HOME/.local/share/pynvim/.venv/bin/pip" install -U neovim
 gem install neovim
 npm install -g @devcontainers/cli
 npm install -g prettier
