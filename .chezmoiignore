@@ -5,7 +5,6 @@ README.md
 
 *.sh
 .config/
-.gitconfig
 .latexmkrc
 .tmux.conf
 .zsh_functions/
