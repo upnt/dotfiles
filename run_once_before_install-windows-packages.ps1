@@ -38,3 +38,9 @@ git clone https://github.com/Shougo/dpp.vim $HOME/.cache/dpp/repos/github.com/Sh
 git clone https://github.com/Shougo/dpp-ext-installer $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-installer
 git clone https://github.com/Shougo/dpp-ext-toml $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml
 git clone https://github.com/vim-denops/denops.vim $HOME/.cache/dpp/repos/github.com/vim-denops/denops.vim
+
+If ("$(which git-remind)" -eq "") {
+	wget https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
+	tar -C $HOME/.local/bin -xzf git-remind_1.1.1_Linux_x86_64.tar.gz
+	rm git-remind_1.1.1_Linux_x86_64.tar.gz $HOME/.local/bin/README.md $HOME/.local/bin/LICENCE.md
+}
