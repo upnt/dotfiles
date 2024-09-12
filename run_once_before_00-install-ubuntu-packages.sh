@@ -39,7 +39,8 @@ fi
 
 if [ -z "$(which asdf)" ]; then
 	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --single-branch -b v0.14.1
-	. "$HOME/.asdf/asdf.sh"
+	# shellcheck source="/dev/null"
+	source "$HOME/.asdf/asdf.sh"
 fi
 
 asdf plugin add lua https://github.com/Stratus3D/asdf-lua
