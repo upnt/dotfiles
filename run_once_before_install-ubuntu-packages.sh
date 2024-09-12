@@ -30,13 +30,17 @@ sudo apt-get install -y build-essential zlib1g-dev libncurses5-dev \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
 	zathura xdotool zsh fzf tmux jq zathura
 
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux64.tar.gz
-rm nvim-linux64.tar.gz
+if [ -z "$(which nvim)" ]; then
+	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+	sudo rm -rf /opt/nvim
+	sudo tar -C /opt -xzf nvim-linux64.tar.gz
+	rm nvim-linux64.tar.gz
+fi
 
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --single-branch -b v0.14.1
-. "$HOME/.asdf/asdf.sh"
+if [ -z "$(which asdf)" ]; then
+	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --single-branch -b v0.14.1
+	. "$HOME/.asdf/asdf.sh"
+fi
 
 asdf plugin add lua https://github.com/Stratus3D/asdf-lua
 asdf plugin add python https://github.com/danhper/asdf-python
@@ -82,19 +86,27 @@ go install github.com/jesseduffield/lazygit@latest
 
 asdf reshim
 
-git clone https://github.com/alacritty/alacritty.git ~/alacritty --single-branch -b master --depth 1
+if [ -z "$(which alacritty)" ]; then
+	git clone https://github.com/alacritty/alacritty.git ~/alacritty --single-branch -b master --depth 1
 
-sudo ln -s "$(which alacritty)" /usr/local/bin
-sudo cp ~/alacritty/extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
-sudo desktop-file-install ~/alacritty/extra/linux/Alacritty.desktop
-sudo update-desktop-database
+	sudo ln -s "$(which alacritty)" /usr/local/bin
+	sudo cp ~/alacritty/extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
+	sudo desktop-file-install ~/alacritty/extra/linux/Alacritty.desktop
+	sudo update-desktop-database
 
-sudo mkdir -p /usr/local/share/man/man1
-sudo mkdir -p /usr/local/share/man/man5
+	sudo mkdir -p /usr/local/share/man/man1
+	sudo mkdir -p /usr/local/share/man/man5
 
-scdoc <~/alacritty/extra/man/alacritty.1.scd | gzip -c | sudo tee /usr/local/share/man/man1/alacritty.1.gz >/dev/null
-scdoc <~/alacritty/extra/man/alacritty-msg.1.scd | gzip -c | sudo tee /usr/local/share/man/man1/alacritty-msg.1.gz >/dev/null
-scdoc <~/alacritty/extra/man/alacritty.5.scd | gzip -c | sudo tee /usr/local/share/man/man5/alacritty.5.gz >/dev/null
-scdoc <~/alacritty/extra/man/alacritty-bindings.5.scd | gzip -c | sudo tee /usr/local/share/man/man5/alacritty-bindings.5.gz >/dev/null
+	scdoc <~/alacritty/extra/man/alacritty.1.scd | gzip -c | sudo tee /usr/local/share/man/man1/alacritty.1.gz >/dev/null
+	scdoc <~/alacritty/extra/man/alacritty-msg.1.scd | gzip -c | sudo tee /usr/local/share/man/man1/alacritty-msg.1.gz >/dev/null
+	scdoc <~/alacritty/extra/man/alacritty.5.scd | gzip -c | sudo tee /usr/local/share/man/man5/alacritty.5.gz >/dev/null
+	scdoc <~/alacritty/extra/man/alacritty-bindings.5.scd | gzip -c | sudo tee /usr/local/share/man/man5/alacritty-bindings.5.gz >/dev/null
 
-rm -rf ~/alacritty
+	rm -rf ~/alacritty
+fi
+
+if [ -z "$(which git-remind)" ]; then
+	wget https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
+	tar -C ~/.local/bin -xzf git-remind_1.1.1_Linux_x86_64.tar.gz
+	rm git-remind_1.1.1_Linux_x86_64.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENCE.md
+fi
