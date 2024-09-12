@@ -109,5 +109,5 @@ fi
 if [ -z "$(which git-remind)" ]; then
 	wget https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
 	tar -C ~/.local/bin -xzf git-remind_1.1.1_Linux_x86_64.tar.gz
-	rm git-remind_1.1.1_Linux_x86_64.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENCE.md
+	rm git-remind_1.1.1_Linux_x86_64.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE.md
 fi
