@@ -39,7 +39,8 @@ fi
 
 if [ -z "$(which asdf)" ]; then
 	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --depth 1 --single-branch -b v0.14.1
-	. "$HOME/.asdf/asdf.sh"
+	# shellcheck source="/dev/null"
+	source "$HOME/.asdf/asdf.sh"
 fi
 
 asdf plugin add lua https://github.com/Stratus3D/asdf-lua
@@ -108,5 +109,5 @@ fi
 if [ -z "$(which git-remind)" ]; then
 	wget https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
 	tar -C ~/.local/bin -xzf git-remind_1.1.1_Linux_x86_64.tar.gz
-	rm git-remind_1.1.1_Linux_x86_64.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENCE.md
+	rm git-remind_1.1.1_Linux_x86_64.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE.md
 fi
