@@ -49,11 +49,23 @@ function prompt {
 if (gcm busybox -ea SilentlyContinue) {
 	. "$PSScriptRoot\remove_aliases_for_busybox.ps1"
 }
-if (gcm cargo -ea SilentlyContinue) {
-	. "$PSScriptRoot\power_ls.ps1"
-	. "$PSScriptRoot\power_cd.ps1"
+if ( "$(Get-Command lsd -ErrorAction SilentlyContinue)" -ne "" ) {
+	Set-Alias ls lsd
+	function ll {
+	    ls --long $args
+	}
+	
+	function la {
+	    ls --all $args
+	}
+}
+if ( "$(Get-Command bat -ErrorAction SilentlyContinue)" -ne "" ) {
 	Set-Alias cat bat
+}
+if ( "$(Get-Command rg -ErrorAction SilentlyContinue)" -ne "" ) {
 	Set-Alias grep rg
+}
+if ( "$(Get-Command fd -ErrorAction SilentlyContinue)" -ne "" ) {
 	Set-Alias find fd
 }
 
