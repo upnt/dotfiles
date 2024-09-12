@@ -18,6 +18,7 @@ gsudo winget install --allow-reboot --silent --accept-package-agreements --accep
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "DevToys-app.DevToys"
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "Microsoft.PowerToys"
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "Neovim.Neovim"
+gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "equalsraf.neovim-qt"
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "lsd-rs.lsd"
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "sharkdp.bat"
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "sharkdp.fd"
@@ -27,31 +28,25 @@ gsudo winget install --allow-reboot --silent --accept-package-agreements --accep
 
 $Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
-If ("$(Get-Command neovide -ErrorAction SilentlyContinue)" -eq "") {
-    echo "Install neovide"
-    [string] $filePath = "$(Get-Location)\neovide.msi"
-    [string] $uri = "https://github.com/neovide/neovide/releases/latest/download/neovide.msi"
-    Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
-    cmd /c "msiexec.exe /i $filePath"
-    Remove-Item $filePath
-}
-
 git clone https://github.com/Shougo/dpp.vim $HOME/.cache/dpp/repos/github.com/Shougo/dpp.vim
 git clone https://github.com/Shougo/dpp-ext-installer $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-installer
+git clone https://github.com/Shougo/dpp-protocol-git $HOME/.cache/dpp/repos/github.com/Shougo/dpp-protocol-git
 git clone https://github.com/Shougo/dpp-ext-toml $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml
 git clone https://github.com/vim-denops/denops.vim $HOME/.cache/dpp/repos/github.com/vim-denops/denops.vim
 
 
-If ("$(Get-ChildItem -File "$HOME\AppData\Local\Microsoft\Windows\Fonts" | rg UDEVGothic )" -eq "") {
-    echo "Install UDEVGothic"
-    [string] $filePath = "$(Get-Location)\UDEVGothic_NF_v2.0.0.zip"
-    [string] $destPath = "$(Get-Location)\UDEVGothic_NF_v2.0.0"
-    [string] $uri = "https://github.com/yuru7/udev-gothic/releases/download/v2.0.0/UDEVGothic_NF_v2.0.0.zip"
-    Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
-    Expand-Archive -Path $filePath -DestinationPath "$(Get-Location)"
-    foreach ($item in $(Get-ChildItem -File "$destPath")) {
-	Move-Item $item.FullName "$HOME\AppData\Local\Microsoft\Windows\Fonts"
+If ("$(Get-Command rg -ErrorAction SilentlyContinue)" -ne "") {
+    If ("$(Get-ChildItem -File "$HOME\AppData\Local\Microsoft\Windows\Fonts" | rg UDEVGothic )" -eq "") {
+        echo "Install UDEVGothic"
+        [string] $filePath = "$(Get-Location)\UDEVGothic_NF_v2.0.0.zip"
+        [string] $destPath = "$(Get-Location)\UDEVGothic_NF_v2.0.0"
+        [string] $uri = "https://github.com/yuru7/udev-gothic/releases/download/v2.0.0/UDEVGothic_NF_v2.0.0.zip"
+        Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
+        Expand-Archive -Path $filePath -DestinationPath "$(Get-Location)"
+        foreach ($item in $(Get-ChildItem -File "$destPath")) {
+    	Move-Item $item.FullName "$HOME\AppData\Local\Microsoft\Windows\Fonts"
+        }
+        Remove-Item $filePath
+        Remove-Item -Recurse -Force $destPath
     }
-    Remove-Item $filePath
-    Remove-Item -Recurse -Force $destPath
 }
