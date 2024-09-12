@@ -28,3 +28,11 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 [string] $uri = "https://github.com/neovide/neovide/releases/latest/download/neovide.msi"
 Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
 cmd /c "msiexec.exe /i $filePath"
+rm $filePath
+
+mkdir -p ~/.cache/dpp/repos/github.com/Shougo
+mkdir -p ~/.cache/dpp/repos/github.com/vim-denops
+git clone https://github.com/Shougo/dpp.vim ~/.cache/dpp/repos/github.com/Shougo/dpp.vim
+git clone https://github.com/Shougo/dpp-ext-installer ~/.cache/dpp/repos/github.com/Shougo/dpp-ext-installer
+git clone https://github.com/Shougo/dpp-ext-toml ~/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml
+git clone https://github.com/vim-denops/denops.vim ~/.cache/dpp/repos/github.com/vim-denops/denops.vim
