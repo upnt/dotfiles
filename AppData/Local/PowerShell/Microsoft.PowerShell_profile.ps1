@@ -1,18 +1,3 @@
-# Required:
-# lsd: beautiful ls command from cargo
-# bat: beautiful cat command from cargo
-# fd: fast find command from cargo
-# rg: fast grep command from cargo
-# git: file manager from winget
-# fzf: fuzzy finder from winget
-# busybox64u: unicode linux commands on x64 from binary
-#
-# Recommended:
-# git-delta: beautiful git diff from cargo
-#
-
-. "$PSScriptRoot\utils.ps1"
-
 function prompt {
     $path = (Get-Location).ToString().Replace((Convert-Path ~), "~").Replace('\', '/')
     if (gcm git -ea SilentlyContinue) {
@@ -46,9 +31,6 @@ function prompt {
     return "`u{232A}"
 }
 
-if (gcm busybox -ea SilentlyContinue) {
-	. "$PSScriptRoot\remove_aliases_for_busybox.ps1"
-}
 if ( "$(Get-Command lsd -ErrorAction SilentlyContinue)" -ne "" ) {
 	Set-Alias ls lsd
 	function ll {
