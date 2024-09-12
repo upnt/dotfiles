@@ -20,19 +20,20 @@ gsudo winget install --allow-reboot --silent --accept-package-agreements --accep
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "sharkdp.bat"
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "sharkdp.fd"
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "dandavison.delta"
+gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "DevToys-app.DevToys"
 gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity "Password Manager SafeInCloud" -s msstore
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
-[string] $filePath = "$(Get-Location)\neovide.msi"
-[string] $uri = "https://github.com/neovide/neovide/releases/latest/download/neovide.msi"
-Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
-cmd /c "msiexec.exe /i $filePath"
-rm $filePath
+If ("$(which neovide)" -eq "") {
+    [string] $filePath = "$(Get-Location)\neovide.msi"
+    [string] $uri = "https://github.com/neovide/neovide/releases/latest/download/neovide.msi"
+    Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
+    cmd /c "msiexec.exe /i $filePath"
+    rm $filePath
+}
 
-mkdir -p ~/.cache/dpp/repos/github.com/Shougo
-mkdir -p ~/.cache/dpp/repos/github.com/vim-denops
-git clone https://github.com/Shougo/dpp.vim ~/.cache/dpp/repos/github.com/Shougo/dpp.vim
-git clone https://github.com/Shougo/dpp-ext-installer ~/.cache/dpp/repos/github.com/Shougo/dpp-ext-installer
-git clone https://github.com/Shougo/dpp-ext-toml ~/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml
-git clone https://github.com/vim-denops/denops.vim ~/.cache/dpp/repos/github.com/vim-denops/denops.vim
+git clone https://github.com/Shougo/dpp.vim $HOME/.cache/dpp/repos/github.com/Shougo/dpp.vim
+git clone https://github.com/Shougo/dpp-ext-installer $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-installer
+git clone https://github.com/Shougo/dpp-ext-toml $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml
+git clone https://github.com/vim-denops/denops.vim $HOME/.cache/dpp/repos/github.com/vim-denops/denops.vim
