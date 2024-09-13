@@ -21,6 +21,6 @@ AppData/
 
 {{- if eq .chezmoi.os "linux" }}
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-ubuntu-fonts.sh
+00-install-linux-fonts.sh
 {{-   end }}
 {{- end }}
