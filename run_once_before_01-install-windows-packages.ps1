@@ -35,7 +35,7 @@ git clone https://github.com/Shougo/dpp-ext-toml $HOME/.cache/dpp/repos/github.c
 git clone https://github.com/vim-denops/denops.vim $HOME/.cache/dpp/repos/github.com/vim-denops/denops.vim
 
 If ("$(Get-Command rg -ErrorAction SilentlyContinue)" -ne "") {
-    If ("$(Get-ChildItem -File "$HOME\AppData\Local\Microsoft\Windows\Fonts" | rg UDEVGothic )" -eq "") {
+    If ("$(Get-ChildItem -File "$HOME\FontTemp" | rg UDEVGothic )" -eq "") {
         echo "Downloading UDEVGothic..."
         [string] $filePath = "$(Get-Location)\UDEVGothic_NF_v2.0.0.zip"
         [string] $destPath = "$(Get-Location)\UDEVGothic_NF_v2.0.0"
@@ -43,7 +43,7 @@ If ("$(Get-Command rg -ErrorAction SilentlyContinue)" -ne "") {
         Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
         Expand-Archive -Path $filePath -DestinationPath "$(Get-Location)"
         foreach ($item in $(Get-ChildItem -File "$destPath")) {
-    	Move-Item $item.FullName "$HOME\AppData\Local\Microsoft\Windows\Fonts"
+            Move-Item $item.FullName "$HOME\FontTemp"
         }
         Remove-Item $filePath
         Remove-Item -Recurse -Force $destPath
