@@ -7,7 +7,7 @@ dotfiles managed by chezmoi
 
 ## Linux
 ### support
-- Ubuntu
+- debian only
 ### install
 ```bash
 mkdir -p ~/.local
