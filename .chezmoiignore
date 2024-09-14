@@ -23,7 +23,7 @@ AppData/
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 linux_*_nowsl_*
 {{-   end }}
-{{-   if ne .chezmoi.kernel.osrelease.idLike "debian" }}
+{{-   if ne .chezmoi.osRelease.idLike "debian" }}
 linux_*_debian_*
 {{-   end }}
 {{- end }}
