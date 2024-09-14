@@ -3,7 +3,7 @@ README.md
 
 {{- if ne .chezmoi.os "linux" }}
 
-*.sh
+linux_*
 .config/
 .latexmkrc
 .tmux.conf
@@ -14,13 +14,16 @@ README.md
 
 {{- if ne .chezmoi.os "windows" }}
 
-*.ps1
+windows_*
 AppData/
 
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-00-install-linux-fonts.sh
+linux_*_nowsl_*
+{{-   end }}
+{{-   if ne .chezmoi.kernel.osrelease.idLike "debian" }}
+linux_*_debian_*
 {{-   end }}
 {{- end }}
