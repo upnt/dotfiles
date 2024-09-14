@@ -7,7 +7,7 @@ dotfiles managed by chezmoi
 
 ## Linux
 ### support
-- Ubuntu
+- debian only
 ### install
 ```bash
 mkdir -p ~/.local
@@ -15,7 +15,7 @@ cd ~/.local
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 ```
 
-## Windows PowersShell
+## Windows PowerShell
 ### install
 ```powershell
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/.local/bin'"
