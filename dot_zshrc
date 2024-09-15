@@ -83,6 +83,20 @@ if [[ -d /opt/gurobi1100 ]] then
     export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 fi
 
+if [[ -d /opt/gurobi1103 ]] then
+    export GUROBI_HOME="/opt/gurobi1103/linux64"
+    export PATH="${PATH}:${GUROBI_HOME}/bin"
+    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
+fi
+
+if [[ -d /opt/cisco ]] then
+    export PATH="${PATH}:/opt/cisco/secureclient/bin"
+    export PATH="${PATH}:/opt/cisco/hostscan/bin/"
+    export PATH="${PATH}:/opt/cisco/anyconnect/securefirewallposture/ac_hostscan/bin"
+    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/opt/cisco/secureclient/lib"
+    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/opt/cisco/hostscan/lib"
+    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/opt/cisco/anyconnect/securefirewallposture/ac_hostscan/lib"
+fi
 
 if [[ -d /usr/local/texlive/2023 ]]; then
     export PATH=$PATH:/usr/local/texlive/2023/bin/x86_64-linux

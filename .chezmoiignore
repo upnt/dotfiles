@@ -9,6 +9,7 @@ linux_*
 .tmux.conf
 .zsh_functions/
 .zshrc
+.icons/
 
 {{- end }}
 
@@ -22,8 +23,9 @@ AppData/
 {{- if eq .chezmoi.os "linux" }}
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 linux_*_nowsl_*
+.icons/
 {{-   end }}
-{{-   if ne .chezmoi.osRelease.idLike "debian" }}
+{{-   if not (.chezmoi.osRelease.idLike | lower | contains "debian") }}
 linux_*_debian_*
 {{-   end }}
 {{- end }}
