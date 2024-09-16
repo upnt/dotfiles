@@ -220,3 +220,8 @@ export EDITOR=nvim
 
 fpath+=~/.zsh_functions
 autoload -Uz compinit && compinit
+{{- if eq .chezmoi.os "linux" }}
+{{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+export PATH="$PATH:/mnt/c/Windows/system32/"
+{{-   end }}
+{{- end }}
