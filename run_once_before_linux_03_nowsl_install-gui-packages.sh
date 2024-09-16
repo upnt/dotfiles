@@ -10,7 +10,7 @@ if [ -z "$(which goneovim)" ]; then
   rm -rf goneovim-v0.6.8-linux
 fi
 
-if [ -z "$(which update-desktop-database)" ]; then
+if [ -n "$(which update-desktop-database)" ]; then
   if [ ! -f "$HOME/.local/share/applications/Alacritty.desktop" ]; then
     git clone https://github.com/alacritty/alacritty.git ~/alacritty --single-branch -b master --depth 1
 
