@@ -56,3 +56,5 @@ Set-PSReadLineKeyHandler -Key 'Ctrl+k' -Function HistorySearchBackward
 
 Set-PSReadLineOption -PredictionSource History -PredictionViewStyle ListView
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+
+. $PSScriptRoot/chezmoi.ps1
