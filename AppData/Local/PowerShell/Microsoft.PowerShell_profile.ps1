@@ -51,10 +51,13 @@ if ( "$(Get-Command fd -ErrorAction SilentlyContinue)" -ne "" ) {
 	Set-Alias find fd
 }
 
+if ( "$(Get-Command zoxide -ErrorAction SilentlyContinue)" -ne "" ) {
+	Invoke-Expression (& { (zoxide init powershell | Out-String) })
+}
+
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key 'Ctrl+k' -Function HistorySearchBackward
 
-Set-PSReadLineOption -PredictionSource History -PredictionViewStyle ListView
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
 . $PSScriptRoot/chezmoi.ps1

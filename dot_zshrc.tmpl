@@ -149,12 +149,10 @@ else
     alias la='ls -A'
 fi
 
+if type "zoxide" > /dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
 
-
-alias pd='pushd 1>/dev/null'
-alias pop='popd 1>/dev/null'
-
-# sudo apt install fzf
 if type "fzf" > /dev/null 2>&1; then
     function ff {
         local dir
