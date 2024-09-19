@@ -58,11 +58,12 @@ add-zsh-hook precmd prompt_precmd
 export PATH="/opt/nvim-linux64/bin:$PATH"
 
 if [[ -d ~/.asdf ]]; then
-    . "$HOME/.asdf/asdf.sh"
+    source "$HOME/.asdf/asdf.sh"
     fpath=(${ASDF_DIR}/completions $fpath)
     autoload -Uz compinit && compinit
     if [[ -d ~/.asdf/plugins/java ]]; then
         . ~/.asdf/plugins/java/set-java-home.zsh
+        export PATH="$PATH:$HOME/.asdf/installs/java/openjdk-21/bin"
     fi
     if [[ -d ~/.asdf/plugins/golang ]]; then
         . ~/.asdf/plugins/golang/set-env.zsh
@@ -70,6 +71,9 @@ if [[ -d ~/.asdf ]]; then
     if [[ -d ~/.asdf/plugins/python ]]; then
         export PYENV_ROOT="$HOME/.asdf/plugins/python/pyenv"
         export PATH="$PATH:$PYENV_ROOT/bin"
+    fi
+    if [[ -d ~/.asdf/installs/rust/1.80.1 ]]; then
+        export PATH="$PATH:$HOME/.asdf/installs/rust/1.80.1/bin"
     fi
 fi
 
@@ -151,6 +155,7 @@ fi
 
 if type "zoxide" > /dev/null 2>&1; then
     eval "$(zoxide init zsh)"
+    alias cd="z"
 fi
 
 if type "fzf" > /dev/null 2>&1; then
