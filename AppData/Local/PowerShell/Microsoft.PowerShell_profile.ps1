@@ -53,6 +53,8 @@ if ( "$(Get-Command fd -ErrorAction SilentlyContinue)" -ne "" ) {
 
 if ( "$(Get-Command zoxide -ErrorAction SilentlyContinue)" -ne "" ) {
 	Invoke-Expression (& { (zoxide init powershell | Out-String) })
+	Remove-Alias cd
+	Set-Alias cd z
 }
 
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
