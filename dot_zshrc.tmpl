@@ -171,7 +171,7 @@ if type "fzf" > /dev/null 2>&1; then
         sed -e 's#\\\\#/#g' |
         fzf --ansi --reverse --preview 'bat --color=always {}' --preview-window=up:60%`
         if [ -n "$file" ]; then
-            nvim $file
+            $EDITOR $file
         fi
     }
 
