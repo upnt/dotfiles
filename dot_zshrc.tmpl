@@ -163,7 +163,7 @@ if type "zoxide" > /dev/null 2>&1; then
 fi
 
 if type "fzf-tmux" > /dev/null 2>&1; then
-    alias fzf="fzf-tmux -p 80%"
+    alias fzf="fzf-tmux -p 90%"
 fi
 if type "fzf" > /dev/null 2>&1; then
     function fe {
@@ -220,7 +220,7 @@ if type "fzf" > /dev/null 2>&1; then
 
     function tmux-startup-sessions {
       if ! tmux has-session 2>/dev/null; then
-        tmux new-session -d 2>/dev/null
+        tmux new-session -d 2>/dev/null -c $HOME/workspace
       fi
       tmux new-session -d -c $(chezmoi source-path) -s chezmoi 2>/dev/null
     }
