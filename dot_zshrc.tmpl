@@ -162,21 +162,10 @@ if type "zoxide" > /dev/null 2>&1; then
     alias cd="z"
 fi
 
+if type "fzf-tmux" > /dev/null 2>&1; then
+    alias fzf="fzf-tmux -p 80%"
+fi
 if type "fzf" > /dev/null 2>&1; then
-    function ff {
-        local dir
-        # dir+=$'\e[34m'"./"$'\e[0m'$'\n'
-        dir+=$'\e[34m'"../"$'\e[0m'$'\n'
-        dir+=`fd . --hidden -t d -p --color=always --maxdepth=1 | sed -e 's#\\\\#/#g'`
-        dir=`echo -n $dir | fzf --ansi --reverse --preview 'lsd -l --color=always {}' --preview-window=up:60%`
-        if [ -n "$dir" ]; then
-            pd $dir
-            if [ "$dir" != "./" ] && [ ! -d ".git" ]; then
-                ff
-            fi
-        fi
-    }
-
     function fe {
         local file=`find . -t f -p --hidden --exclude=".git/" --color=always |
         sed -e 's#\\\\#/#g' |
@@ -214,6 +203,15 @@ if type "fzf" > /dev/null 2>&1; then
         local repo=`echo $repos | fzf --ansi --reverse | cut -f 1`
         if [ ! "$repo" = "" ]; then
             gh repo clone "$repo" $@
+        fi
+    }
+
+    function ftm {
+        if [ -n "$TMUX" ]; then
+          SELECTED="$(tmux list-sessions | fzf | cut -d : -f 1)"
+          if [ -n "$SELECTED" ]; then
+            tmux switch -t $SELECTED
+          fi
         fi
     }
 fi
