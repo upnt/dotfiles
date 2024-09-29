@@ -209,17 +209,23 @@ if type "fzf" > /dev/null 2>&1; then
     function ftm {
         SELECTED="$(tmux list-sessions | fzf | cut -d : -f 1)"
         if [ -n "$TMUX" ]; then
-          if [ -n "$SELECTED" ]; then
-            tmux switch -t $SELECTED
-          fi
+          local cmd=switch
         else
-          tmux attach -t $SELECTED
+          local cmd=attach
+        fi
+        if [ -n "$SELECTED" ]; then
+          tmux $cmd -t $SELECTED
         fi
     }
 
-    if [ "$(tmux list-sessions | wc -l)" = "0" ]; then
-        tmux new -d
-    fi
+    function tmux-startup-sessions {
+      if ! tmux has-session 2>/dev/null; then
+        tmux new-session -d 2>/dev/null
+      fi
+      tmux new-session -d -c $(chezmoi source-path) -s chezmoi 2>/dev/null
+    }
+
+    tmux-startup-sessions
 fi
 
 # Add an "alert" alias for long running commands.  Use like so:
