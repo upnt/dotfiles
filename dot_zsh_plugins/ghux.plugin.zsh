@@ -23,7 +23,7 @@ function ghux() {
     fi
 
     # touchはファイルが存在しなかったときだけ作ってくれるので
-    touch $GHUX_ALIASES_PATH
+    /usr/bin/touch $GHUX_ALIASES_PATH
     local file
     file="$GHUX_ALIASES_PATH"
     local project_alias 
@@ -31,14 +31,14 @@ function ghux() {
     local project_dir
     if [[ -n $1 ]] && [[ `/usr/bin/cat $file |/usr/bin/grep -E "$1"` ]];then
         local tmp=$(/usr/bin/cat $file |/usr/bin/grep "$1")
-        line=( `echo $tmp | tr -s ',' ' '` )
+        line=( `echo $tmp | /usr/bin/tr -s ',' ' '` )
         project_alias=${line[1]}
         project_name=${line[2]}
         project_dir=${line[3]}
     else
         if ( type ghq &> /dev/null ); then
             ghq_list=$(ghq list)
-            project_list="$(/usr/bin/cat $file | awk -F , '{print "[alias]", $1}')
+            project_list="$(/usr/bin/cat $file | /usr/bin/awk -F , '{print "[alias]", $1}')
 $ghq_list"
         fi
         local list
@@ -51,14 +51,14 @@ $ghq_list"
             return 1
         fi
 
-        if ! ( echo $project_dir | /usr/bin/grep -E "^\[alias\]" &>/dev/null);then
+        if ! (echo $project_dir | /usr/bin/grep -E "^\[alias\]" &>/dev/null);then
             project_dir=$(ghq root)/$project_dir
-            project_name=$( echo $project_dir |rev | awk -F \/ '{printf "%s", $1}' |rev | awk '{sub("\\.",""); print $0}')
+            project_name=$(echo $project_dir | /usr/bin/rev | /usr/bin/awk -F \/ '{printf "%s", $1}' | /usr/bin/rev | /usr/bin/awk '{sub("\\.",""); print $0}')
         else
-            local als=$(echo $project_dir| awk '{print $2}')
-            line=( `/usr/bin/cat $file|/usr/bin/grep -E "^$als" | tr -s ',' ' '` )
+            local als=$(echo $project_dir| /usr/bin/awk '{print $2}')
+            line=( `/usr/bin/cat $file|/usr/bin/grep -E "^$als" | /usr/bin/tr -s ',' ' '` )
             project_alias=${line[1]}
-            project_name=$(echo ${line[2]}| awk '{sub("\\.",""); print $0}')
+            project_name=$(echo ${line[2]}| /usr/bin/awk '{sub("\\.",""); print $0}')
             project_dir=${line[3]}
         fi
     fi

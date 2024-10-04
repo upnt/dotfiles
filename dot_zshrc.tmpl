@@ -239,11 +239,24 @@ export PATH="$PATH:/mnt/c/Windows/system32/"
 {{- end }}
 
 function confirm_exit() {
-  echo -n "セッションを終了しますか？(y/N): "
-  read answer
-  if [[ "$answer" == "y" ]]; then
-    # ユーザーが 'y' を選んだ場合、通常のexitを実行
-    builtin exit
+  local last_status=$?
+  local last_pane=false
+  if [[ -n $TMUX ]]; then
+    if [ "$(tmux list-windows | wc -l)" -eq 1 ]; then
+      if [ "$(tmux list-panes | wc -l)" -eq 1 ]; then
+        last_pane=true
+      fi
+    fi
+  fi
+  
+  if "${last_pane}"; then
+    echo -n "セッションを終了しますか？(y/N): "
+    read answer
+    if [[ "$answer" == "y" ]]; then
+      builtin exit $last_status
+    fi
+  else
+      builtin exit $last_status
   fi
 }
 
