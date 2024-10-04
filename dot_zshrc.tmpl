@@ -209,14 +209,6 @@ if type "fzf" > /dev/null 2>&1; then
     }
 
     alias ftm=ghux
-    function tmux-startup-sessions {
-      if ! tmux has-session 2>/dev/null; then
-        tmux new-session -d 2>/dev/null -c $HOME/workspace
-      fi
-      tmux new-session -d -c $(chezmoi source-path) -s chezmoi 2>/dev/null
-    }
-
-    tmux-startup-sessions
 fi
 
 # Add an "alert" alias for long running commands.  Use like so:
