@@ -44,8 +44,9 @@ npm install -g @devcontainers/cli
 npm install -g prettier
 npm install -g neovim
 cpanm -n Neovim::Ext
-cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli git-delta fd-find zoxide --locked 
+cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli git-delta fd-find zoxide --locked
 go install github.com/dundee/gdu/v5/cmd/gdu@latest
 go install github.com/jesseduffield/lazygit@latest
+go install github.com/x-motemen/ghq@latest
 
 asdf reshim

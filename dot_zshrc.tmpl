@@ -122,6 +122,8 @@ if [[ -d /usr/local/texlive/2024 ]]; then
     export INFOPATH=$INFOPATH:/usr/local/texlive/2024/texmf-dist/doc/info
 fi
 
+export GHQ_ROOT="$HOME/workspace"
+
 export PATH=$PATH:~/.local/bin
 
 # enable color support of ls and also add handy aliases
@@ -184,17 +186,17 @@ if type "fzf" > /dev/null 2>&1; then
         fi
     }
 
-    function get_repos {
+    function _get_repos {
         local repo=`gh repo list $1 --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
         echo $repo
     }
 
     function gclone {
-        local repos=`get_repos`
+        local repos=`_get_repos`
         if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
             for i in `gh org list`
             do
-                local buf=`get_repos $i`
+                local buf=`_get_repos $i`
                 if [ ! "$buf" = "" ]; then
                     repos="${repos}\n${buf}"
                 fi
@@ -206,18 +208,7 @@ if type "fzf" > /dev/null 2>&1; then
         fi
     }
 
-    function ftm {
-        SELECTED="$(tmux list-sessions | fzf | cut -d : -f 1)"
-        if [ -n "$TMUX" ]; then
-          local cmd=switch
-        else
-          local cmd=attach
-        fi
-        if [ -n "$SELECTED" ]; then
-          tmux $cmd -t $SELECTED
-        fi
-    }
-
+    alias ftm=ghux
     function tmux-startup-sessions {
       if ! tmux has-session 2>/dev/null; then
         tmux new-session -d 2>/dev/null -c $HOME/workspace
@@ -236,9 +227,24 @@ export LESS='-R'
 export EDITOR=nvim
 
 fpath+=~/.zsh_functions
+while read -d $'\0' file; do
+    source "${file}"
+done < <(/usr/bin/find ~/.zsh_plugins -mindepth 1 -maxdepth 1 -print0)
+
 autoload -Uz compinit && compinit
 {{- if eq .chezmoi.os "linux" }}
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 export PATH="$PATH:/mnt/c/Windows/system32/"
 {{-   end }}
 {{- end }}
+
+function confirm_exit() {
+  echo -n "セッションを終了しますか？(y/N): "
+  read answer
+  if [[ "$answer" == "y" ]]; then
+    # ユーザーが 'y' を選んだ場合、通常のexitを実行
+    builtin exit
+  fi
+}
+
+alias exit=confirm_exit
