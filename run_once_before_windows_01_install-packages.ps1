@@ -7,27 +7,39 @@ If (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   }
 }
 
+function __winget_install_id($package)
+{
+    echo "Install $package"
+    gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package >$null
+}
+
+function __winget_install_ms($package)
+{
+    echo $package
+    gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity $package -s msstore >$null
+}
+
 echo "Install pkgs..."
 winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "gerardog.gsudo" >$null
 $Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "Microsoft.PowerShell" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "Zen-Team.Zen-Browser.Optimized" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "GitHub.cli" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "Git.Git" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "7zip.7zip" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "DevToys-app.DevToys" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "Microsoft.PowerToys" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "Neovim.Neovim" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "equalsraf.neovim-qt" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "lsd-rs.lsd" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "sharkdp.bat" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "sharkdp.fd" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "junegunn.fzf" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "ajeetdsouza.zoxide" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "dandavison.delta" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id "BurntSushi.ripgrep.MSVC" >$null
-gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity "Password Manager SafeInCloud" -s msstore >$null
+__winget_install_id("Microsoft.PowerShell")
+__winget_install_id("Zen-Team.Zen-Browser.Optimized")
+__winget_install_id("GitHub.cli")
+__winget_install_id("Git.Git")
+__winget_install_id("7zip.7zip")
+__winget_install_id("DevToys-app.DevToys")
+__winget_install_id("Microsoft.PowerToys")
+__winget_install_id("Neovim.Neovim")
+__winget_install_id("equalsraf.neovim-qt")
+__winget_install_id("lsd-rs.lsd")
+__winget_install_id("sharkdp.bat")
+__winget_install_id("sharkdp.fd")
+__winget_install_id("junegunn.fzf")
+__winget_install_id("ajeetdsouza.zoxide")
+__winget_install_id("dandavison.delta")
+__winget_install_id("BurntSushi.ripgrep.MSVC")
+__winget_install_ms("Password Manager SafeInCloud")
 echo "Installed"
 
 $Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
