@@ -29,7 +29,7 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	bison gettext libgd-dev libedit-dev libicu-dev libmysqlclient-dev \
 	libpng-dev libpq-dev pkg-config re2c libbz2-dev libsqlite3-dev tk-dev \
 	liblzma-dev libyaml-dev fontconfig libwayland-dev libwayland-egl-backend-dev wayland-scanner++ \
-	libglu1-mesa-dev libpulse-dev libglib2.0-dev libasound2 libnss3 libpci3 libtiff5 \
+	libglu1-mesa-dev libpulse-dev libglib2.0-dev libnss3 libpci3 \
 	libwayland-egl-backend-dev libwayland-egl++1 \
 	libwayland-egl1 libwayland-egl1 libxcb-sync-dev \
 	libxcb-damage0-dev libxcb-imdkit-dev libxcb-present-dev \
@@ -45,6 +45,9 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
 	zathura xdotool zsh fzf tmux jq zathura
+echo "installed"
+
+chsh -s $(which zsh)
 
 if [ -z "$(which nvim)" ]; then
 	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
