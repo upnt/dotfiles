@@ -47,7 +47,11 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	zathura xdotool zsh fzf tmux jq zathura xsel
 echo "installed"
 
-chsh -s "$(which zsh)"
+current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
+
+if [ "$current_shell" != "/usr/bin/zsh" ]; then
+	chsh -s "$(which zsh)"
+fi
 
 if [ -z "$(which nvim)" ]; then
 	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
