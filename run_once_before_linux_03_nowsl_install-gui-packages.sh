@@ -14,7 +14,9 @@ if [ -z "$(which goneovim)" ]; then
 fi
 
 if [ -n "$(which update-desktop-database)" ]; then
+  mkdir -p "$HOME/.local/share/applications/"
   if [ ! -f "$HOME/.local/share/applications/Alacritty.desktop" ]; then
+    sudo ln -s "$(which alacritty)" /usr/bin/alacritty
     git clone https://github.com/alacritty/alacritty.git ~/alacritty --single-branch -b master --depth 1
 
     sudo ln -s "$(which alacritty)" /usr/local/bin
@@ -38,6 +40,5 @@ if [ -n "$(which update-desktop-database)" ]; then
 
     rm -rf ~/goneovim
   fi
-
   sudo update-desktop-database ~/.local/share/applications -v
 fi

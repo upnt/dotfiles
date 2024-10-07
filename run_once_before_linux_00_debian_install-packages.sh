@@ -44,10 +44,10 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	zathura xdotool zsh fzf tmux jq zathura
+	zathura xdotool zsh fzf tmux jq zathura xsel
 echo "installed"
 
-chsh -s $(which zsh)
+chsh -s "$(which zsh)"
 
 if [ -z "$(which nvim)" ]; then
 	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
