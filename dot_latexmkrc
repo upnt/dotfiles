@@ -13,7 +13,7 @@ $biber = 'biber %O --bblencoding=utf8 -u -U --output_safechars %O %S';
 
 $makeindex = 'makeindex -s german -g %S';
 
-$pdf_mode = 4;
+$pdf_mode = 4; # lualatex
 $max_repeat = 10;
 $emulate_aux = 1;
 $aux_dir = ".tex_intermediates";
