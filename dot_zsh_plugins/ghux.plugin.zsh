@@ -67,7 +67,7 @@ $ghq_list"
     local in_tmux
     [[ -n $TMUX ]] && in_tmux=0 || in_tmux=1
 
-    local tmux_list=$(tmux list-session )
+    local tmux_list=$(tmux list-session 2>/dev/null)
 
     # tmuxに既にfzfで選択したプロジェクトのセッションが存在するかどうか
     if  ! (echo $tmux_list | /usr/bin/grep -E "^$project_name" &>/dev/null); then
