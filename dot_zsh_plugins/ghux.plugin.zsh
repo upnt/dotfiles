@@ -36,11 +36,16 @@ function ghux() {
         project_name=${line[2]}
         project_dir=${line[3]}
     else
+        project_list="$(/usr/bin/cat $file | /usr/bin/awk -F , '{print "[alias]", $1}')"
         if ( type ghq &> /dev/null ); then
             ghq_list=$(ghq list)
-            project_list="$(/usr/bin/cat $file | /usr/bin/awk -F , '{print "[alias]", $1}')
-$ghq_list"
+            project_list="$ghq_list\n$project_list"
         fi
+        if ( type gclone &> /dev/null ); then
+            gh_list="[github] clone from github"
+            project_list="$project_list\n$gh_list"
+        fi
+        echo $project_list
         local list
 
 
@@ -51,15 +56,19 @@ $ghq_list"
             return 1
         fi
 
-        if ! (echo $project_dir | /usr/bin/grep -E "^\[alias\]" &>/dev/null);then
-            project_dir=$(ghq root)/$project_dir
-            project_name=$(echo $project_dir | /usr/bin/rev | /usr/bin/awk -F \/ '{printf "%s", $1}' | /usr/bin/rev | /usr/bin/awk '{sub("\\.",""); print $0}')
-        else
+        if (echo $project_dir | /usr/bin/grep -E "^\[alias\]" &>/dev/null);then
             local als=$(echo $project_dir| /usr/bin/awk '{print $2}')
             line=( `/usr/bin/cat $file|/usr/bin/grep -E "^$als" | /usr/bin/tr -s ',' ' '` )
             project_alias=${line[1]}
             project_name=$(echo ${line[2]}| /usr/bin/awk '{sub("\\.",""); print $0}')
             project_dir=${line[3]}
+        elif (echo $project_dir | /usr/bin/grep -E "^\[github\]" &>/dev/null);then
+            cd $(ghq root); project_name=$(gclone); cd -
+            project_name=${project_name##*/}
+            project_dir=$(ghq root)/$project_name
+        else
+            project_dir=$(ghq root)/$project_dir
+            project_name=$(echo $project_dir | /usr/bin/rev | /usr/bin/awk -F \/ '{printf "%s", $1}' | /usr/bin/rev | /usr/bin/awk '{sub("\\.",""); print $0}')
         fi
     fi
 

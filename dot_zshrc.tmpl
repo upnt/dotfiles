@@ -206,6 +206,7 @@ if type "fzf" > /dev/null 2>&1; then
         if [ ! "$repo" = "" ]; then
             gh repo clone "$repo" $@
         fi
+        echo $repo
     }
 
     alias ftm=ghux

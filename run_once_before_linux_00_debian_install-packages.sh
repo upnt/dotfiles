@@ -44,7 +44,7 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	zathura xdotool zsh fzf tmux jq zathura xsel
+	python3.12-dev python3.12-venv zathura xdotool zsh fzf tmux jq zathura xsel
 echo "installed"
 
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
