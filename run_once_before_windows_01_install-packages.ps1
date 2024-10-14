@@ -39,6 +39,7 @@ __winget_install_id("junegunn.fzf")
 __winget_install_id("ajeetdsouza.zoxide")
 __winget_install_id("dandavison.delta")
 __winget_install_id("BurntSushi.ripgrep.MSVC")
+__winget_install_id("Discord.Discord")
 __winget_install_ms("Password Manager SafeInCloud")
 echo "Installed"
 
@@ -48,6 +49,7 @@ git clone https://github.com/Shougo/dpp.vim $HOME/.cache/dpp/repos/github.com/Sh
 git clone https://github.com/Shougo/dpp-ext-installer $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-installer
 git clone https://github.com/Shougo/dpp-protocol-git $HOME/.cache/dpp/repos/github.com/Shougo/dpp-protocol-git
 git clone https://github.com/Shougo/dpp-ext-toml $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-toml
+git clone https://github.com/Shougo/dpp-ext-lazy $HOME/.cache/dpp/repos/github.com/Shougo/dpp-ext-lazy
 git clone https://github.com/vim-denops/denops.vim $HOME/.cache/dpp/repos/github.com/vim-denops/denops.vim
 
 If ("$(Get-Command deno -ErrorAction SilentlyContinue)" -eq "") {
