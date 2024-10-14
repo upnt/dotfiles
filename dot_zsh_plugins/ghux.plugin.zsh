@@ -45,7 +45,6 @@ function ghux() {
             gh_list="[github] clone from github"
             project_list="$project_list\n$gh_list"
         fi
-        echo $project_list
         local list
 
 
@@ -80,7 +79,7 @@ function ghux() {
 
     # tmuxに既にfzfで選択したプロジェクトのセッションが存在するかどうか
     if  ! (echo $tmux_list | /usr/bin/grep -E "^$project_name" &>/dev/null); then
-        (cd $(eval echo ${project_dir}) && TMUX=; tmux new-session -ds $project_name) > /dev/null # cdした後lsしちゃうので
+        (cd $(eval echo ${project_dir}) && TMUX=; tmux new-session -ds $project_name 2>/dev/null) > /dev/null # cdした後lsしちゃうので
     fi
 
 
