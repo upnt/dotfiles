@@ -1,0 +1,32 @@
+.chezmoiscripts/windows/*
+.chezmoiscripts/linux/*/*
+
+{{- if eq .chezmoi.os "windows" }}
+
+!.chezmoiscripts/windows/*
+.config/
+.latexmkrc
+.tmux.conf
+.zsh_functions/
+.zshrc
+.icons/
+
+{{- end }}
+
+
+{{- if eq .chezmoi.os "linux" }}
+
+AppData/
+.icons/
+
+# debian
+{{-   if (.chezmoi.osRelease.idLike | lower | contains "debian") }}
+!.chezmoiscripts/linux/00_debian/*
+
+{{-     if not (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+!.chezmoiscripts/linux/01_flatpak/*
+!.icons/
+
+{{-     end }}
+{{-   end }}
+{{- end }}
