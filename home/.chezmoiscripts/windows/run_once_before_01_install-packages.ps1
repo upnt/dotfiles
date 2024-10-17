@@ -9,13 +9,13 @@ If (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 function __winget_install_id($package)
 {
-    echo "Install $package"
-    gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package >$null
+    echo "Install $package from winget"
+    gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget >$null
 }
 
 function __winget_install_ms($package)
 {
-    echo $package
+    echo "Install $package from msstore"
     gsudo winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity $package -s msstore >$null
 }
 
@@ -25,6 +25,7 @@ $Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 
 __winget_install_id("Microsoft.PowerShell")
 __winget_install_id("Zen-Team.Zen-Browser.Optimized")
+__winget_install_id("Google.Chrome")
 __winget_install_id("GitHub.cli")
 __winget_install_id("Git.Git")
 __winget_install_id("7zip.7zip")
@@ -41,6 +42,7 @@ __winget_install_id("dandavison.delta")
 __winget_install_id("BurntSushi.ripgrep.MSVC")
 __winget_install_id("Discord.Discord")
 __winget_install_ms("Password Manager SafeInCloud")
+__winget_install_ms("9P64KGF20H0T")
 echo "Installed"
 
 $Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
