@@ -1,9 +1,37 @@
 {{ if eq .chezmoi.os "windows" }}
+
 ["AppData/Local/nvim"]
 type = "git-repo"
 url = "https://github.com/upnt/nvim-dein"
 refreshPeriod = "24h"
+
+[".cache/dpp/repos/github.com/Shougo/dpp-ext-installer"]
+type = "git-repo"
+url = "https://github.com/Shougo/dpp-ext-installer"
+refreshPeriod = "24h"
+
+[".cache/dpp/repos/github.com/Shougo/dpp-ext-toml"]
+type = "git-repo"
+url = "https://github.com/Shougo/dpp-ext-toml"
+refreshPeriod = "24h"
+
+[".cache/dpp/repos/github.com/Shougo/dpp-ext-lazy"]
+type = "git-repo"
+url = "https://github.com/Shougo/dpp-ext-lazy"
+refreshPeriod = "24h"
+
+[".cache/dpp/repos/github.com/Shougo/dpp-protocol-git"]
+type = "git-repo"
+url = "https://github.com/Shougo/dpp-protocol-git"
+refreshPeriod = "24h"
+
+[".cache/dpp/repos/github.com/vim-denops/denops.vim"]
+type = "git-repo"
+url = "https://github.com/vim-denops/denops.vim"
+refreshPeriod = "24h"
+
 {{ else }}
+
 [".tmux/plugins/tpm"]
 type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
@@ -13,4 +41,5 @@ refreshPeriod = "168h"
 type = "git-repo"
 url = "https://github.com/upnt/nvim-myastro"
 refreshPeriod = "24h"
+
 {{ end }}
