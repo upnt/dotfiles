@@ -1,4 +1,4 @@
-$latex = 'latex -synctex=1 -file-line-error -halt-on-error %O %S';
+$latex = 'platex -synctex=1 -file-line-error -halt-on-error %O %S';
 $pdflatex = 'pdflatex -synctex=1 -file-line-error -halt-on-error %O %S';
 $lualatex = 'lualatex -synctex=1 -file-line-error -halt-on-error %O %S';
 $xelatex = 'xelatex -synctex=1 -file-line-error -halt-on-error %O %S';
