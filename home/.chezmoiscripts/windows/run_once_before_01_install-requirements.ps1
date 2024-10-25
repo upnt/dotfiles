@@ -41,6 +41,9 @@ try {
 	__winget_install_id("Google.Chrome")
 	__winget_install_id("GitHub.cli")
 	__winget_install_id("Git.Git")
+    if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\git.exe) ) {
+        $null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name git.exe -Value $(Get-Command git).Source
+    }
 	__winget_install_id("7zip.7zip")
 	__winget_install_id("DevToys-app.DevToys")
 	__winget_install_id("Microsoft.PowerToys")
@@ -48,9 +51,11 @@ try {
 	__winget_install_id("equalsraf.neovim-qt")
 	__winget_install_id("lsd-rs.lsd")
 	__winget_install_id("sharkdp.bat")
+    if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\bat.exe) ) {
+        $null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name bat.exe -Value $(Get-Command bat).Source
+    }
 	__winget_install_id("sharkdp.fd")
 	__winget_install_id("junegunn.fzf")
-	__winget_install_id("ajeetdsouza.zoxide")
 	__winget_install_id("dandavison.delta")
 	__winget_install_id("BurntSushi.ripgrep.MSVC")
 	__winget_install_id("Discord.Discord")

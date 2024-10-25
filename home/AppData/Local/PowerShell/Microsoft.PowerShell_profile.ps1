@@ -5,7 +5,7 @@ foreach ($cmd in 'git', 'lsd', 'bat', 'rg', 'fd', 'zoxide') {
 }
 
 function prompt {
-    $path = (Get-Location).ToString().Replace((Convert-Path ~), "~")
+    $path = (Get-Location).ToString().Replace($HOME, "~")
     $branch = if ($_HAS['git']) { git branch --show-current } else { $null }
 
     ## first line
@@ -30,9 +30,8 @@ function prompt {
     return "`u{232A}"
 }
 
-	
-if ( $_HAS['bat'] ) { Set-Alias cat bat }
 if ( $_HAS['rg'] ) { Set-Alias grep rg }
+if ( $_HAS['bat'] ) { Set-Alias cat bat }
 if ( $_HAS['fd'] ) { Set-Alias find fd }
 
 if ( $_HAS['lsd'] ) {
@@ -42,8 +41,30 @@ if ( $_HAS['lsd'] ) {
 	function la { ls --all $args }
 }
 
+function gclone {
+    param (
+        [string]$option = "",
+        [string[]]$extraArgs = @()
+    )
+
+    $repos = (gh repo list --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]')
+    if ( ( $option -eq "-a" ) -or ( $option -eq "--all" ) ) {
+        foreach ($i in (gh org list) ) {
+            $buf = (gh repo list $i --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]')
+            if ( -not ($buf -eq "") ) {
+                $repos = "$repos\n$buf"
+            }
+        }
+    }
+    $repo = (Write-Host $repos | fzf --ansi --reverse | cut -f 1)
+    if ( -not ($repo -eq "" ) ) {
+        gh repo clone $repo $extraArgs
+    }
+    Write-Host $repo
+}
+
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key 'Ctrl+k' -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
 . $PSScriptRoot/chezmoi.ps1

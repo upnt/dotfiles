@@ -186,17 +186,12 @@ if type "fzf" > /dev/null 2>&1; then
         fi
     }
 
-    function _get_repos {
-        local repo=`gh repo list $1 --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
-        echo $repo
-    }
-
     function gclone {
-        local repos=`_get_repos`
+        local repos=`gh repo list --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
         if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
             for i in `gh org list`
             do
-                local buf=`_get_repos $i`
+                local buf=`gh repo list $i --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
                 if [ ! "$buf" = "" ]; then
                     repos="${repos}\n${buf}"
                 fi
