@@ -1,8 +1,12 @@
-$_HAS_GIT = Get-Command git -ea SilentlyContinue
+$_HAS = @{}
+
+foreach ($cmd in 'git', 'lsd', 'bat', 'rg', 'fd', 'zoxide') {
+    $_HAS.add($cmd, (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\$cmd.exe))
+}
 
 function prompt {
     $path = (Get-Location).ToString().Replace((Convert-Path ~), "~")
-    $branch = if ($_HAS_GIT) { git branch --show-current } else { $null }
+    $branch = if ($_HAS['git']) { git branch --show-current } else { $null }
 
     ## first line
     Write-Host ""
@@ -26,20 +30,16 @@ function prompt {
     return "`u{232A}"
 }
 
-if ( "$(Get-Command lsd -ErrorAction SilentlyContinue)" -ne "" ) {
-	Set-Alias ls lsd
-	function ll { ls --long $args }
-	function la { ls --all $args }
-}
 	
-if ( "$(Get-Command bat -ErrorAction SilentlyContinue)" -ne "" ) { Set-Alias cat bat }
-if ( "$(Get-Command rg -ErrorAction SilentlyContinue)" -ne "" ) { Set-Alias grep rg }
-if ( "$(Get-Command fd -ErrorAction SilentlyContinue)" -ne "" ) { Set-Alias find fd }
+if ( $_HAS['bat'] ) { Set-Alias cat bat }
+if ( $_HAS['rg'] ) { Set-Alias grep rg }
+if ( $_HAS['fd'] ) { Set-Alias find fd }
 
-if ( "$(Get-Command zoxide -ErrorAction SilentlyContinue)" -ne "" ) {
-	Invoke-Expression (& { (zoxide init powershell | Out-String) })
-	Remove-Alias cd -ErrorAction Ignore
-	Set-Alias cd z
+if ( $_HAS['lsd'] ) {
+	$null = Set-Alias ls lsd
+	function ll { ls --long $args }
+	function lt { ls --tree $args }
+	function la { ls --all $args }
 }
 
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
