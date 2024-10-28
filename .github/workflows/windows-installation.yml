@@ -18,7 +18,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install winget
-        run: Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe
+        uses: Cyberboss/install-winget@v1
 
       - name: Install chezmoi
         run: |
