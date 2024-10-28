@@ -15,26 +15,34 @@ Write-Output ""
 function __winget_install_id($package)
 {
 	Write-Output "Install $package from winget"
-	winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
-	$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
-	Write-Output $buf
-	if ($LASTEXITCODE -eq -1978335212)
+	try
 	{
-		Write-Output $buf
-		Write-Output ""
-		Write-Error "Package is not exists."
+		$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
+		if ($LASTEXITCODE -eq -1978335212)
+		{
+			Write-Output $buf
+			Write-Output ""
+			Write-Error "Package is not exists."
+		}
+	} catch
+	{
 	}
 }
 
 function __winget_install_ms($package)
 {
 	Write-Output "Install $package from msstore"
-	$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity $package -s msstore
-	if ($LASTEXITCODE -eq -1978335212)
+	try
 	{
-		Write-Output $buf
-		Write-Output ""
-		Write-Error "Package is not exists."
+		$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity $package -s msstore
+		if ($LASTEXITCODE -eq -1978335212)
+		{
+			Write-Output $buf
+			Write-Output ""
+			Write-Error "Package is not exists."
+		}
+	} catch
+	{
 	}
 }
 
