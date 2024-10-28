@@ -14,39 +14,26 @@ Write-Output ""
 
 function __winget_install_id($package)
 {
-	Write-Output "Install $package from winget"
-	try
+	$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
+	if ($LASTEXITCODE -eq -1978335212)
 	{
-		$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
-		if ($LASTEXITCODE -eq -1978335212)
-		{
-			Write-Output $buf
-			Write-Output ""
-			Write-Error "Package is not exists."
-		}
-	} catch
-	{
+		Write-Output $buf
+		Write-Output ""
+		Write-Error "Package is not exists."
 	}
 }
 
 function __winget_install_ms($package)
 {
 	Write-Output "Install $package from msstore"
-	try
+	$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity $package -s msstore
+	if ($LASTEXITCODE -eq -1978335212)
 	{
-		$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity $package -s msstore
-		if ($LASTEXITCODE -eq -1978335212)
-		{
-			Write-Output $buf
-			Write-Output ""
-			Write-Error "Package is not exists."
-		}
-	} catch
-	{
+		Write-Output $buf
+		Write-Output ""
+		Write-Error "Package is not exists."
 	}
 }
-
-$ErrorActionPreference = "Stop"
 
 try
 {
@@ -86,5 +73,3 @@ try
 	Write-Output "An error occured."
 	Read-Host -Prompt "Press any key to exit"
 }
-
-$ErrorActionPreference = "Continue"
