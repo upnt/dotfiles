@@ -15,6 +15,7 @@ Write-Output ""
 function __winget_install_id($package)
 {
 	Write-Output "Install $package from winget"
+	winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
 	$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
 	Write-Output $buf
 	if ($LASTEXITCODE -eq -1978335212)
