@@ -11,7 +11,7 @@ If ("$(Get-Command rg -ErrorAction SilentlyContinue)" -ne "") {
         [string] $uri = "https://github.com/yuru7/udev-gothic/releases/download/v2.0.0/UDEVGothic_NF_v2.0.0.zip"
         Invoke-WebRequest -Uri $uri -OutFile $filePath -UseBasicParsing
         Expand-Archive -Path $filePath -DestinationPath "$(Get-Location)"
-	mkdir "$HOME\FontTemp"
+	    mkdir "$HOME\FontTemp"
         foreach ($item in $(Get-ChildItem -File "$destPath")) {
             Move-Item $item.FullName "$HOME\FontTemp"
         }

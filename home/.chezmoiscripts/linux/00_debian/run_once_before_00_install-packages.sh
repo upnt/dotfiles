@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# pwsh
+###################################
+# Prerequisites
+# Install pre-requisite packages.
+sudo apt-get update
+sudo apt-get install -y curl wget
+# Download the PowerShell package file
+wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.5/powershell_7.4.5-1.deb_amd64.deb
+# Register the Microsoft repository GPG keys
+sudo dpkg -i ~/powershell_7.4.5-1.deb_amd64.deb
+# Delete the Microsoft repository GPG keys file
+rm ~/powershell_7.4.5-1.deb_amd64.deb
+
 # docker
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
@@ -42,9 +55,9 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	libxcb-util0-dev libxcb-glx0-dev libxcb-xrm-dev libxcb-xtest0-dev \
 	libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
-	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils wget cmake scdoc git gh \
+	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	python3.12-dev python3.12-venv zathura xdotool zsh fzf tmux jq zathura xsel
+	python3.12-dev python3.12-venv zathura xdotool zsh fzf tmux jq zathura xsel powershell
 echo "installed"
 
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
