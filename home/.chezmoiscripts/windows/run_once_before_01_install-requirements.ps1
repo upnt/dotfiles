@@ -14,6 +14,7 @@ Write-Output ""
 
 function __winget_install_id($package)
 {
+	Write-Output "Install $package from winget"
 	$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
 	if ($LASTEXITCODE -eq -1978335212)
 	{
@@ -34,6 +35,8 @@ function __winget_install_ms($package)
 		Write-Error "Package is not exists."
 	}
 }
+
+$ErrorActionPreference = "Stop"
 
 try
 {
@@ -73,3 +76,5 @@ try
 	Write-Output "An error occured."
 	Read-Host -Prompt "Press any key to exit"
 }
+
+$ErrorActionPreference = "Continue"
