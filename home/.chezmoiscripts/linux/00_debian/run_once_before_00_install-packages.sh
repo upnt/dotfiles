@@ -7,21 +7,6 @@
 sudo apt-get update
 sudo apt-get install -y curl wget
 
-# Get the version of Debian
-source /etc/os-release
-
-echo $VERSION_ID
-# Download the Microsoft repository GPG keys
-wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/powershell-lts_7.4.6-1.deb_amd64.deb
-
-# Register the Microsoft repository GPG keys
-sudo dpkg -i ~/powershell-lts_7.4.6-1.deb_amd64.deb
-
-sudo apt-get install -f
-
-# Delete the Microsoft repository GPG keys file
-rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
-
 # Update the list of packages after we added packages.microsoft.com
 sudo apt-get update
 
@@ -70,6 +55,7 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
 	python3.12-dev python3.12-venv zathura xdotool zsh fzf tmux jq zathura xsel
+
 echo "installed"
 
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
@@ -89,4 +75,21 @@ if [ -z "$(which git-remind)" ]; then
 	wget https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
 	tar -C ~/.local/bin -xzf git-remind_1.1.1_Linux_x86_64.tar.gz
 	rm git-remind_1.1.1_Linux_x86_64.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE.md
+fi
+
+if [ -z "$(which pwsh)" ]; then
+	# Download the Microsoft repository GPG keys
+	wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/powershell-lts_7.4.6-1.deb_amd64.deb
+
+	# Register the Microsoft repository GPG keys
+	sudo dpkg -i ~/powershell-lts_7.4.6-1.deb_amd64.deb
+
+	sudo apt-get install -f
+
+	# Delete the Microsoft repository GPG keys file
+	rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
+fi
+
+if [ -z "$(which clang)" ]; then
+	sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 fi
