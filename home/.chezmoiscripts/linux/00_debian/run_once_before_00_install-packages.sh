@@ -6,12 +6,24 @@
 # Install pre-requisite packages.
 sudo apt-get update
 sudo apt-get install -y curl wget
-# Download the PowerShell package file
-wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.5/powershell_7.4.5-1.deb_amd64.deb
+
+# Get the version of Debian
+source /etc/os-release
+
+echo $VERSION_ID
+# Download the Microsoft repository GPG keys
+wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/powershell-lts_7.4.6-1.deb_amd64.deb
+
 # Register the Microsoft repository GPG keys
-sudo dpkg -i ~/powershell_7.4.5-1.deb_amd64.deb
+sudo dpkg -i ~/powershell-lts_7.4.6-1.deb_amd64.deb
+
+sudo apt-get install -f
+
 # Delete the Microsoft repository GPG keys file
-rm ~/powershell_7.4.5-1.deb_amd64.deb
+rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
+
+# Update the list of packages after we added packages.microsoft.com
+sudo apt-get update
 
 # docker
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -57,7 +69,7 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	python3.12-dev python3.12-venv zathura xdotool zsh fzf tmux jq zathura xsel powershell
+	python3.12-dev python3.12-venv zathura xdotool zsh fzf tmux jq zathura xsel
 echo "installed"
 
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
