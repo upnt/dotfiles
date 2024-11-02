@@ -1,7 +1,10 @@
+# Ignore all scripts
 .chezmoiscripts/windows/*
 .chezmoiscripts/linux/*/*
+.chezmoiscripts/darwin/*
 
 {{- if eq .chezmoi.os "windows" }}
+# for windows
 
 !.chezmoiscripts/windows/*
 .config/
@@ -15,18 +18,26 @@
 
 
 {{- if eq .chezmoi.os "linux" }}
+# for linux
 
 AppData/
-.icons/
 
-# debian
 {{-   if (.chezmoi.osRelease.idLike | lower | contains "debian") }}
+# debian
 !.chezmoiscripts/linux/00_debian/*
-
-{{-     if not (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-!.chezmoiscripts/linux/01_flatpak/*
-!.icons/
-
-{{-     end }}
 {{-   end }}
+{{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+# wsl
+!.chezmoiscripts/linux/01_wsl/*
+.icons/
+{{-   else }}
+# gui
+!.chezmoiscripts/linux/01_flatpak/*
+{{-   end }}
+
+{{- end }}
+
+{{- if eq .chezmoi.os "darwin" }}
+# for macOS
+!.chezmoiscripts/darwin/*
 {{- end }}
