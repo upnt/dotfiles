@@ -38,12 +38,17 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 
 ### Windows PowerShell
 
+The setup is lightweight and fast because it is designed to be developed in WSL.
+
 - [x] Graphical, fast terminal
 - [x] Git and GitHub cli support
-- [x] Fast and minimal editor (Neovim minimal setting)
+- [x] Fast and minimal editor (Neovim)
 - [x] GUI applications for development
 
 ### Debian (including WSL)
+
+The setup is such that all languages can be developed in the same environment.
+Even if you are using a new language, you can quickly prepare your development environment and move into development.
 
 - [x] Graphical, fast terminal
 - [x] Git and GitHub cli support
