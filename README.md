@@ -3,14 +3,14 @@
 [![Windows PowerShell](https://github.com/upnt/dotfiles/actions/workflows/windows-installation.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/windows-installation.yml)
 [![Ubuntu](https://github.com/upnt/dotfiles/actions/workflows/ubuntu-installation.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/ubuntu-installation.yml)
 
-dotfiles managed by chezmoi
+Dotfiles managed by chezmoi
 
-## support
+## Support
 
 - [x] Debian (zsh)
 - [x] Windows (PowerShell7)
 
-## installation
+## Installation
 
 ### debian
 
