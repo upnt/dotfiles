@@ -7,19 +7,11 @@ Dotfiles managed by chezmoi
 
 ## Support
 
-- [x] Debian (zsh)
-- [x] Windows (PowerShell7)
-- [ ] macOS (Since I don't have a macOS)
+- [x] Debian (including WSL)
+- [x] Windows
+- [ ] macOS
 
 ## Installation
-
-### debian
-
-```bash
-mkdir -p ~/.local
-cd ~/.local
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
-```
 
 ### Windows PowerShell
 
@@ -33,3 +25,29 @@ If you're a OneDrive user, simply add the following script to enhance your setup
 ```powershell:Microsoft.PowerShell_profile.ps1
 . "$Home\AppData\Local\PowerShell\Microsoft.PowerShell_profile.ps1"
 ```
+
+### Debian (including WSL)
+
+```bash
+mkdir -p ~/.local
+cd ~/.local
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
+```
+
+## Features
+
+### Windows PowerShell
+
+- [x] Graphical, fast terminal
+- [x] Git and GitHub cli support
+- [x] Fast and minimal editor (Neovim minimal setting)
+- [x] GUI applications for development
+
+### Debian (including WSL)
+
+- [x] Graphical, fast terminal
+- [x] Git and GitHub cli support
+- [x] Graphical, highly functional editor (Neovim using LSP)
+- [x] Repository management on tmux using ghux
+- [x] Some compilers installed by asdf
+- [x] GUI applications for development
