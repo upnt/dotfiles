@@ -5,13 +5,14 @@
 
 dotfiles managed by chezmoi
 
-## Linux
+## support
 
-### support
+- [x] Debian (zsh)
+- [x] Windows (PowerShell7)
 
-- debian only
+## installation
 
-### install
+### debian
 
 ```bash
 mkdir -p ~/.local
@@ -19,9 +20,7 @@ cd ~/.local
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 ```
 
-## Windows PowerShell
-
-### install
+### Windows PowerShell
 
 ```powershell
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~\.local\bin'"
