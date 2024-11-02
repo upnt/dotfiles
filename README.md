@@ -9,6 +9,7 @@ Dotfiles managed by chezmoi
 
 - [x] Debian (zsh)
 - [x] Windows (PowerShell7)
+- [ ] macOS (Since I don't have a macOS)
 
 ## Installation
 
