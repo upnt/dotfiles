@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "textlint": "^14.3.0",
-    "textlint-rule-ginger": "^2.2.1",
     "textlint-rule-max-doc-width": "^1.4.0",
     "textlint-rule-spellchecker": "^2.2.1"
   }
