@@ -54,7 +54,8 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	python3.12-dev python3.12-venv zathura xdotool zsh fzf tmux jq zathura xsel
+	lsb-release software-properties-common gnupg python3.12-dev python3.12-venv \
+	zathura xdotool zsh fzf tmux jq zathura xsel
 
 echo "installed"
 
@@ -90,6 +91,6 @@ if [ -z "$(which pwsh)" ]; then
 	rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
 fi
 
-if [ -z "$(which clang)" ]; then
+if [ -z "$(which clang++-18)" ]; then
 	sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 fi

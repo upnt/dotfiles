@@ -81,6 +81,10 @@ if [[ -d ~/.asdf ]]; then
     if [[ -d ~/.asdf/installs/rust/1.80.1 ]]; then
         export PATH="$PATH:$HOME/.asdf/installs/rust/1.80.1/bin"
     fi
+    if [[ -d ~/.asdf/installs/go/1.23.0 ]]; then
+        export PATH="$PATH:$HOME/.asdf/installs/go/1.23.0/go/bin"
+        export PATH="$PATH:$HOME/.asdf/installs/go/1.23.0/packages/bin"
+    fi
     {{-   end }}
     {{- end }}
 fi
