@@ -62,23 +62,23 @@ echo "installed"
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
 
 if [ "$current_shell" != "/usr/bin/zsh" ]; then
-	chsh -s "$(which zsh)"
+	chsh -s "$(/usr/bin/which zsh)"
 fi
 
-if [ -z "$(which nvim)" ]; then
+if [ -z "$(/usr/bin/which nvim)" ]; then
 	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 	sudo rm -rf /opt/nvim
 	sudo tar -C /opt -xzf nvim-linux64.tar.gz
 	rm nvim-linux64.tar.gz
 fi
 
-if [ -z "$(which git-remind)" ]; then
+if [ -z "$(/usr/bin/which git-remind)" ]; then
 	wget https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
 	tar -C ~/.local/bin -xzf git-remind_1.1.1_Linux_x86_64.tar.gz
 	rm git-remind_1.1.1_Linux_x86_64.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE.md
 fi
 
-if [ -z "$(which pwsh)" ]; then
+if [ -z "$(/usr/bin/which pwsh)" ]; then
 	# Download the Microsoft repository GPG keys
 	wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/powershell-lts_7.4.6-1.deb_amd64.deb
 
@@ -91,12 +91,12 @@ if [ -z "$(which pwsh)" ]; then
 	rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
 fi
 
-if [ -z "$(which clang)" ]; then
+if [ -z "$(/usr/bin/which clang)" ]; then
 	sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 fi
 
 for cmd in clang clang++ lldb clangd lld; do
-	if [ -z "$(which "$cmd")" ]; then
+	if [ -z "$(/usr/bin/which "$cmd")" ]; then
 		_latest=$(/usr/bin/ls /usr/bin | /usr/bin/grep -P "${cmd//+/\+}-\d+$" | sort -V | tail -n 1)
 		if [ -n "$_latest" ]; then
 			echo "$_latest -> /usr/bin/$cmd"
