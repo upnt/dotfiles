@@ -91,6 +91,16 @@ if [ -z "$(which pwsh)" ]; then
 	rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
 fi
 
-if [ -z "$(which clang++-18)" ]; then
+if [ -z "$(which clang)" ]; then
 	sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 fi
+
+for cmd in clang clang++ lldb clangd lld; do
+	if [ -z "$(which "$cmd")" ]; then
+		_latest=$(/usr/bin/ls /usr/bin | /usr/bin/grep -P "${cmd//+/\+}-\d+$" | sort -V | tail -n 1)
+		if [ -n "$_latest" ]; then
+			echo "$_latest -> /usr/bin/$cmd"
+			sudo ln -s "$_latest" "/usr/bin/$cmd"
+		fi
+	fi
+done
