@@ -29,8 +29,8 @@ if [ ! -d "$PYENV_ROOT" ]; then
 	eval "$(pyenv virtualenv-init -)"
 
 	pyenv install 2.7
-	pyenv install 3.10
-	pyenv global 3.10
+	pyenv install 3.12
+	pyenv global 3.12
 
 	pip install poetry
 
@@ -40,7 +40,7 @@ if [ ! -d "$PYENV_ROOT" ]; then
 	pip install -U neovim
 	pip install -U pynvim
 
-	pyenv virtualenv 3.10 py3nvim
+	pyenv virtualenv latest py3nvim
 	pyenv activate py3nvim
 	pip install -U pip
 	pip install -U neovim
