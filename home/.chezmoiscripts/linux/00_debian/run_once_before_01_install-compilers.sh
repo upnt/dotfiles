@@ -20,8 +20,13 @@ if [ ! -d "$HOME/.pyenv" ]; then
 	export PYENV_ROOT="$HOME/.pyenv"
 	export PATH="$PYENV_ROOT/bin:$PATH"
 
-	curl https://pyenv.run | bash
+	git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+	git clone https://github.com/pyenv/pyenv-virtualenv.git "$PYENV_ROOT/plugins/pyenv-virtualenv"
+	git clone https://github.com/pyenv/pyenv-ccache.git "$PYENV_ROOT/plugins/pyenv-ccache"
+	git clone https://github.com/pyenv/pyenv-update.git "$PYENV_ROOT/plugins/pyenv-update"
+	cd ~/.pyenv && src/configure && make -C src
 	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
 
 	pyenv install 3.10
 	pyenv global 3.10
