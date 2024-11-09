@@ -130,11 +130,12 @@ if [ ! -d "$PLENV_ROOT" ]; then
 	git clone https://github.com/tokuhirom/Perl-Build.git "$PLENV_ROOT/plugins/perl-build/"
 	eval "$(plenv init -)"
 
-	plenv install 5.22.0
+	plenv install 5.22.4
 	plenv rehash
+	plenv install-cpanm
 
-	plenv global 5.22.0
-	# cpanm Neovim::Ext
+	plenv global 5.22.4
+	cpanm -n Neovim::Ext
 fi
 
 # rust
