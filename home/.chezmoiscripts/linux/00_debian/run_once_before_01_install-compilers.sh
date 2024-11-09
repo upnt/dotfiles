@@ -16,7 +16,7 @@ for cmd in clang clang++ lldb clangd lld; do
 done
 
 # python
-if [ ! -d "$HOME"/.pyenv ]; then
+if [ ! -d "$HOME/.pyenv" ]; then
 	export PYENV_ROOT="$HOME/.pyenv"
 	export PATH="$PYENV_ROOT/bin:$PATH"
 
@@ -35,7 +35,7 @@ if [ ! -d "$HOME"/.pyenv ]; then
 fi
 
 # nodejs
-if [ ! -d "$HOME"/.nodenv ]; then
+if [ ! -d "$HOME/.nodenv" ]; then
 	git clone https://github.com/nodenv/nodenv.git ~/.nodenv
 	cd ~/.nodenv && src/configure && make -C src
 	export PATH="$HOME/.nodenv/bin:$PATH"
@@ -51,7 +51,7 @@ if [ ! -d "$HOME"/.nodenv ]; then
 fi
 
 # ruby
-if [ ! -d "$HOME"/.rbenv ]; then
+if [ ! -d "$HOME/.rbenv" ]; then
 	git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 	export PATH="$HOME/.rbenv/bin:$PATH"
 	eval "$(rbenv init - zsh)"
@@ -60,6 +60,20 @@ if [ ! -d "$HOME"/.rbenv ]; then
 	rbenv global 3.3.4
 
 	gem install neovim
+fi
+
+# lua
+if [ ! -d "$HOME/.luaenv" ]; then
+	git clone https://github.com/cehoffman/luaenv.git ~/.luaenv
+	git clone https://github.com/cehoffman/lua-build.git ~/.luaenv/plugins/lua-build
+	git clone https://github.com/xpol/luaenv-luarocks.git ~/.luaenv/plugins/luaenv-luarocks
+	export PATH="$HOME/.luaenv/bin:$PATH"
+	eval "$(luaenv init - zsh)"
+
+	luaenv install 5.1.5
+	luaenv global 5.1.5
+
+	luaenv luarocks
 fi
 
 # golang (No goenv for backward compatibility)
@@ -87,7 +101,7 @@ if [ ! -f /opt/perl-5.40.0/bin/perl ]; then
 	sudo make install
 	sudo rm /tmp/perl-5.40.0.tar.gz
 	sudo rm -rf /tmp/perl-5.40.0
-	
+
 	cpanm -n Neovim::Ext
 
 	# texlive
@@ -104,26 +118,7 @@ fi
 if [ -z "$(/usr/bin/which rustup)" ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 	export PATH="$HOME/.cargo/bin:$PATH"
-	cargo install lsd bat ripgrep alacritty bottom tree-sitter-cli git-delta fd-find zoxide --locked
-fi
-
-# lua
-if [ -z "$(/usr/bin/which lua)" ]; then
-	cd /tmp || return
-	curl -L -R -O https://www.lua.org/ftp/lua-5.4.7.tar.gz
-	tar zxf lua-5.4.7.tar.gz
-	cd lua-5.4.7 || return
-	make all test
-	sudo rm /tmp/lua-5.4.7.tar.gz
-	sudo rm -rf /tmp/lua-5.4.7
-
-	cd /tmp || return
-	wget https://luarocks.org/releases/luarocks-3.11.1.tar.gz
-	tar zxpf luarocks-3.11.1.tar.gz
-	cd luarocks-3.11.1 || return
-	./configure && make && sudo make install
-	sudo rm /tmp/luarocks-3.11.1.tar.gz
-	sudo rm -rf /tmp/luarocks-3.11.1
+	cargo install lsd bat ripgrep bottom tree-sitter-cli git-delta fd-find zoxide --locked
 fi
 
 # asdf install java openjdk-21

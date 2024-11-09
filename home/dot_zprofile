@@ -18,3 +18,10 @@ if [[ -d "$HOME"/.rbenv ]]; then
     eval "$(rbenv init -)"
     export FPATH="$RBENV_ROOT/completions:$FPATH"
 fi
+
+if [[ -d "$HOME"/.luaenv ]]; then
+    export LUAENV_ROOT="$HOME/.luaenv"
+    export PATH="$LUAENV_ROOT/bin:$PATH"
+    eval "$(luaenv init -)"
+    export FPATH="$LUAENV_ROOT/completions:$FPATH"
+fi

@@ -14,6 +14,7 @@ if [ -z "$(which goneovim)" ]; then
 fi
 
 if [ -n "$(which update-desktop-database)" ]; then
+  cargo install alacritty
   mkdir -p "$HOME/.local/share/applications/"
   if [ ! -f "$HOME/.local/share/applications/Alacritty.desktop" ]; then
     sudo ln -s "$(which alacritty)" /usr/bin/alacritty
