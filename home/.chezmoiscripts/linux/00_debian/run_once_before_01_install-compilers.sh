@@ -32,7 +32,8 @@ if [ ! -d "$PYENV_ROOT" ]; then
 	pyenv install 3.12
 	pyenv global 3.12
 
-	pip install poetry
+	pip install -U pip
+	pip install -U poetry
 
 	pyenv virtualenv 2.7 py2nvim
 	pyenv activate py2nvim
