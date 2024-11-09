@@ -16,11 +16,11 @@ for cmd in clang clang++ lldb clangd lld; do
 done
 
 # python
-if [ ! -d "$HOME/.pyenv" ]; then
-	export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_ROOT="$HOME/.pyenv"
+if [ ! -d "$PYENV_ROOT" ]; then
 	export PATH="$PYENV_ROOT/bin:$PATH"
 
-	git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+	git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
 	git clone https://github.com/pyenv/pyenv-virtualenv.git "$PYENV_ROOT/plugins/pyenv-virtualenv"
 	git clone https://github.com/pyenv/pyenv-ccache.git "$PYENV_ROOT/plugins/pyenv-ccache"
 	git clone https://github.com/pyenv/pyenv-update.git "$PYENV_ROOT/plugins/pyenv-update"
@@ -28,23 +28,36 @@ if [ ! -d "$HOME/.pyenv" ]; then
 	eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
 
+	pyenv install 2.7
 	pyenv install 3.10
 	pyenv global 3.10
 
 	pip install poetry
 
-	pyenv virtualenv 3.10 pynvim3
-	pyenv activate pynvim3
+	pyenv virtualenv 2.7 py2nvim
+	pyenv activate py2nvim
 	pip install -U pip
+	pip install -U neovim
 	pip install -U pynvim
+
+	pyenv virtualenv 3.10 py3nvim
+	pyenv activate py3nvim
+	pip install -U pip
+	pip install -U neovim
+	pip install -U pynvim
+
+	pyenv deactivate
 fi
 
 # nodejs
-if [ ! -d "$HOME/.nodenv" ]; then
-	git clone https://github.com/nodenv/nodenv.git ~/.nodenv
+export NODENV_ROOT="$HOME/.nodenv"
+if [ ! -d "$NODENV_ROOT" ]; then
+	export PATH="$NODENV_ROOT/bin:$PATH"
+
+	git clone https://github.com/nodenv/nodenv.git "$NODENV_ROOT"
+	git clone https://github.com/nodenv/node-build.git "$NODENV_ROOT/plugins/node-build"
+	git clone https://github.com/nodenv/nodenv-update.git "$NODENV_ROOT/plugins/nodenv-update"
 	cd ~/.nodenv && src/configure && make -C src
-	export PATH="$HOME/.nodenv/bin:$PATH"
-	git clone https://github.com/nodenv/node-build.git "$(nodenv root)"/plugins/node-build
 
 	eval "$(nodenv init - zsh)"
 	nodenv install 20.17.0
@@ -56,9 +69,13 @@ if [ ! -d "$HOME/.nodenv" ]; then
 fi
 
 # ruby
-if [ ! -d "$HOME/.rbenv" ]; then
-	git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-	export PATH="$HOME/.rbenv/bin:$PATH"
+export RBENV_ROOT="$HOME/.rbenv"
+if [ ! -d "$RBENV_ROOT" ]; then
+	export PATH="$RBENV_ROOT/bin:$PATH"
+
+	git clone https://github.com/rbenv/rbenv.git "$RBENV_ROOT"
+	git clone https://github.com/rbenv/ruby-build.git "$RBENV_ROOT/plugins/ruby-build"
+	git clone https://github.com/rkh/rbenv-update.git "$RBENV_ROOT/plugins/rbenv-update"
 	eval "$(rbenv init - zsh)"
 
 	rbenv install 3.3.4
@@ -68,11 +85,14 @@ if [ ! -d "$HOME/.rbenv" ]; then
 fi
 
 # lua
-if [ ! -d "$HOME/.luaenv" ]; then
-	git clone https://github.com/cehoffman/luaenv.git ~/.luaenv
-	git clone https://github.com/cehoffman/lua-build.git ~/.luaenv/plugins/lua-build
-	git clone https://github.com/xpol/luaenv-luarocks.git ~/.luaenv/plugins/luaenv-luarocks
-	export PATH="$HOME/.luaenv/bin:$PATH"
+export LUAENV_ROOT="$HOME/.luaenv"
+if [ ! -d "$LUAENV_ROOT" ]; then
+	export PATH="$LUAENV_ROOT/bin:$PATH"
+
+	git clone https://github.com/cehoffman/luaenv.git "$LUAENV_ROOT"
+	git clone https://github.com/cehoffman/lua-build.git "$LUAENV_ROOT/plugins/lua-build"
+	git clone https://github.com/xpol/luaenv-luarocks.git "$LUAENV_ROOT/plugins/luaenv-luarocks"
+	git clone https://github.com/Sharparam/luaenv-update.git "$LUAENV_ROOT/plugins/luaenv-update"
 	eval "$(luaenv init - zsh)"
 
 	luaenv install 5.1.5
@@ -81,52 +101,76 @@ if [ ! -d "$HOME/.luaenv" ]; then
 	luaenv luarocks
 fi
 
+# java
+export JENV_ROOT="$HOME/.jenv"
+if [ ! -d "$JENV_ROOT" ]; then
+	export PATH="$JENV_ROOT/bin:$PATH"
+
+	git clone https://github.com/jenv/jenv.git "$JENV_ROOT"
+	eval "$(jenv init -)"
+
+	sudo apt-get install -y openjdk-21-jdk
+	jenv add /usr/lib/jvm/java-21-openjdk-amd64
+	jenv global 21
+	jenv enable-plugin export
+fi
+
+# julia
+export JULIAUP_ROOT="$HOME/.juliaup"
+if [ ! -d "$JULIAUP_ROOT" ]; then
+	curl -fsSL https://install.julialang.org | sh -s -- -y
+fi
+
+# perl
+export PLENV_ROOT="$HOME/.plenv"
+if [ ! -d "$PLENV_ROOT" ]; then
+	export PATH="$PLENV_ROOT/bin:$PATH"
+
+	git clone https://github.com/tokuhirom/plenv.git "$PLENV_ROOT"
+	git clone https://github.com/tokuhirom/Perl-Build.git "$PLENV_ROOT/plugins/perl-build/"
+	eval "$(plenv init -)"
+
+	plenv install 5.22.0
+	plenv rehash
+
+	plenv global 5.22.0
+	# cpanm Neovim::Ext
+fi
+
+# rust
+export RUSTUP_ROOT="$HOME/.rustup"
+if [ ! -d "$RUSTUP_ROOT" ]; then
+	export PATH="$HOME/.cargo/bin:$PATH"
+
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+	cargo install lsd bat ripgrep bottom tree-sitter-cli git-delta fd-find zoxide --locked
+fi
+
+# php
+if [ -z "$(which composer)" ]; then
+	sudo apt-get install -y php-common php-mbstring libapache2-mod-php php-cli php-curl php-xml
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+	php -r "unlink('composer-setup.php');"
+fi
+
+# tinytex
+if [ ! -d "$HOME/.TinyTeX" ]; then
+	wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+fi
+
 # golang (No goenv for backward compatibility)
 if [ ! -d /opt/go-1.12.3 ]; then
-	cd /tmp || return
+	export PATH="/opt/go-1.12.3/bin:$PATH"
+
+	cd /tmp || exit 1
 	wget https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
 	tar -xzf go1.23.3.linux-amd64.tar.gz
 	sudo mv go /opt/go-1.12.3
 	rm /tmp/go1.23.3.linux-amd64.tar.gz
-	export PATH="/opt/go-1.12.3/bin:$PATH"
 
 	go install github.com/dundee/gdu/v5/cmd/gdu@latest
 	go install github.com/jesseduffield/lazygit@latest
 	go install github.com/x-motemen/ghq@latest
 fi
-
-# perl
-if [ ! -f /opt/perl-5.40.0/bin/perl ]; then
-	cd /tmp || return
-	wget https://www.cpan.org/src/5.0/perl-5.40.0.tar.gz
-	tar -xzf perl-5.40.0.tar.gz
-	cd perl-5.40.0 || return
-	sudo ./Configure -des -Dprefix=/opt/perl-5.40.0
-	make
-	make test
-	sudo make install
-	sudo rm /tmp/perl-5.40.0.tar.gz
-	sudo rm -rf /tmp/perl-5.40.0
-
-	cpanm -n Neovim::Ext
-
-	# texlive
-	cd /tmp || return
-	wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-	tar xvf install-tl-unx.tar.gz
-	sudo rm /tmp/install-tl-unx.tar.gz
-	sudo rm -rf /tmp/install-tl-unx
-	cd install-tl-* || return
-	/opt/perl-5.40.0/bin/perl ./install-tl
-fi
-
-# rust
-if [ -z "$(/usr/bin/which rustup)" ]; then
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-	export PATH="$HOME/.cargo/bin:$PATH"
-	cargo install lsd bat ripgrep bottom tree-sitter-cli git-delta fd-find zoxide --locked
-fi
-
-# asdf install java openjdk-21
-# asdf install php 8.3.11
-# asdf install julia 1.10.5
