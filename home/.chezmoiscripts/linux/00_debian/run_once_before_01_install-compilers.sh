@@ -77,12 +77,13 @@ if [ ! -d "$HOME/.luaenv" ]; then
 fi
 
 # golang (No goenv for backward compatibility)
-if [ ! -d /usr/local/go ]; then
+if [ ! -d /opt/go-1.12.3 ]; then
 	cd /tmp || return
 	wget https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
-	sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.23.3.linux-amd64.tar.gz
-	sudo rm /tmp/go1.23.3.linux-amd64.tar.gz
-	export PATH=$PATH:/usr/local/go/bin
+	tar -xzf go1.23.3.linux-amd64.tar.gz
+	sudo mv go /opt/go-1.12.3
+	rm /tmp/go1.23.3.linux-amd64.tar.gz
+	export PATH="/opt/go-1.12.3/bin:$PATH"
 
 	go install github.com/dundee/gdu/v5/cmd/gdu@latest
 	go install github.com/jesseduffield/lazygit@latest

@@ -55,49 +55,6 @@ prompt_precmd() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_precmd
 
-export PATH="/opt/nvim-linux64/bin:$PATH"
-
-if [[ -d /usr/local/go ]]; then
-    export PATH=$PATH:/usr/local/go/bin
-fi
-
-if [[ -d /opt/gurobi1100 ]] then
-    export GUROBI_HOME="/opt/gurobi1100/linux64"
-    export PATH="${PATH}:${GUROBI_HOME}/bin"
-    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
-fi
-
-if [[ -d /opt/gurobi1103 ]] then
-    export GUROBI_HOME="/opt/gurobi1103/linux64"
-    export PATH="${PATH}:${GUROBI_HOME}/bin"
-    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
-fi
-
-if [[ -d /opt/cisco ]] then
-    export PATH="${PATH}:/opt/cisco/secureclient/bin"
-    export PATH="${PATH}:/opt/cisco/hostscan/bin/"
-    export PATH="${PATH}:/opt/cisco/anyconnect/securefirewallposture/ac_hostscan/bin"
-    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/opt/cisco/secureclient/lib"
-    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/opt/cisco/hostscan/lib"
-    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/opt/cisco/anyconnect/securefirewallposture/ac_hostscan/lib"
-fi
-
-if [[ -d /usr/local/texlive/2023 ]]; then
-    export PATH=$PATH:/usr/local/texlive/2023/bin/x86_64-linux
-    export MANPATH=$MANPATH:/usr/local/texlive/2023/texmf-dist/doc/man
-    export INFOPATH=$INFOPATH:/usr/local/texlive/2023/texmf-dist/doc/info
-fi
-
-if [[ -d /usr/local/texlive/2024 ]]; then
-    export PATH=$PATH:/usr/local/texlive/2024/bin/x86_64-linux
-    export MANPATH=$MANPATH:/usr/local/texlive/2024/texmf-dist/doc/man
-    export INFOPATH=$INFOPATH:/usr/local/texlive/2024/texmf-dist/doc/info
-fi
-
-export GHQ_ROOT="$HOME/workspace"
-
-export PATH=$PATH:~/.local/bin
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -186,13 +143,36 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 export LESS='-R'
 export EDITOR=nvim
 
+# load functions
 fpath+=~/.zsh_functions
+
+# load plugins
 while read -d $'\0' file; do
     source "${file}"
 done < <(/usr/bin/find ~/.zsh_plugins -mindepth 1 -maxdepth 1 -print0)
 
-autoload -Uz compinit && compinit
+# load envs
+if [[ -d "$HOME/.pyenv" ]]; then
+    eval "$(pyenv init -)"
+    fpath+="$PYENV_ROOT/completions"
+fi
 
+if [[ -d "$HOME/.nodenv" ]]; then
+    eval "$(nodenv init - zsh)"
+    fpath+="$NODENV_ROOT/completions"
+fi
+
+if [[ -d "$HOME/.rbenv" ]]; then
+    eval "$(rbenv init -)"
+    fpath+="$RBENV_ROOT/completions"
+fi
+
+if [[ -d "$HOME/.luaenv" ]]; then
+    eval "$(luaenv init -)"
+    fpath+="$LUAENV_ROOT/completions"
+fi
+
+# update exit function
 function confirm_exit() {
   local last_status=$?
   local last_pane=false
@@ -216,3 +196,5 @@ function confirm_exit() {
 }
 
 alias exit=confirm_exit
+
+autoload -Uz compinit && compinit
