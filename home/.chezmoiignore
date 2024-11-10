@@ -11,7 +11,12 @@
 .latexmkrc
 .tmux.conf
 .zsh_functions/
+.zsh_plugins/
 .zshrc
+.zprofile
+.bashrc
+.bash_profile
+.bash_aliases
 .icons/
 
 {{- end }}
