@@ -41,7 +41,7 @@ if [ ! -d "$PYENV_ROOT" ]; then
 	pip install -U neovim
 	pip install -U pynvim
 
-	pyenv virtualenv latest py3nvim
+	pyenv virtualenv 3.12 py3nvim
 	pyenv activate py3nvim
 	pip install -U pip
 	pip install -U neovim
@@ -132,10 +132,11 @@ if [ ! -d "$PLENV_ROOT" ]; then
 	eval "$(plenv init -)"
 
 	plenv install 5.22.4
+	plenv global 5.22.4
 	plenv rehash
 	plenv install-cpanm
+	plenv rehash
 
-	plenv global 5.22.4
 	cpanm -n Neovim::Ext
 fi
 
