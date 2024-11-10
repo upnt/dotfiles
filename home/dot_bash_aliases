@@ -1,0 +1,114 @@
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+  if [ -r ~/.dircolors ]; then
+    eval "$(dircolors -b ~/.dircolors)"
+  else
+    eval "$(dircolors -b)"
+  fi
+  alias ls='ls --color=auto'
+  alias dir='dir --color=auto'
+  alias vdir='vdir --color=auto'
+
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# update exit function
+function confirm_exit() {
+  local last_status=$?
+  local last_pane=false
+  if [[ -n $TMUX ]]; then
+    if [ "$(tmux list-windows | wc -l)" -eq 1 ]; then
+      if [ "$(tmux list-panes | wc -l)" -eq 1 ]; then
+        last_pane=true
+      fi
+    fi
+  fi
+
+  if "${last_pane}"; then
+    echo -n "セッションを終了しますか？(y/N): "
+    read -r answer
+    if [[ "$answer" == "y" ]]; then
+      builtin exit $last_status
+    fi
+  else
+    builtin exit $last_status
+  fi
+}
+
+alias exit=confirm_exit
+
+if type "bat" >/dev/null 2>&1; then
+  alias cat='bat'
+fi
+if type "rg" >/dev/null 2>&1; then
+  alias grep='rg'
+fi
+if type "fd" >/dev/null 2>&1; then
+  alias find='fd'
+fi
+if type "lsd" >/dev/null 2>&1; then
+  alias ls='lsd -l --blocks "git,user,group,name"'
+  alias la='ls -A'
+  alias ll='lsd -alF'
+else
+  alias ll='ls -alF'
+  alias la='ls -A'
+fi
+
+if type "zoxide" >/dev/null 2>&1; then
+  eval "$(zoxide init bash)"
+  alias cd="z"
+fi
+
+if type "fzf-tmux -p" >/dev/null 2>&1; then
+  alias fzf="fzf-tmux -p 90%"
+fi
+if type "fzf" >/dev/null 2>&1; then
+  function fe {
+    local file=$(find . -t f -p --hidden --exclude=".git/" --color=always |
+      sed -e 's#\\#/#g' |
+      fzf --ansi --reverse --preview 'bat --color=always {}' --preview-window=up:60%)
+    if [ -n "$file" ]; then
+      $EDITOR $file
+    fi
+  }
+
+  function fdiff {
+    local file=$(find . -t f -p --hidden --color=always --exclude=".git/" |
+      sed -e 's#\\#/#g' |
+      fzf --ansi --reverse --preview "git diff $@ {}" --preview-window=up:60%)
+    if [ -n "$file" ]; then
+      git diff $@ $file
+    fi
+  }
+
+  function gclone {
+    local repos=$(gh repo list --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]')
+    if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
+      for i in $(gh org list); do
+        local buf=$(gh repo list $i --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]')
+        if [ ! "$buf" = "" ]; then
+          repos="${repos}\n${buf}"
+        fi
+      done
+    fi
+    local repo=$(echo $repos | fzf --ansi --reverse | cut -f 1)
+    if [ ! "$repo" = "" ]; then
+      gh repo clone "$repo" $@
+    fi
+    echo $repo
+  }
+
+  alias ftm=ghux
+fi

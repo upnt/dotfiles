@@ -34,7 +34,6 @@ if [[ -d "$JENV_ROOT" ]]; then
     jenv enable-plugin export
 fi
 
-export PLENV_ROOT="$HOME/.plenv"
 if [[ -d "$PLENV_ROOT" ]]; then
     eval "$(plenv init -)"
 fi
