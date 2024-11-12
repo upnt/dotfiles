@@ -1,15 +1,3 @@
-@article{100000spin,
-  title = {100,000-Spin Coherent {{Ising}} Machine},
-  author = {Toshimori, Honjo and Tomohiro, Sonobe and Kensuke, Inaba and
-            Takahiro, Inagaki and Takuya, Ikuta and Yasuhiro, Yamada and Takushi,
-            Kazama and Koji, Enbutsu and Takeshi, Umeki and Ryoichi, Kasahara and
-            Ken-ichi, Kawarabayashi and Hiroki, Takesue},
-  date = {2021-09-29},
-  journaltitle = {Science Advances},
-  url = {https://www.science.org/doi/10.1126/sciadv.abh0952},
-  urldate = {2023-09-08},
-}
-
 @report{Advantage,
   type = {Technical report},
   title = {Advantage Processor Overview},
@@ -244,41 +232,6 @@
   organization = {The Quantum Computing Cloud - Fixstars Amplify},
 }
 
-@article{fullyConnected,
-  title = {A {{Fully-Connected Ising Model Embedding Method}} and {{Its
-           Evaluation}} for {{CMOS Annealing Machines}}},
-  author = {Oku, Daisuke and Terada, Kotaro and Hayashi, Masato and Yamaoka,
-            Masanao and Tanaka, Shu and Togawa, Nozomu},
-  date = {2019},
-  journaltitle = {IEICE Transactions on Information and Systems},
-  volume = {E102.D},
-  number = {9},
-  pages = {1696--1706},
-  doi = {10.1587/transinf.2018EDP7411},
-  abstract = {Combinatorial optimization problems with a large solution space
-              are difficult to solve just using von Neumann computers. Ising
-              machines or annealing machines have been developed to tackle these
-              problems as a promising Non-von Neumann computer. In order to use
-              these annealing machines, every combinatorial optimization problem
-              is mapped onto the physical Ising model, which consists of spins,
-              interactions between them, and their external magnetic fields. Then
-              the annealing machines operate so as to search the ground state of
-              the physical Ising model, which corresponds to the optimal solution
-              of the original combinatorial optimization problem. A combinatorial
-              optimization problem can be firstly described by an ideal
-              fully-connected Ising model but it is very hard to embed it onto
-              the physical Ising model topology of a particular annealing machine
-              , which causes one of the largest issues in annealing machines. In
-              this paper, we propose a fully-connected Ising model embedding
-              method targeting for CMOS annealing machine. The key idea is that
-              the proposed method replicates every logical spin in a
-              fully-connected Ising model and embeds each logical spin onto the
-              physical spins with the same chain length. Experimental results
-              through an actual combinatorial problem show that the proposed
-              method obtains spin embeddings superior to the conventional de
-              facto standard method, in terms of the embedding time and the
-              probability of obtaining a feasible solution.},
-}
 
 @online{gloverTutorialFormulatingUsing2019,
   title = {A {{Tutorial}} on {{Formulating}} and {{Using QUBO Models}}},
@@ -833,58 +786,6 @@
   langid = {english},
 }
 
-@inproceedings{preimageMD,
-  title = {Preimage {{Attacks}} on {{One-Block MD4}}, 63-{{Step MD5}} and {{More
-           }}},
-  booktitle = {Selected {{Areas}} in {{Cryptography}}},
-  author = {Aoki, Kazumaro and Sasaki, Yu},
-  editor = {Avanzi, Roberto Maria and Keliher, Liam and Sica, Francesco},
-  date = {2009},
-  pages = {103--119},
-  publisher = {Springer},
-  location = {Berlin, Heidelberg},
-  doi = {10.1007/978-3-642-04159-4_7},
-  abstract = {This paper shows preimage attacks on one-block MD4 and MD5 reduced
-              to 63 (out of 64) steps. Our attacks are based on the
-              meet-in-the-middle attack, and many additional improvements make
-              the preimage computable faster than that of the brute-force attack,
-              2128 hash computation. A preimage of one-block MD4 can be computed
-              in the complexity of the 2107 MD4 compression function computation,
-              and a preimage of MD5 reduced to 63 steps can be computed in the
-              complexity of the 2121 MD5 compression function computation.
-              Moreover, we optimize the computational order of the brute-force
-              attack against MD5, and a preimage of full-round MD5 can be
-              computed in the complexity of the 2127 MD5 compression function
-              computation.},
-  isbn = {978-3-642-04159-4},
-  langid = {english},
-}
-
-@inproceedings{preimages,
-  title = {Preimages for {{Reduced SHA-0}} and {{SHA-1}}},
-  booktitle = {Advances in {{Cryptology}} – {{CRYPTO}} 2008},
-  author = {De Cannière, Christophe and Rechberger, Christian},
-  editor = {Wagner, David},
-  date = {2008},
-  pages = {179--202},
-  publisher = {Springer},
-  location = {Berlin, Heidelberg},
-  doi = {10.1007/978-3-540-85174-5_11},
-  abstract = {In this paper, we examine the resistance of the popular hash
-              function SHA-1 and its predecessor SHA-0 against dedicated preimage
-              attacks. In order to assess the security margin of these hash
-              functions against these attacks, two new cryptanalytic techniques
-              are developed: Reversing the inversion problem: the idea is to
-              start with an impossible expanded message that would lead to the
-              required digest, and then to correct this message until it becomes
-              valid without destroying the preimage property.P3graphs: an
-              algorithm based on the theory of random graphs that allows the
-              conversion of preimage attacks on the compression function to
-              attacks on the hash function with less effort than traditional
-              meet-in-the-middle approaches.},
-  isbn = {978-3-540-85174-5},
-  langid = {english},
-}
 
 @article{RSA,
   title = {A Method for Obtaining Digital Signatures and Public-Key
@@ -1076,4 +977,301 @@
   issn = {2689-1808},
   doi = {10.1109/tqe.2021.3050449},
   url = {http://dx.doi.org/10.1109/TQE.2021.3050449},
+}
+  
+@article{convertBool,
+  title = {Converting of Boolean Expression to Linear Equations, Inequalities
+           and {{QUBO}} Penalties for Cryptanalysis},
+  author = {Pakhomchik, Aleksey I. and Voloshinov, Vladimir V. and Vinokur,
+            Valerii M. and Lesovik, Gordey B.},
+  year = {2022},
+  month = feb,
+  journal = {Algorithms},
+  volume = {15},
+  number = {2},
+  pages = {33},
+  publisher = {Multidisciplinary Digital Publishing Institute},
+  issn = {1999-4893},
+  doi = {10.3390/a15020033},
+  urldate = {2024-07-01},
+  abstract = {There exists a wide range of constraint programming (CP) problems
+              defined on Boolean functions depending on binary variables. One of
+              the approaches to solving CP problems is using specific appropriate
+              solvers, e.g., SAT solvers. An alternative is using the generic
+              solvers for mixed-integer linear programming problems (MILP), but
+              they require transforming expressions with Boolean functions to
+              linear equations or inequalities. Here, we present two methods of
+              such a transformation which applies to any Boolean function defined
+              by explicit rules giving values of the Boolean function for all
+              combinations of its Boolean variables. The first method represents
+              the Boolean function as a linear equation in the original binary
+              variables and, possibly, binary ancillaries, which become
+              additional variables of the MILP problem being composed. The second
+              method represents the Boolean function as a set of linear
+              inequalities in the original binary variables and one additional
+              continuous variable (representing the value of the function). The
+              choice between the first or second method is a trade-off between
+              the number of binary variables and number of linear constraints in
+              the emerging MP problem. The advantage of the proposed approach is
+              that both methods reduce important cryptanalysis problems, such as
+              the preimaging of hash functions or breaking symmetric ciphers as
+              the MILP problems, which are solved by the generic MILP solvers.
+              Furthermore, the first method enables to reduce the binary linear
+              equations to quadratic unconstrained binary optimization (QUBO), by
+              the quantum annealer, e.g., D-Wave.},
+  copyright = {http://creativecommons.org/licenses/by/3.0/},
+  langid = {english},
+}
+
+@inproceedings{preimages,
+  title = {Preimages for Reduced {{SHA-0}} and {{SHA-1}}},
+  booktitle = {Advances in Cryptology -- {{CRYPTO}} 2008},
+  author = {De Canni{\`e}re, Christophe and Rechberger, Christian},
+  editor = {Wagner, David},
+  year = {2008},
+  pages = {179--202},
+  publisher = {Springer},
+  address = {Berlin, Heidelberg},
+  doi = {10.1007/978-3-540-85174-5_11},
+  abstract = {In this paper, we examine the resistance of the popular hash
+              function SHA-1 and its predecessor SHA-0 against dedicated preimage
+              attacks. In order to assess the security margin of these hash
+              functions against these attacks, two new cryptanalytic techniques
+              are developed: Reversing the inversion problem: the idea is to
+              start with an impossible expanded message that would lead to the
+              required digest, and then to correct this message until it becomes
+              valid without destroying the preimage property.P3graphs: an
+              algorithm based on the theory of random graphs that allows the
+              conversion of preimage attacks on the compression function to
+              attacks on the hash function with less effort than traditional
+              meet-in-the-middle approaches.},
+  isbn = {978-3-540-85174-5},
+  langid = {english},
+}
+
+@misc{gurobiOptimizer,
+  title = {Gurobi Optimizer},
+  journal = {Gurobi Optimization},
+  urldate = {2024-06-11},
+  abstract = {Decision Intelligence -- Across the Enterprise Data Scientists
+              Operations Researchers Business Leaders Academics Consultants and
+              ISVs Optimization for Data Scientists Data Scientists By combining
+              machine learning and optimization, you can go beyond
+              predictions---to optimized decisions. Learn More Optimization for
+              Operations Researchers Operations Researchers When your ``good
+              enough'' solver isn't enough, Gurobi delivers the speed, quality, [
+              {\dots}]},
+  howpublished = {https://www.gurobi.com/},
+  langid = {american},
+}
+
+@inproceedings{preimageMD,
+  title = {Preimage Attacks on One-Block {{MD4}}, 63-Step {{MD5}} and More},
+  booktitle = {Selected Areas in Cryptography},
+  author = {Aoki, Kazumaro and Sasaki, Yu},
+  editor = {Avanzi, Roberto Maria and Keliher, Liam and Sica, Francesco},
+  year = {2009},
+  pages = {103--119},
+  publisher = {Springer},
+  address = {Berlin, Heidelberg},
+  doi = {10.1007/978-3-642-04159-4_7},
+  abstract = {This paper shows preimage attacks on one-block MD4 and MD5 reduced
+              to 63 (out of 64) steps. Our attacks are based on the
+              meet-in-the-middle attack, and many additional improvements make
+              the preimage computable faster than that of the brute-force attack,
+              2128 hash computation. A preimage of one-block MD4 can be computed
+              in the complexity of the 2107 MD4 compression function computation,
+              and a preimage of MD5 reduced to 63 steps can be computed in the
+              complexity of the 2121 MD5 compression function computation.
+              Moreover, we optimize the computational order of the brute-force
+              attack against MD5, and a preimage of full-round MD5 can be
+              computed in the complexity of the 2127 MD5 compression function
+              computation.},
+  isbn = {978-3-642-04159-4},
+  langid = {english},
+}
+
+@inproceedings{ABS2,
+  title = {Diverse Adaptive Bulk Search: A Framework for Solving {{QUBO}}
+           Problems on Multiple {{GPUs}}},
+  shorttitle = {Diverse {{Adaptive Bulk Search}}},
+  booktitle = {2023 {{IEEE}} International Parallel and Distributed Processing
+               Symposium Workshops ({{IPDPSW}})},
+  author = {Nakano, Koji and Takafuji, Daisuke and Ito, Yasuaki and Yazane,
+            Takashi and Yano, Junko and Ozaki, Shiro and Katsuki, Ryota and Mori,
+            Rie},
+  year = {2023},
+  month = may,
+  eprint = {2207.03069},
+  primaryclass = {cs},
+  pages = {314--325},
+  doi = {10.1109/IPDPSW59300.2023.00060},
+  urldate = {2023-11-21},
+  abstract = {Quadratic Unconstrained Binary Optimization (QUBO) is a
+              combinatorial optimization to find an optimal binary solution
+              vector that minimizes the energy value defined by a quadratic
+              formula of binary variables in the vector. As many NP-hard problems
+              can be reduced to QUBO problems, considerable research has gone
+              into developing QUBO solvers running on various computing platforms
+              such as quantum devices, ASICs, FPGAs, GPUs, and optical fibers.
+              This paper presents a framework called Diverse Adaptive Bulk Search
+              (DABS), which has the potential to find optimal solutions of many
+              types of QUBO problems. Our DABS solver employs a genetic
+              algorithm-based search algorithm featuring three diverse
+              strategies: multiple search algorithms, multiple genetic operations
+              , and multiple solution pools. During the execution of the solver,
+              search algorithms and genetic operations that succeeded in finding
+              good solutions are automatically selected to obtain better
+              solutions. Moreover, search algorithms traverse between different
+              solution pools to find good solutions. We have implemented our DABS
+              solver to run on multiple GPUs. Experimental evaluations using
+              eight NVIDIA A100 GPUs confirm that our DABS solver succeeds in
+              finding optimal or potentially optimal solutions for three types of
+              QUBO problems.},
+  archiveprefix = {arXiv},
+}
+
+@article{MAlgorithm,
+  title = {Binary Optimization by Momentum Annealing},
+  author = { Takuya Okuyama and Tomohiro Sonobe and {Ken-ichi} Kawarabayashi and
+            Masanao Yamaoka},
+  year = {2019},
+  month = jul,
+  journal = {Physical Review E},
+  volume = {100},
+  number = {1},
+  pages = {012111},
+  issn = {2470-0045, 2470-0053},
+  doi = {10.1103/PhysRevE.100.012111},
+  urldate = {2023-09-08},
+  langid = {english},
+}
+
+@article{100000spin,
+  title = {100,000-Spin Coherent {{Ising}} Machine},
+  author = {Toshimori Honjo and Tomohiro Sonobe and Kensuke Inaba and Takahiro
+            Inagaki and Takuya Ikuta and Yasuhiro Yamada and Takushi Kazama and
+            Koji Enbutsu and Takeshi Umeki and Ryoichi Kasahara and {Ken-ichi}
+            Kawarabayashi and Hiroki Takesue},
+  date = {2021-09-29},
+  month = sep,
+  journal = {Science Advances},
+  journaltitle = {Science Advances},
+  url = {https://www.science.org/doi/10.1126/sciadv.abh0952},
+  urldate = {2023-09-08},
+}
+
+
+@article{fullyConnected,
+  title = {A Fully-Connected {{Ising}} Model Embedding Method and Its Evaluation
+           for {{CMOS}} Annealing Machines},
+  author = {Oku, Daisuke and Terada, Kotaro and Hayashi, Masato and Yamaoka,
+            Masanao and Tanaka, Shu and Togawa, Nozomu},
+  year = {2019},
+  journal = {IEICE Transactions on Information and Systems},
+  volume = {E102.D},
+  number = {9},
+  pages = {1696--1706},
+  doi = {10.1587/transinf.2018EDP7411},
+  abstract = {Combinatorial optimization problems with a large solution space
+              are difficult to solve just using von Neumann computers. Ising
+              machines or annealing machines have been developed to tackle these
+              problems as a promising Non-von Neumann computer. In order to use
+              these annealing machines, every combinatorial optimization problem
+              is mapped onto the physical Ising model, which consists of spins,
+              interactions between them, and their external magnetic fields. Then
+              the annealing machines operate so as to search the ground state of
+              the physical Ising model, which corresponds to the optimal solution
+              of the original combinatorial optimization problem. A combinatorial
+              optimization problem can be firstly described by an ideal
+              fully-connected Ising model but it is very hard to embed it onto
+              the physical Ising model topology of a particular annealing machine
+              , which causes one of the largest issues in annealing machines. In
+              this paper, we propose a fully-connected Ising model embedding
+              method targeting for CMOS annealing machine. The key idea is that
+              the proposed method replicates every logical spin in a
+              fully-connected Ising model and embeds each logical spin onto the
+              physical spins with the same chain length. Experimental results
+              through an actual combinatorial problem show that the proposed
+              method obtains spin embeddings superior to the conventional de
+              facto standard method, in terms of the embedding time and the
+              probability of obtaining a feasible solution.},
+}
+
+@misc{shs,
+  title = {Secure Hash Standard ({{SHS}})},
+  author = {{National Institute of Standards {and} Technology}},
+  year = {2015},
+  month = aug,
+  number = {Federal Information Processing Standard (FIPS) 180-4},
+  publisher = {U.S. Department of Commerce},
+  doi = {10.6028/NIST.FIPS.180-4},
+  urldate = {2024-05-29},
+  abstract = {This standard specifies hash algorithms that can be used to
+              generate digests of messages. The digests are used to detect
+              whether messages have been changed since the digests were
+              generated.},
+  langid = {english},
+}
+
+@article{isingformulation,
+  title = {{{Ising}} Formulations of Many {{NP}} Problems},
+  author = {Lucas, Andrew},
+  year = {2014},
+  month = feb,
+  journal = {Frontiers in Physics},
+  volume = {2},
+  publisher = {Frontiers},
+  issn = {2296-424X},
+  doi = {10.3389/fphy.2014.00005},
+  urldate = {2024-05-29},
+  abstract = {We provide Ising formulations for many NP-complete and NP-hard
+              problems, including all of Karp's 21 NP-complete problems. This
+              collects and extends mappings to the Ising model from partitioning,
+              covering and satisfiability. In each case, the required number of
+              spins is at most cubic in the size of the problem. This work may be
+              useful in designing adiabatic quantum optimization algorithms.},
+  langid = {english},
+}
+
+@misc{tutorial,
+  title = {A Tutorial on Formulating and Using {{QUBO}} Models},
+  author = {Glover, Fred and Kochenberger, Gary and Du, Yu},
+  year = {2019},
+  month = nov,
+  number = {arXiv:1811.11538},
+  eprint = {1811.11538},
+  primaryclass = {quant-ph},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1811.11538},
+  urldate = {2024-08-09},
+  abstract = {The Quadratic Unconstrained Binary Optimization (QUBO) model has
+              gained prominence in recent years with the discovery that it
+              unifies a rich variety of combinatorial optimization problems. By
+              its association with the Ising problem in physics, the QUBO model
+              has emerged as an underpinning of the quantum computing area known
+              as quantum annealing and has become a subject of study in
+              neuromorphic computing. Through these connections, QUBO models lie
+              at the heart of experimentation carried out with quantum computers
+              developed by D-Wave Systems and neuromorphic computers developed by
+              IBM. Computational experience is being amassed by both the
+              classical and the quantum computing communities that highlights not
+              only the potential of the QUBO model but also its effectiveness as
+              an alternative to traditional modeling and solution methodologies.
+              This tutorial discloses the basic features of the QUBO model that
+              give it the power and flexibility to encompass the range of
+              applications that have thrust it onto center stage of the
+              optimization field. We show how many different types of
+              constraining relationships arising in practice can be embodied
+              within the "unconstrained" QUBO formulation in a very natural
+              manner using penalty functions, yielding exact model
+              representations in contrast to the approximate representations
+              produced by customary uses of penalty functions. Each step of
+              generating such models is illustrated in detail by simple numerical
+              examples, to highlight the convenience of using QUBO models in
+              numerous settings. We also describe recent innovations for solving
+              QUBO models that offer a fertile avenue for integrating classical
+              and quantum computing and for applying these models in machine
+              learning.},
+  archiveprefix = {arXiv},
 }
