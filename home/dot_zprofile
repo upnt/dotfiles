@@ -2,6 +2,10 @@ if [[ -d /opt/nvim-linux64 ]]; then
     export PATH="/opt/nvim-linux64/bin:$PATH"
 fi
 
+if [[ -d /opt/apache-maven-3.9.9 ]]; then
+    export PATH="/opt/apache-maven-3.9.9/bin:$PATH"
+fi
+
 if [[ -d /opt/perl-5.40.0 ]]; then
     export PATH="/opt/perl-5.40.0/bin:$PATH"
 fi
@@ -84,3 +88,5 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export LESS='-R'
 export EDITOR=nvim
 export GHQ_ROOT="$HOME/workspace"
+export BIBINPUTS="$BIBINPUTS:$HOME/.local/bib"
+export BSTINPUTS="$BSTINPUTS:$HOME/.local/bst"

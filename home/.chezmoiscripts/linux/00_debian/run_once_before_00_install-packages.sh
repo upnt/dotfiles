@@ -63,13 +63,6 @@ if [ "$current_shell" != "/usr/bin/zsh" ]; then
 	chsh -s "$(/usr/bin/which zsh)"
 fi
 
-if [ -z "$(/usr/bin/which nvim)" ]; then
-	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-	sudo rm -rf /opt/nvim
-	sudo tar -C /opt -xzf nvim-linux64.tar.gz
-	rm nvim-linux64.tar.gz
-fi
-
 if [ -z "$(/usr/bin/which git-remind)" ]; then
 	wget https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
 	tar -C ~/.local/bin -xzf git-remind_1.1.1_Linux_x86_64.tar.gz
@@ -87,4 +80,15 @@ if [ -z "$(/usr/bin/which pwsh)" ]; then
 
 	# Delete the Microsoft repository GPG keys file
 	rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
+fi
+
+if [ -d "/opt/nvim-linux64" ]; then
+	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+	sudo tar -C /opt -xzf nvim-linux64.tar.gz
+	rm nvim-linux64.tar.gz
+fi
+
+if [ ! -d "/opt/apache-maven-3.9.9" ]; then
+	wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
+	sudo tar xzvf apache-maven-3.9.9-bin.tar.gz -C /opt
 fi
