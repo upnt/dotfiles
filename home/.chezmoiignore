@@ -7,18 +7,22 @@
 # for windows
 
 !.chezmoiscripts/windows/*
-.config/
 .latexmkrc
 .tmux.conf
-.zsh_functions/
-.zsh_plugins/
+.ghux_aliases
+.local/
+.config/
+.icons/
+
 .zshrc
 .zprofile
+.zsh_functions/
+.zsh_plugins/
+
 .profile
 .bashrc
 .bash_profile
 .bash_aliases
-.icons/
 
 {{- end }}
 
