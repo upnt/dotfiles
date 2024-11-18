@@ -35,10 +35,6 @@ AppData/
 {{-   if (.chezmoi.osRelease.idLike | lower | contains "debian") }}
 # debian
 !.chezmoiscripts/linux/00_debian/*
-.profile
-.bashrc
-.bash_profile
-.bash_aliases
 {{-   end }}
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 # wsl
@@ -54,8 +50,4 @@ AppData/
 {{- if eq .chezmoi.os "darwin" }}
 # for macOS
 !.chezmoiscripts/darwin/*
-.profile
-.bashrc
-.bash_profile
-.bash_aliases
 {{- end }}
