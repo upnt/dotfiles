@@ -67,6 +67,7 @@ try
 	__winget_install_id("BurntSushi.ripgrep.MSVC")
 	__winget_install_id("Discord.Discord")
 	__winget_install_id("Notion.Notion")
+	__winget_install_id("Notion.NotionCalendar")
 	__winget_install_ms("Password Manager SafeInCloud")
 	__winget_install_ms("9P64KGF20H0T")
 	$Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
