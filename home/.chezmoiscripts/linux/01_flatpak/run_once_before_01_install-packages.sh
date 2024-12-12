@@ -14,6 +14,7 @@ if [ -z "$(which goneovim)" ]; then
 fi
 
 if [ -n "$(which update-desktop-database)" ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
   cargo install alacritty
   mkdir -p "$HOME/.local/share/applications/"
   if [ ! -f "$HOME/.local/share/applications/Alacritty.desktop" ]; then

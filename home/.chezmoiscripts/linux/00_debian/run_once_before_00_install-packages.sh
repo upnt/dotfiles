@@ -82,7 +82,7 @@ if [ -z "$(/usr/bin/which pwsh)" ]; then
 	rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
 fi
 
-if [ -d "/opt/nvim-linux64" ]; then
+if [ ! -d "/opt/nvim-linux64" ]; then
 	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 	sudo tar -C /opt -xzf nvim-linux64.tar.gz
 	rm nvim-linux64.tar.gz
@@ -91,4 +91,5 @@ fi
 if [ ! -d "/opt/apache-maven-3.9.9" ]; then
 	wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
 	sudo tar xzvf apache-maven-3.9.9-bin.tar.gz -C /opt
+	rm apache-maven-3.9.9-bin.tar.gz
 fi
