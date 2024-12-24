@@ -180,9 +180,9 @@ if type "fzf" > /dev/null 2>&1; then
     }
     
     function fcm {
-        local pane=`tmux ls |
-        fzf --ansi --preview 'echo {} | cut -d : -f 1 | xargs tmux capture-pane -ep -t | cat' |
-        cut -d : -f 1`
+        local pane=`tmux ls -F '[#{session_windows}] #S' |
+        fzf --ansi --preview 'echo {} | cut -d " " -f 2- | xargs tmux capture-pane -ep -t | cat' |
+        cut -d ' ' -f 2-`
         if [ -n "$pane" ]; then
             tmux switch -t $pane
         fi
