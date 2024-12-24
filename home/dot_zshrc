@@ -183,8 +183,16 @@ if type "fzf" > /dev/null 2>&1; then
         local pane=`tmux ls -F '[#{session_windows}] #S' |
         fzf --ansi --preview 'echo {} | cut -d " " -f 2- | xargs tmux capture-pane -ep -t | cat' |
         cut -d ' ' -f 2-`
-        if [ -n "$pane" ]; then
-            tmux switch -t $pane
+        
+        # if you in tmux sesion
+        local in_tmux
+        [[ -n "$TMUX" ]] && in_tmux=0 || in_tmux=1
+
+        if [[ -n "$pane" ]];
+            if [[ $in_tmux == 0 ]] ; then
+                tmux switch-client -t $pane
+            else;
+                tmux attach-session -t $pane
         fi
     }
 

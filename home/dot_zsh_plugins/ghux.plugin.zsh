@@ -45,6 +45,8 @@ function ghux() {
             gh_list="[github] clone from github"
             project_list="$project_list\n$gh_list"
         fi
+        repo_list="[create] new repository"
+        project_list="$project_list\n$repo_list"
         local list
 
 
@@ -65,6 +67,15 @@ function ghux() {
             cd $(ghq root); project_name=$(gclone); cd -
             project_name=${project_name##*/}
             project_dir=$(ghq root)/$project_name
+        elif (echo $project_dir | /usr/bin/grep -E "^\[create\]" &>/dev/null);then
+            read project_name"?project name: "
+            project_dir=$(ghq root)/$project_name
+            if [ ! -d "$project_dir" ]; then
+                mkdir $project_dir
+                cd $project_dir; git init; cd -
+            else;
+                echo "${project_dir} already exists"
+            fi
         else
             project_dir=$(ghq root)/$project_dir
             project_name=$(echo $project_dir | /usr/bin/rev | /usr/bin/awk -F \/ '{printf "%s", $1}' | /usr/bin/rev | /usr/bin/awk '{sub("\\.",""); print $0}')
@@ -84,16 +95,16 @@ function ghux() {
 
 
     if [[ $in_tmux == 0 ]] ; then
-        if [[ -n $CONTEXT ]];then
+        if [[ -n "$CONTEXT" ]]; then
             BUFFER="tmux switch-client -t $project_name"&& zle accept-line && zle redisplay
-        else;
+        elif [[ -n "$project_name" ]]; then
             tmux switch-client -t $project_name
         fi
     else;
         
-        if [[ -n $CONTEXT ]];then
+        if [[ -n "$CONTEXT" ]]; then
             BUFFER="tmux attach-session -t $project_name"&& zle accept-line && zle redisplay
-        else;
+        elif [[ -n "$project_name" ]]; then
             tmux attach-session -t $project_name
         fi
     fi
