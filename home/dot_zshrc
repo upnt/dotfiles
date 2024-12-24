@@ -178,6 +178,15 @@ if type "fzf" > /dev/null 2>&1; then
             git diff $@ $file
         fi
     }
+    
+    function fcm {
+        local pane=`tmux ls |
+        fzf --ansi --preview 'echo {} | cut -d : -f 1 | xargs tmux capture-pane -ep -t | cat' |
+        cut -d : -f 1`
+        if [ -n "$pane" ]; then
+            tmux switch -t $pane
+        fi
+    }
 
     function gclone {
         local repos=`gh repo list --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
