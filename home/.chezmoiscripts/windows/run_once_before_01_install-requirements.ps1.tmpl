@@ -42,7 +42,12 @@ try
 {
 	Write-Output "Install pkgs..."
 	__winget_install_id("Microsoft.PowerShell")
+
+	{{ if eq .chezmoi.arch "amd64" }}
 	__winget_install_id("Zen-Team.Zen-Browser.Optimized")
+	{{ else }}
+	__winget_install_id("Zen-Team.Zen-Browser")
+	{{ end }}
 	__winget_install_id("Google.Chrome")
 	__winget_install_id("GitHub.cli")
 	__winget_install_id("Git.Git")
