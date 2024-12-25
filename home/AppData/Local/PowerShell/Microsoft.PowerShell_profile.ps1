@@ -86,7 +86,7 @@ function gclone
             }
         }
     }
-    $repo = (Write-Host $repos | fzf --ansi --reverse | cut -f 1)
+    $repo = (Write-Host $repos | fzf --ansi --reverse )
     if ( -not ($repo -eq "" ) )
     {
         gh repo clone $repo $extraArgs

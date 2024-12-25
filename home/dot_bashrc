@@ -108,3 +108,5 @@ fi
 if [[ -d "$PLENV_ROOT" ]]; then
   eval "$(plenv init -)"
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
