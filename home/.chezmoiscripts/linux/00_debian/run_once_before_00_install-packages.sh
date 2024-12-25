@@ -54,7 +54,7 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	lsb-release software-properties-common gnupg zathura xdotool zsh fzf tmux jq zathura xsel
+	lsb-release software-properties-common gnupg zathura xdotool zsh tmux jq zathura xsel
 echo "installed"
 
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
@@ -92,4 +92,9 @@ if [ ! -d "/opt/apache-maven-3.9.9" ]; then
 	wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
 	sudo tar xzvf apache-maven-3.9.9-bin.tar.gz -C /opt
 	rm apache-maven-3.9.9-bin.tar.gz
+fi
+
+if [ ! -d "$HOME/.fzf" ]; then
+	git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+	~/.fzf/install
 fi
