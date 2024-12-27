@@ -109,6 +109,8 @@ if [[ -d "$PLENV_ROOT" ]]; then
   eval "$(plenv init -)"
 fi
 
-if [[ -d "$HOME/.fzf"]]; then
+if [[ -d "$HOME/.fzf" ]]; then
   eval "$(fzf --bash)"
 fi
+
+[[ -f "$HOME/._bashrc" ]] && source "$HOME/._bashrc"

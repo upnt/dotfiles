@@ -95,3 +95,5 @@ export EDITOR=nvim
 export GHQ_ROOT="$HOME/workspace"
 export BIBINPUTS="$BIBINPUTS:$HOME/.local/bib"
 export BSTINPUTS="$BSTINPUTS:$HOME/.local/bst"
+
+[[ -f "$HOME/._zprofile" ]] && source "$HOME/._zprofile"
