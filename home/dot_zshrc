@@ -160,7 +160,8 @@ if type "zoxide" > /dev/null 2>&1; then
 fi
 
 if [[ -d "$HOME/.fzf" ]]; then
-    alias fzf="$HOME/.fzf/bin/fzf-tmux -p 90%"
+    source <(fzf --zsh)
+    
     function fe {
         local file=`find . -t f -p --hidden --exclude=".git/" --color=always |
         sed -e 's#\\\\#/#g' |
@@ -215,11 +216,10 @@ if [[ -d "$HOME/.fzf" ]]; then
     }
 
     alias ftm=ghux
+    alias fzf="$HOME/.fzf/bin/fzf-tmux -p 90%"
 fi
 
 # config
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

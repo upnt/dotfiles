@@ -74,6 +74,11 @@ if [[ -d "$HOME/.local/bin" ]]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [[ -d "$HOME/.fzf" ]]; then
+  PATH="/home/upnt/.fzf/bin:$PATH"
+fi
+
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 export HISTCONTROL=ignoreboth
