@@ -74,6 +74,7 @@ fi
 if type "fzf-tmux -p" >/dev/null 2>&1; then
   alias fzf="fzf-tmux -p 90%"
 fi
+
 if type "fzf" >/dev/null 2>&1; then
   function fe {
     local file=$(find . -t f -p --hidden --exclude=".git/" --color=always |
