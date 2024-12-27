@@ -20,7 +20,10 @@ iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~\.local\bin'"
 ~\.local\bin\chezmoi init --apply upnt
 ```
 
-If you're a OneDrive user, simply add the following script to enhance your setup! Just drop it into `$HOME\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`, and you're good to go!
+If you're a OneDrive user, simply add the following script to enhance your setup!
+Just drop it into
+`$HOME\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`,
+and you're good to go!
 
 ```powershell:Microsoft.PowerShell_profile.ps1
 . "$Home\AppData\Local\PowerShell\Microsoft.PowerShell_profile.ps1"
@@ -48,7 +51,9 @@ The setup is lightweight and fast because it is designed that you develop in WSL
 ### Debian (including WSL)
 
 The setup is such that all languages can be developed in the same environment.
-Even if you are using a new language, you can immediately set up a development environment, where you can develop with the same feeling as in the previous language.
+Even if you are using a new language,
+you can immediately set up a development environment,
+where you can develop with the same feeling as in the previous language.
 
 - [x] Graphical, fast terminal
 - [x] Git and GitHub cli support
