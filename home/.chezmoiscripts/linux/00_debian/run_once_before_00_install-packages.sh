@@ -96,5 +96,5 @@ fi
 
 if [ ! -d "$HOME/.fzf" ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-	~/.fzf/install
+	~/.fzf/install --bin
 fi
