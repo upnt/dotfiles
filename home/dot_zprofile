@@ -17,8 +17,26 @@ fi
 
 if [[ -d /opt/gurobi1103 ]] then
     export GUROBI_HOME="/opt/gurobi1103/linux64"
-    export PATH="${PATH}:${GUROBI_HOME}/bin"
+    export PATH="${GUROBI_HOME}/bin:${PATH}"
+    export LIBRARY_PATH="${LIBRARY_PATH}:${GUROBI_HOME}/lib"
     export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
+    export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${GUROBI_HOME}/include"
+fi
+
+if [[ -d /opt/gurobi1200 ]] then
+    export GUROBI_HOME="/opt/gurobi1200/linux64"
+    export PATH="${GUROBI_HOME}/bin:${PATH}"
+    export LIBRARY_PATH="${LIBRARY_PATH}:${GUROBI_HOME}/lib"
+    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
+    export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${GUROBI_HOME}/include"
+fi
+
+if [[ -d /opt/boost ]] then
+    export BOOST_HOME="/opt/boost"
+    export PATH="${PATH}:${BOOST_HOME}/bin"
+    export LIBRARY_PATH="${LIBRARY_PATH}:${BOOST_HOME}/lib"
+    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${BOOST_HOME}/lib"
+    export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH}:${BOOST_HOME}/include"
 fi
 
 if [[ -d /opt/cisco ]] then
