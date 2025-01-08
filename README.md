@@ -16,6 +16,8 @@ Dotfiles managed by chezmoi
 ### Windows PowerShell
 
 ```powershell
+Set-ExecutionPolicy RemoteSigned
+winget install Git.Git
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~\.local\bin'"
 ~\.local\bin\chezmoi init --apply upnt
 ```

@@ -50,7 +50,6 @@ try
 	{{ end }}
 	__winget_install_id("Google.Chrome")
 	__winget_install_id("GitHub.cli")
-	__winget_install_id("Git.Git")
 	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\git.exe) )
 	{
 		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name git.exe -Value $(Get-Command git).Source
