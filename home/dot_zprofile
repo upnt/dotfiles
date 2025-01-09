@@ -15,6 +15,10 @@ if [[ -d /opt/go-1.12.3 ]]; then
     export PATH="$(go env GOPATH)/bin:$PATH"
 fi
 
+if [[ -d $HOME/.TinyTeX/bin/x86_64-linux ]]; then
+    export PATH="$PATH:$HOME/.TinyTeX/bin/x86_64-linux"
+fi
+
 if [[ -d /opt/gurobi1103 ]] then
     export GUROBI_HOME="/opt/gurobi1103/linux64"
     export PATH="${GUROBI_HOME}/bin:${PATH}"
