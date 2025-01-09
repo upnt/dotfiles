@@ -94,6 +94,20 @@ if [ ! -d "/opt/apache-maven-3.9.9" ]; then
 	rm apache-maven-3.9.9-bin.tar.gz
 fi
 
+if [ ! -d "/opt/boost" ]; then
+	wget https://archives.boost.io/release/1.87.0/source/boost_1_87_0.tar.gz
+	if [ "$(sha256sum boost_1_87_0.tar.gz | awk '{print $1}')" = "f55c340aa49763b1925ccf02b2e83f35fdcf634c9d5164a2acb87540173c741d" ]; then
+		sudo tar xzvf boost_1_87_0.tar.gz -C /opt
+		cd /opt/boost_1_87_0 || return
+		sudo ./bootstrap.sh
+		sudo ./b2 install --prefix=/opt/boost
+		cd - || return
+	else
+		echo "Invalid hash value for boost_1_87_0.tar.gz"
+	fi
+	rm boost_1_87_0.tar.gz
+fi
+
 if [ ! -d "$HOME/.fzf" ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
 	~/.fzf/install --bin
