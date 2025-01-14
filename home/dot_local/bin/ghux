@@ -1,24 +1,17 @@
 #!/usr/bin/env zsh
-#
-# if you want to going dotfiles dir with ghux, add this option
-# GHUX_DOTFILES_OPTION=1
-: ${GHUX_DOTFILES_OPTION:=0}
-
-# set ghux aliases path
-: ${GHUX_ALIASES_PATH:="$HOME/.ghux_aliases"}
 
 
-function print_usage() {
+    if ! (type fzf &> /dev/null); then
     /usr/bin/cat << EOL
 You dont have ghq or fzf.
 $ go get github.com/motemen/ghq
 $ brew install fzf
 EOL
-}
-
-function ghux() {
-    if ! (type fzf &> /dev/null); then
-        print_usage
+        exit 1
+    fi
+    
+    if [ -z $GHUX_ALIASES_PATH ]; then
+        echo 'Please set the "GHUX_ALIASES_PATH"'
         exit 1
     fi
 
@@ -108,6 +101,3 @@ function ghux() {
             tmux attach-session -t $project_name
         fi
     fi
-}
-
-zle -N ghux
