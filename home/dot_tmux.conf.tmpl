@@ -7,8 +7,8 @@ bind k select-pane -U
 bind l select-pane -R
 bind g run-shell "ftm"
 
-bind | split-window -h -c '#{pane_current_path}'
-bind - split-window -v -c '#{pane_current_path}'
+bind % split-window -h -c '#{pane_current_path}'
+bind " split-window -v -c '#{pane_current_path}'
 
 set-option -sg escape-time 10
 set-option -g focus-events on
