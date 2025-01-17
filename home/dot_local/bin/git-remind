@@ -1,46 +1,23 @@
 #!/usr/bin/bash
 
-# touchはファイルが存在しなかったときだけ作ってくれるので
 if [ -z "$GHUX_ALIASES_PATH" ]; then
         echo 'Please set the "GHUX_ALIASES_PATH"'
         exit 1
 fi
 
-/usr/bin/touch "$GHUX_ALIASES_PATH"
-
-project_list="$(cut -d "," -f 3 <"$GHUX_ALIASES_PATH")"
-
-if (type ghq >/dev/null); then
-        ghq_root=$(ghq root)
-        LF=$'\n'
-        for i in $(ghq list); do
-                project_list="$project_list$LF$ghq_root/$i"
-        done
+if [ ! -f "$GHUX_ALIASES_PATH" ]; then
+        /usr/bin/touch "$GHUX_ALIASES_PATH"
 fi
 
-for repo in $project_list; do
-        cd $repo || continue
-        # リモートの最新情報を取得
-        git fetch >/dev/null 2>&1
+readarray -t ghux_list < <(awk -F, '{print $3}' "$GHUX_ALIASES_PATH")
+readarray -t ghq_list < <(ghq list)
 
-        # 未プッシュコミットを確認
-        unpushed=$(git log @{u}..HEAD --oneline 2>/dev/null | wc -l)
-        unpulled=$(git log HEAD..@{u} --oneline 2>/dev/null | wc -l)
-        text=""
-        if [ "$unpushed" -gt 0 ]; then
-                text="${text} unpushed "
-        fi
-        if [ "$unpulled" -gt 0 ]; then
-                text="${text} unpulled "
-        fi
-        if ! git diff --quiet; then
-                text="${text} unstaged "
-        fi
-        if ! git diff --cached --quiet; then
-                text="${text} uncommited "
-        fi
+ghq_list=("$(ghq root)" "${ghq_list[@]}")
 
-        if [ -n "$text" ]; then
-                echo "$repo: $text"
-        fi
+for repo in $ghux_list; do
+        echo $repo
+done
+
+for repo in $ghq_list; do
+        echo $repo
 done
