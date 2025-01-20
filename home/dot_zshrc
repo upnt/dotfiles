@@ -234,9 +234,8 @@ if [[ -d "$HOME/.fzf" ]]; then
             cd - > /dev/null || return
         done < <(ghq list)
         while read -r line; do
-            _dir=$(eval echo "$line")
-            _tmp=$(echo $_dir | rev | cut -d'/' -f1 | rev)
-            cd "$_dir" || continue
+            IFS=" " read -r _tmp _dir <<< "$line"
+            cd $(eval echo "$_dir") || continue
             if [ -n "$(git-uploaded)" ]; then
                 _project_status="*"
             else
@@ -244,13 +243,11 @@ if [[ -d "$HOME/.fzf" ]]; then
             fi
             _project_list+=("${_project_status} [alias] ${_tmp}")
             cd - > /dev/null || return
-        done < <(awk -F, '{print $3}' "$GHUX_ALIASES_PATH")
-        IFS=$'\n'
-        echo "${_project_list[*]}"
+        done < <(awk -F, '{print $1,$2}' "$GHUX_ALIASES_PATH")
+        IFS=$'\n' echo "${_project_list[*]}"
     }
 
     function ftm() {
-        local project_alias 
         local project_name  
         local project_dir
         local project_list
@@ -267,14 +264,10 @@ if [[ -d "$HOME/.fzf" ]]; then
             return 1
         fi
     
-        echo ${project_dir}
-        echo ${project_dir} | /usr/bin/grep -E "^\[alias\]"
         if (echo ${project_dir:2} | /usr/bin/grep -E "^\[alias\]" &>/dev/null);then
-            local als=$(echo $project_dir| /usr/bin/awk '{print $2}')
-            line=( `/usr/bin/cat $GHUX_ALIASES_PATH|/usr/bin/grep -E "^$als" | /usr/bin/tr -s ',' ' '` )
-            project_alias=${line[1]}
-            project_name=$(echo ${line[2]}| /usr/bin/awk '{sub("\\.",""); print $0}')
-            project_dir=${line[3]}
+            project_name=${project_dir:10}
+            line=( `/usr/bin/cat $GHUX_ALIASES_PATH|/usr/bin/grep -E "${project_name}," | /usr/bin/cut -d',' -f2` )
+            project_dir="$(eval echo ${line[1]})"
         elif (echo ${project_dir:2} | /usr/bin/grep -E "^\[github\]" &>/dev/null);then
             cd $(ghq root); project_name=$(gclone); cd -
             project_name=${project_name##*/}
