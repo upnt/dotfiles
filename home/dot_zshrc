@@ -1,11 +1,6 @@
 # load functions
 fpath+="$HOME/.zsh_functions"
 
-# load plugins
-while read -d $'\0' file; do
-    source "${file}"
-done < <(/usr/bin/find "$HOME/.zsh_plugins" -mindepth 1 -maxdepth 1 -print0)
-
 # load envs
 if [[ -d "$PYENV_ROOT" ]]; then
     fpath+="$PYENV_ROOT/completions"
@@ -197,6 +192,7 @@ if [[ -d "$HOME/.fzf" ]]; then
         fi
     }
 
+
     function gclone {
         local repos=`gh repo list --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
         if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
@@ -214,8 +210,118 @@ if [[ -d "$HOME/.fzf" ]]; then
         fi
         echo $repo
     }
+    
+    function git-uploaded {
+        if [ -n "$(git status -s)" ]; then
+            echo "There are uncommited or unpushed files"
+        fi
+    }
 
-    alias ftm=ghux
+    function _ftm_list() {
+        local _project_list
+        local _project_status
+        _project_list=()
+        while read -r line; do
+            _dir="$(ghq root)/$line"
+            cd $_dir || continue
+            git status -s
+            if [ -n "$(git-uploaded)" ]; then
+                _project_status="*"
+            else
+                _project_status=" "
+            fi
+            _project_list+=("${_project_status} ${line}")
+            cd - > /dev/null || return
+        done < <(ghq list)
+        while read -r line; do
+            _dir=$(eval echo "$line")
+            _tmp=$(echo $_dir | rev | cut -d'/' -f1 | rev)
+            cd "$_dir" || continue
+            if [ -n "$(git-uploaded)" ]; then
+                _project_status="*"
+            else
+                _project_status=" "
+            fi
+            _project_list+=("${_project_status} [alias] ${_tmp}")
+            cd - > /dev/null || return
+        done < <(awk -F, '{print $3}' "$GHUX_ALIASES_PATH")
+        IFS=$'\n'
+        echo "${_project_list[*]}"
+    }
+
+    function ftm() {
+        local project_alias 
+        local project_name  
+        local project_dir
+        local project_list
+        project_list="$(_ftm_list)"
+        if ( type gclone &> /dev/null ); then
+            project_list="$project_list\n  [github] clone from github"
+        fi
+        project_list="$project_list\n  [create] new repository"
+    
+        project_dir=$(echo $project_list|fzf)
+    
+        if [[ -z $project_dir ]]; then
+            [[ -n $CURSOR ]] && zle redisplay
+            return 1
+        fi
+    
+        echo ${project_dir}
+        echo ${project_dir} | /usr/bin/grep -E "^\[alias\]"
+        if (echo ${project_dir:2} | /usr/bin/grep -E "^\[alias\]" &>/dev/null);then
+            local als=$(echo $project_dir| /usr/bin/awk '{print $2}')
+            line=( `/usr/bin/cat $GHUX_ALIASES_PATH|/usr/bin/grep -E "^$als" | /usr/bin/tr -s ',' ' '` )
+            project_alias=${line[1]}
+            project_name=$(echo ${line[2]}| /usr/bin/awk '{sub("\\.",""); print $0}')
+            project_dir=${line[3]}
+        elif (echo ${project_dir:2} | /usr/bin/grep -E "^\[github\]" &>/dev/null);then
+            cd $(ghq root); project_name=$(gclone); cd -
+            project_name=${project_name##*/}
+            project_dir=$(ghq root)/$project_name
+        elif (echo ${project_dir:2} | /usr/bin/grep -E "^\[create\]" &>/dev/null);then
+            read project_name"?project name: "
+            project_dir=$(ghq root)/$project_name
+            if [ ! -d "$project_dir" ]; then
+                mkdir $project_dir
+                cd $project_dir; git init; cd -
+            else;
+                echo "${project_dir} already exists"
+            fi
+        else
+            project_dir=$(ghq root)/${project_dir:2}
+            project_name=$(echo $project_dir | /usr/bin/rev | /usr/bin/awk -F \/ '{printf "%s", $1}' | /usr/bin/rev | /usr/bin/awk '{sub("\\.",""); print $0}')
+        fi
+    
+        # if you in tmux sesion
+        local in_tmux
+        [[ -n $TMUX ]] && in_tmux=0 || in_tmux=1
+    
+        local tmux_list=$(tmux list-session 2>/dev/null)
+    
+        # tmuxに既にfzfで選択したプロジェクトのセッションが存在するかどうか
+        if  ! (echo $tmux_list | /usr/bin/grep -E "^$project_name" &>/dev/null); then
+            (cd $(eval echo ${project_dir}) && TMUX=; tmux new-session -ds $project_name 2>/dev/null) > /dev/null # cdした後lsしちゃうので
+        fi
+    
+    
+        if [[ $in_tmux == 0 ]] ; then
+            if [[ -n "$CONTEXT" ]]; then
+                BUFFER="tmux switch-client -t $project_name"&& zle accept-line && zle redisplay
+            elif [[ -n "$project_name" ]]; then
+                tmux switch-client -t $project_name
+            fi
+        else;
+            
+            if [[ -n "$CONTEXT" ]]; then
+                BUFFER="tmux attach-session -t $project_name"&& zle accept-line && zle redisplay
+            elif [[ -n "$project_name" ]]; then
+                tmux attach-session -t $project_name
+            fi
+        fi
+    }
+
+    zle -N ghux
     alias fzf="$HOME/.fzf/bin/fzf-tmux -p 90%"
 fi
 

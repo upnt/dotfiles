@@ -1,2 +1,2 @@
-nvim,nvim,$HOME/.config/nvim
-chezmoi,chezmoi,$HOME/.local/share/chezmoi
+nvim,$HOME/.config/nvim
+chezmoi,$HOME/.local/share/chezmoi
