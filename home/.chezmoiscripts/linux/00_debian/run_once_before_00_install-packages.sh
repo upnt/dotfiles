@@ -63,12 +63,6 @@ if [ "$current_shell" != "/usr/bin/zsh" ]; then
 	chsh -s "$(/usr/bin/which zsh)"
 fi
 
-if [ -z "$(/usr/bin/which git-remind)" ]; then
-	wget https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
-	tar -C ~/.local/bin -xzf git-remind_1.1.1_Linux_x86_64.tar.gz
-	rm git-remind_1.1.1_Linux_x86_64.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE.md
-fi
-
 if [ -z "$(/usr/bin/which pwsh)" ]; then
 	# Download the Microsoft repository GPG keys
 	wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/powershell-lts_7.4.6-1.deb_amd64.deb
@@ -109,6 +103,6 @@ if [ ! -d "/opt/boost" ]; then
 fi
 
 if [ ! -d "$HOME/.fzf" ]; then
-	git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
 	~/.fzf/install --bin
 fi
