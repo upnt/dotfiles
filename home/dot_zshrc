@@ -216,8 +216,12 @@ if [[ -d "$HOME/.fzf" ]]; then
     
     function git-uploaded {
         if [ -n "$(git status -s)" ]; then
-            echo "There are uncommited or unpushed files"
+            echo "There are uncommited files"
         fi
+        if [ -n "$(git status | grep 'ahead of')" ]; then
+            echo "There are unpushed files"
+        fi
+        return 0
     }
 
     function _ftm_list() {
