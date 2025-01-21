@@ -50,7 +50,14 @@ HISTFILE=~/.zsh_history
 
 # Use modern completion system
 autoload -Uz compinit
-compinit
+local now=$(date +"%s")
+local updated=$(date -r ~/.zcompdump +"%s")
+local threshold=$((60 * 60 * 24))
+if [ $((${now} - ${updated})) -gt ${threshold} ]; then
+    compinit
+else
+    compinit -C
+fi
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
