@@ -232,7 +232,7 @@ if [[ -d "$HOME/.fzf" ]]; then
             IFS=" " read -r _tmp _dir <<< "$line"
             cd $(eval echo "$_dir") || continue
             if [ -n "$(git-uploaded)" ]; then
-                _project_status="*"
+                _project_status="✓"
             else
                 _project_status=" "
             fi
@@ -244,7 +244,7 @@ if [[ -d "$HOME/.fzf" ]]; then
             cd $_dir || continue
             git status -s
             if [ -n "$(git-uploaded)" ]; then
-                _project_status="*"
+                _project_status="✓"
             else
                 _project_status=" "
             fi
@@ -252,32 +252,17 @@ if [[ -d "$HOME/.fzf" ]]; then
             cd - &> /dev/null || return
         done < <(ghq list | sort -r)
         IFS=$'\n'
-        echo "${_project_list[*]}"
+        echo -e "${_project_list[*]}"
     }
 
-    function ftm() {
-        local project_name  
-        local project_dir
-        local project_list
-        project_list="$(_ftm_list)"
-        project_list="  [create] new repository\n$project_list"
-        if ( type gclone &> /dev/null ); then
-            project_list="  [create] clone from github\n$project_list"
-        fi
-    
-        project_dir=$(echo $project_list|fzf)
-    
-        if [[ -z $project_dir ]]; then
-            [[ -n $CURSOR ]] && zle redisplay
-            return 1
-        fi
-    
-        if (echo ${project_dir:2} | /usr/bin/grep -E "^\[alias\]" &>/dev/null);then
-            project_name=${project_dir:10}
+    function _ftm_parse() {
+        _alias=${1:2}
+        if (echo ${_alias} | /usr/bin/grep -E "^\[alias\]" &>/dev/null);then
+            project_name=${_alias:8}
             line=( `/usr/bin/cat $GHUX_ALIASES_PATH|/usr/bin/grep -E "${project_name}," | /usr/bin/cut -d',' -f2` )
             project_dir="$(eval echo ${line[1]})"
-        elif (echo ${project_dir:2} | /usr/bin/grep -E "^\[create\]" &>/dev/null); then
-            if (echo ${project_dir:2} | /usr/bin/grep -E "github" &>/dev/null); then
+        elif (echo ${_alias} | /usr/bin/grep -E "^\[create\]" &>/dev/null); then
+            if (echo ${_alias} | /usr/bin/grep -E "github" &>/dev/null); then
                 cd $(ghq root); project_name=$(gclone); cd - &>/dev/null
                 project_name=${project_name##*/}
                 project_dir=$(ghq root)/$project_name
@@ -292,8 +277,31 @@ if [[ -d "$HOME/.fzf" ]]; then
                 fi
             fi
         else
-            project_dir=$(ghq root)/${project_dir:2}
+            project_dir=$(ghq root)/${_alias}
             project_name=$(echo $project_dir | /usr/bin/rev | /usr/bin/awk -F \/ '{printf "%s", $1}' | /usr/bin/rev | /usr/bin/awk '{sub("\\.",""); print $0}')
+        fi
+        echo "${project_dir},${project_name}"
+    }
+
+    function ftm() {
+        local project_list
+        project_list="$(_ftm_list)"
+        project_list="  [create] new repository\n$project_list"
+        if ( type gclone &> /dev/null ); then
+            project_list="  [create] clone from github\n$project_list"
+        fi
+    
+        _alias=$(echo -e $project_list|fzf)
+        
+        local project_name  
+        local project_dir
+        IFS="," read -r project_name project_dir <<< "$(_ftm_parse ${_alias})"
+        echo $project_name
+        echo $project_dir
+    
+        if [[ -z $project_dir ]]; then
+            [[ -n $CURSOR ]] && zle redisplay
+            return 1
         fi
     
         # if you in tmux sesion
