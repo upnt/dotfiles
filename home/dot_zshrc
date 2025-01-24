@@ -78,24 +78,37 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 prompt_precmd() {
-    local red=$'\e[31m' green=$'\e[32m' yellow=$'\e[33m'
-    local blue=$'\e[34m' magenta=$'\e[35m'
-    local cyan=$'\e[36m' reset=$'\e[m'
-    local branch_icon=$'\ue725'
+    PROMPT="$HEADER"
+    PROMPT+=$'\n'
+    PROMPT+="$PNAME"
+}
+
+chpwd() {
+    local name_color=$'\e[36m'
+    local branch_color=$'\e[31m'
+    local reset=$'\e[m'
+    
     local branch="$(git branch --show-current 2> /dev/null)"
-    PROMPT=$'\n'
-    if [ -n "$VIRTUAL_ENV_PROMPT" ]; then
-        PROMPT+="%B%{${green}%}${VIRTUAL_ENV_PROMPT}%{${reset}%}%b"$'\n'
-    fi
-    PROMPT+="%B%{${cyan}%}%~%{${reset}%}%b"
+    PNAME="%B%{${name_color}%}%~%{${reset}%}%b"
     if [ -n "$branch" ]; then
-        PROMPT+=" on %B%{${red}%}${branch_icon} ${branch}%{${reset}%}%b"
+       PNAME+=" on %B%{${branch_color}%}"
+       PNAME+=$'\ue725'
+       PNAME+=" ${branch}%{${reset}%}%b"
     fi
-    PROMPT+=$'\n'"%B"$'\u232A'"%b"
+    PNAME+=$'\n'"%B"$'\u232A'"%b"
+    export PNAME
 }
 
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_precmd
+add-zsh-hook chpwd chpwd
+
+chpwd
+if [ -n "$VIRTUAL_ENV_PROMPT" ]; then
+    HEADER="%B%{${green}%}${VIRTUAL_ENV_PROMPT}%{${reset}%}%b"
+else
+    HEADER=""
+fi
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
