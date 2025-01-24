@@ -283,7 +283,6 @@ if [[ -d "$HOME/.fzf" ]]; then
     
         _alias=$(echo $project_list|fzf --preview='tree -d -L 3 $(_ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
         _alias=${_alias:2}
-        echo ${_alias}
         
         local project_name  
         local project_dir
