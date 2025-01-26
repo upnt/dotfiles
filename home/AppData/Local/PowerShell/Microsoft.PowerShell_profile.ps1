@@ -46,7 +46,7 @@ if ( $_HAS['rg'] )
 }
 if ( $_HAS['bat'] )
 {
-    Set-Alias cat bat 
+    Set-Alias -Name cat -Value bat -Option AllScope
 }
 if ( $_HAS['fd'] )
 {
@@ -55,7 +55,7 @@ if ( $_HAS['fd'] )
 
 if ( $_HAS['lsd'] )
 {
-    $null = Set-Alias ls lsd
+    $null = Set-Alias -Name ls -Value lsd -Option AllScope
     function ll
     { ls --long $args 
     }
@@ -86,16 +86,17 @@ function gclone
             }
         }
     }
-    $repo = (Write-Host $repos | fzf --ansi --reverse )
+
+    $repo = (Write-Output $repos | fzf --ansi --reverse)
     if ( -not ($repo -eq "" ) )
     {
         gh repo clone $repo $extraArgs
     }
-    Write-Host $repo
 }
 
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key 'Ctrl+k' -Function HistorySearchBackward
 
+$Env:GHQ_ROOT = "$HOME\workspace"
 . $PSScriptRoot/chezmoi.ps1

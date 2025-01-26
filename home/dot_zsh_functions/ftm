@@ -1,34 +1,30 @@
-function _ftm_list() {
-    local _project_list
-    local _project_status
-    _project_list=()
-    while read -r line; do
-        IFS=" " read -r _tmp _dir <<< "$line"
-        cd $(eval echo "$_dir") || continue
-        if [ -n "$(git-uploaded)" ]; then
-            _project_status="✓"
-        else
-            _project_status=" "
-        fi
-        _project_list+=("${_project_status} [alias] ${_tmp}")
-        cd - &> /dev/null || return
-    done < <(awk -F, '{print $1,$2}' "$GHUX_ALIASES_PATH")
-    while read -r line; do
-        _dir="$(ghq root)/$line"
-        cd $_dir || continue
-        if [ -n "$(git-uploaded)" ]; then
-            _project_status="✓"
-        else
-            _project_status=" "
-        fi
-        _project_list+=("${_project_status} ${line}")
-        cd - &> /dev/null || return
-    done < <(ghq list | sort -r)
-    IFS=$'\n'
-    echo -e "${_project_list[*]}"
-}
-local project_list
-project_list="$(_ftm_list)"
+local _project_list
+local _project_status
+_project_list=()
+while read -r line; do
+    IFS=" " read -r _tmp _dir <<< "$line"
+    cd $(eval echo "$_dir") || continue
+    if [ -n "$(git-uploaded)" ]; then
+        _project_status="✓"
+    else
+        _project_status=" "
+    fi
+    _project_list+=("${_project_status} [alias] ${_tmp}")
+    cd - &> /dev/null || return
+done < <(awk -F, '{print $1,$2}' "$GHUX_ALIASES_PATH")
+while read -r line; do
+    _dir="$(ghq root)/$line"
+    cd $_dir || continue
+    if [ -n "$(git-uploaded)" ]; then
+        _project_status="✓"
+    else
+        _project_status=" "
+    fi
+    _project_list+=("${_project_status} ${line}")
+    cd - &> /dev/null || return
+done < <(ghq list | sort -r)
+IFS=$'\n'
+project_list="${_project_list[*]}"
 project_list="  [create] new repository\n$project_list"
 if ( type gclone &> /dev/null ); then
     project_list="  [create] clone from github\n$project_list"

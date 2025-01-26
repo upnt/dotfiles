@@ -42,12 +42,7 @@ try
 {
 	Write-Output "Install pkgs..."
 	__winget_install_id("Microsoft.PowerShell")
-
-	{{ if eq .chezmoi.arch "amd64" }}
-	__winget_install_id("Zen-Team.Zen-Browser.Optimized")
-	{{ else }}
 	__winget_install_id("Zen-Team.Zen-Browser")
-	{{ end }}
 	__winget_install_id("Google.Chrome")
 	__winget_install_id("GitHub.cli")
 	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\git.exe) )
@@ -73,6 +68,7 @@ try
 	__winget_install_id("Notion.Notion")
 	__winget_install_id("Notion.NotionCalendar")
 	__winget_install_id("jqlang.jq")
+	__winget_install_id("GoLang.Go")
 	__winget_install_ms("Password Manager SafeInCloud")
 	__winget_install_ms("9P64KGF20H0T")
 	$Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 

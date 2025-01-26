@@ -21,3 +21,5 @@ If ("$(Get-Command rg -ErrorAction SilentlyContinue)" -ne "") {
         echo "Downloaded UDEVGothic to $HOME\FontTemp."
     }
 }
+
+go install github.com/x-motemen/ghq@latest
