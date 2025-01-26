@@ -1,0 +1,15 @@
+local repos=`gh repo list --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
+if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
+    for i in `gh org list`
+    do
+        local buf=`gh repo list $i --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
+        if [ ! "$buf" = "" ]; then
+            repos="${repos}\n${buf}"
+        fi
+    done
+fi
+local repo=`echo $repos | fzf --ansi --reverse | cut -f 1`
+if [ ! "$repo" = "" ]; then
+    gh repo clone "$repo" $@
+fi
+echo $repo

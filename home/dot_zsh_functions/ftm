@@ -1,0 +1,92 @@
+function _ftm_list() {
+    local _project_list
+    local _project_status
+    _project_list=()
+    while read -r line; do
+        IFS=" " read -r _tmp _dir <<< "$line"
+        cd $(eval echo "$_dir") || continue
+        if [ -n "$(git-uploaded)" ]; then
+            _project_status="✓"
+        else
+            _project_status=" "
+        fi
+        _project_list+=("${_project_status} [alias] ${_tmp}")
+        cd - &> /dev/null || return
+    done < <(awk -F, '{print $1,$2}' "$GHUX_ALIASES_PATH")
+    while read -r line; do
+        _dir="$(ghq root)/$line"
+        cd $_dir || continue
+        if [ -n "$(git-uploaded)" ]; then
+            _project_status="✓"
+        else
+            _project_status=" "
+        fi
+        _project_list+=("${_project_status} ${line}")
+        cd - &> /dev/null || return
+    done < <(ghq list | sort -r)
+    IFS=$'\n'
+    echo -e "${_project_list[*]}"
+}
+local project_list
+project_list="$(_ftm_list)"
+project_list="  [create] new repository\n$project_list"
+if ( type gclone &> /dev/null ); then
+    project_list="  [create] clone from github\n$project_list"
+fi
+
+_alias=$(echo $project_list|fzf --preview='tree -d -L 3 $(_ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
+_alias=${_alias:2}
+
+local project_name  
+local project_dir
+
+if (echo ${_alias} | /usr/bin/grep -E "^\[create\]" &>/dev/null); then
+  if (echo ${_alias} | /usr/bin/grep -E "github" &>/dev/null); then
+      cd $(ghq root); project_name=$(gclone); cd - &>/dev/null
+      project_name=${project_name##*/}
+      project_dir=$(ghq root)/$project_name
+  else
+      read project_name"?project name: "
+      project_dir=$(ghq root)/$project_name
+      if [ ! -d "$project_dir" ]; then
+          mkdir $project_dir
+          cd $project_dir; git init; cd - &>/dev/null
+      else;
+          echo "${project_dir} already exists"
+      fi
+  fi
+else
+    IFS="," read -r project_name project_dir <<< "$(_ftm_parse ${_alias})"
+fi
+
+if [[ -z $project_dir ]]; then
+    [[ -n $CURSOR ]] && zle redisplay
+    return 1
+fi
+
+# if you in tmux sesion
+local in_tmux
+[[ -n $TMUX ]] && in_tmux=0 || in_tmux=1
+
+local tmux_list=$(tmux list-session 2>/dev/null)
+
+# tmuxに既にfzfで選択したプロジェクトのセッションが存在するかどうか
+if  ! (echo $tmux_list | /usr/bin/grep -E "^$project_name" &>/dev/null); then
+    (cd $(eval echo ${project_dir}) && TMUX=; tmux new-session -ds $project_name 2>/dev/null) > /dev/null # cdした後lsしちゃうので
+fi
+
+
+if [[ $in_tmux == 0 ]] ; then
+    if [[ -n "$CONTEXT" ]]; then
+        BUFFER="tmux switch-client -t $project_name"&& zle accept-line && zle redisplay
+    elif [[ -n "$project_name" ]]; then
+        tmux switch-client -t $project_name
+    fi
+else;
+    
+    if [[ -n "$CONTEXT" ]]; then
+        BUFFER="tmux attach-session -t $project_name"&& zle accept-line && zle redisplay
+    elif [[ -n "$project_name" ]]; then
+        tmux attach-session -t $project_name
+    fi
+fi
