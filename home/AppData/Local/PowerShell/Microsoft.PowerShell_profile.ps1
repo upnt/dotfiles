@@ -94,6 +94,94 @@ function gclone
     }
 }
 
+function ftm
+{
+    $projectList = @()
+
+    # GHUX_ALIASES_PATHの読み込み
+    Get-Content $env:GHUX_ALIASES_PATH | ForEach-Object {
+        $line = $_ -split ','
+        $tmp = $line[0]
+        $dir = $line[1]
+
+        # ディレクトリ移動とチェック
+        Push-Location -Path (Invoke-Expression $dir) -ErrorAction SilentlyContinue
+        if (Test-Path .git)
+        {
+            $projectStatus = "✓"
+        } else
+        {
+            $projectStatus = " "
+        }
+        $projectList += "$projectStatus [alias] $tmp"
+        Pop-Location -ErrorAction SilentlyContinue
+    }
+
+    # ghqリストの処理
+    ghq list | Sort-Object -Descending | ForEach-Object {
+        $dir = Join-Path (ghq root) $_
+        Push-Location -Path $dir -ErrorAction SilentlyContinue
+        if (Test-Path .git)
+        {
+            $projectStatus = "✓"
+        } else
+        {
+            $projectStatus = " "
+        }
+        $projectList += "$projectStatus $_"
+        Pop-Location -ErrorAction SilentlyContinue
+    }
+
+    # メニュー作成
+    $projectList = @("  [create] new repository") + $projectList
+    if (Get-Command gclone -ErrorAction SilentlyContinue)
+    {
+        $projectList = @("  [create] clone from github") + $projectList
+    }
+
+    # fzfでプロジェクト選択
+    $alias = $projectList | fzf
+    $alias = $alias.Substring(2)
+
+    # プロジェクト情報の処理
+    if ($alias -match "^\[create\]")
+    {
+        if ($alias -match "github")
+        {
+            Push-Location -Path (ghq root)
+            $projectName = gclone
+            Pop-Location
+            $projectName = $projectName.Split('/')[-1]
+            $projectDir = Join-Path (ghq root) $projectName
+        } else
+        {
+            $projectName = Read-Host "Project name"
+            $projectDir = Join-Path (ghq root) $projectName
+            if (-not (Test-Path $projectDir))
+            {
+                New-Item -ItemType Directory -Path $projectDir | Out-Null
+                Push-Location -Path $projectDir
+                git init | Out-Null
+                Pop-Location
+            } else
+            {
+                Write-Output "$projectDir already exists"
+            }
+        }
+    } else
+    {
+        $projectName, $projectDir = $alias -split ","
+    }
+
+    if (-not $projectDir)
+    {
+        return
+    }
+
+    # tmuxのセッション管理
+    Push-Location -Path (Invoke-Expression $projectDir)
+}
+
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key 'Ctrl+k' -Function HistorySearchBackward
