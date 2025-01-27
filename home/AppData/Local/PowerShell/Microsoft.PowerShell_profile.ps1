@@ -125,34 +125,52 @@ function _ftm_parse ($Alias) {
     return "$projectName,$projectDir"
 }
 
+function git-uploaded {
+    if (git status -s) {
+	Write-Output "There are uncommitted files"
+    }
+
+    if (git status | Select-String "ahead of") {
+	Write-Output "There are unpushed files"
+    }
+}
+
 function ftm
 {
     $projectList = @()
 
     # GHUX_ALIASES_PATHの読み込み
     Get-Content $Env:GHUX_ALIASES_PATH | ForEach-Object {
+	$projectStatus = ""
         $line = $_ -split ','
         $tmp = $line[0]
         $dir = $line[1]
 
-        # ディレクトリ移動とチェック
-        Push-Location -Path $dir.Replace("/", "\").Replace('$HOME', "$HOME") -ErrorAction SilentlyContinue
-        if (Test-Path .git)
-        {
-            $projectStatus = "✓"
-        } else
-        {
-            $projectStatus = " "
-        }
-        $projectList += "$projectStatus [alias] $tmp"
-        Pop-Location -ErrorAction SilentlyContinue
+	$dir = $dir.Replace("/", "\").Replace('$HOME', "$HOME") 
+
+	if (Test-Path $dir) {
+        	# ディレクトリ移動とチェック
+        	Push-Location -Path $dir -ErrorAction SilentlyContinue
+        	if (-not (Test-Path .git)) {
+        	    $projectStatus = " "
+		} elseif(git-uploaded)
+        	{
+        	    $projectStatus = "✓"
+        	} else
+        	{
+        	    $projectStatus = " "
+        	}
+        	$projectList += "$projectStatus [alias] $tmp"
+        	Pop-Location -ErrorAction SilentlyContinue
+	}
     }
 
     # ghqリストの処理
     ghq list | Sort-Object -Descending | ForEach-Object {
+	$projectStatus = ""
         $dir = Join-Path (ghq root) $_
         Push-Location -Path $dir -ErrorAction SilentlyContinue
-        if (Test-Path .git)
+        if (git-uploaded)
         {
             $projectStatus = "✓"
         } else
@@ -172,6 +190,11 @@ function ftm
 
     # fzfでプロジェクト選択
     $alias = $projectList | fzf
+
+    if (-not $alias) {
+	return
+    }
+
     $alias = $alias.Substring(2)
 
     # プロジェクト情報の処理
