@@ -13,6 +13,7 @@
 .config/
 .icons/
 
+.zshenv
 .zshrc
 .zprofile
 .zsh_functions/
