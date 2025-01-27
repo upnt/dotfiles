@@ -1,4 +1,4 @@
-$_HAS = @{}
+﻿$_HAS = @{}
 
 foreach ($cmd in 'git', 'lsd', 'bat', 'rg', 'fd', 'zoxide')
 {
