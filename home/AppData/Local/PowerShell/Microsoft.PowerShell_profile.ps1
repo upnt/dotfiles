@@ -20,7 +20,7 @@ function prompt
     Write-Host ""
 
     ## second line
-    Write-Host "$env:USERNAME" -ForeGroundColor Yellow -NoNewLine
+    Write-Host "$Env:USERNAME" -ForeGroundColor Yellow -NoNewLine
     Write-Host " $path" -ForeGroundColor Cyan -NoNewLine
 
     if ($branch -and $host.UI.RawUI.WindowSize.Width -gt 70)
@@ -29,10 +29,10 @@ function prompt
         Write-Host "`u{e725} $branch " -ForeGroundColor Red -NoNewLine
     }
     Write-Host ""
-    if (($null -ne $env:CONDA_PROMPT_MODIFIER) -And ($null -eq $env:VIRTUAL_ENV))
+    if (($null -ne $Env:CONDA_PROMPT_MODIFIER) -And ($null -eq $Env:VIRTUAL_ENV))
     {
         Write-Host (
-            $env:CONDA_PROMPT_MODIFIER.SubString(1, $env:CONDA_PROMPT_MODIFIER.Length - 3)
+            $Env:CONDA_PROMPT_MODIFIER.SubString(1, $Env:CONDA_PROMPT_MODIFIER.Length - 3)
         ) -ForeGroundColor Magenta -NoNewLine
     }
     Write-Host "" -ForeGroundColor White -NoNewLine
@@ -94,18 +94,49 @@ function gclone
     }
 }
 
+function _ftm_parse ($Alias) {
+    $projectName = ""
+    $projectDir = ""
+
+    # 入力が[alias]で始まる場合
+    if ($Alias -match "^\[alias\]") {
+        $projectName = $Alias.Substring(8)
+        $line = Get-Content $env:GHUX_ALIASES_PATH | Select-String -Pattern "$projectName," | ForEach-Object {
+            ($_ -split ',')[1]
+        }
+	if (-not $line) {
+		return
+	}
+        $projectDir = $line.Replace("/", "\").Replace('$HOME', "$HOME")
+    }
+    # 入力が[.*]で始まる場合
+    elseif ($Alias -match "^\[.*\]") {
+        $projectDir = ghq root
+        $projectName = "default"
+    }
+    # その他の場合
+    else {
+        $projectDir = Join-Path -Path (ghq root) -ChildPath $Alias
+        $projectName = $projectDir -split '/' | Select-Object -Last 1
+        $projectName = $projectName -replace '\.', ''
+    }
+
+    # 結果を出力
+    return "$projectName,$projectDir"
+}
+
 function ftm
 {
     $projectList = @()
 
     # GHUX_ALIASES_PATHの読み込み
-    Get-Content $env:GHUX_ALIASES_PATH | ForEach-Object {
+    Get-Content $Env:GHUX_ALIASES_PATH | ForEach-Object {
         $line = $_ -split ','
         $tmp = $line[0]
         $dir = $line[1]
 
         # ディレクトリ移動とチェック
-        Push-Location -Path (Invoke-Expression $dir) -ErrorAction SilentlyContinue
+        Push-Location -Path $dir.Replace("/", "\").Replace('$HOME', "$HOME") -ErrorAction SilentlyContinue
         if (Test-Path .git)
         {
             $projectStatus = "✓"
@@ -151,7 +182,10 @@ function ftm
             Push-Location -Path (ghq root)
             $projectName = gclone
             Pop-Location
-            $projectName = $projectName.Split('/')[-1]
+	    if (-not $projectName) {
+		    return
+	    }
+            $projectName = $projectName.Split('\')[-1]
             $projectDir = Join-Path (ghq root) $projectName
         } else
         {
@@ -170,7 +204,7 @@ function ftm
         }
     } else
     {
-        $projectName, $projectDir = $alias -split ","
+        $projectName, $projectDir = (_ftm_parse $alias) -split ","
     }
 
     if (-not $projectDir)
@@ -178,8 +212,8 @@ function ftm
         return
     }
 
-    # tmuxのセッション管理
-    Push-Location -Path (Invoke-Expression $projectDir)
+    cd $projectDir
+
 }
 
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
@@ -187,4 +221,5 @@ Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key 'Ctrl+k' -Function HistorySearchBackward
 
 $Env:GHQ_ROOT = "$HOME\workspace"
+$Env:GHUX_ALIASES_PATH = "$HOME\.ghux_aliases"
 . $PSScriptRoot/chezmoi.ps1

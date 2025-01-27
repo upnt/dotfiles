@@ -9,7 +9,6 @@
 !.chezmoiscripts/windows/*
 .latexmkrc
 .tmux.conf
-.ghux_aliases
 .local/
 .config/
 .icons/
