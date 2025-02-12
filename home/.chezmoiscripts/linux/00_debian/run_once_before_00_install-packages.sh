@@ -106,3 +106,7 @@ if [ ! -d "$HOME/.fzf" ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
 	~/.fzf/install --bin
 fi
+
+if [ -z "$(/usr/bin/which direnv)" ]; then
+	curl -sfL https://direnv.net/install.sh | bash
+fi

@@ -4,58 +4,49 @@ fpath+="$HOME/.zsh_functions"
 # load envs
 if [[ -d "$PYENV_ROOT" ]]; then
     fpath+="$PYENV_ROOT/completions"
-    function plenv() {
-        unfunction "$0"
-        eval "$(pyenv init -)"
-	    eval "$(pyenv virtualenv-init -)"
-        $0 "$@"
-    }
+    eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+	eval "$(pip completion --zsh)"
 fi
 
 if [[ -d "$NODENV_ROOT" ]]; then
     fpath+="$NODENV_ROOT/completions"
-    function plenv() {
-        unfunction "$0"
-        eval "$(nodenv init - zsh)"
-        $0 "$@"
-    }
+    eval "$(nodenv init - zsh)"
 fi
 
 if [[ -d "$RBENV_ROOT" ]]; then
     fpath+="$RBENV_ROOT/completions"
-    function plenv() {
-        unfunction "$0"
-        eval "$(rbenv init -)"
-        $0 "$@"
-    }
+    eval "$(rbenv init -)"
 fi
 
 if [[ -d "$LUAENV_ROOT" ]]; then
     fpath+="$LUAENV_ROOT/completions"
-    function plenv() {
-        unfunction "$0"
-        eval "$(luaenv init -)"
-        $0 "$@"
-    }
+    eval "$(luaenv init -)"
 fi
 
 if [[ -d "$JENV_ROOT" ]]; then
     fpath+="$JENV_ROOT/completions"
-    function jenv() {
-        unfunction "$0"
+    function _jenv_init() {
         eval "$(jenv init -)"
         jenv enable-plugin export
-        $0 "$@"
+    }
+    function jenv() {
+        unset -f jenv
+        _jenv_init
+        jenv "$@"
+    }
+    function java() {
+        unset -f java
+        _jenv_init
+        java "$@"
     }
 fi
 
 if [[ -d "$PLENV_ROOT" ]]; then
-    function plenv() {
-        unfunction "$0"
-        eval "$(plenv init -)"
-        $0 "$@"
-    }
+    eval "$(plenv init -)"
 fi
+
+eval "$(direnv hook zsh)"
 
 # Set up the prompt
 autoload -Uz promptinit
@@ -73,7 +64,6 @@ SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
 # Use modern completion system
-autoload -Uz compinit
 local now=$(date +"%s")
 local updated=$(date -r ~/.zcompdump +"%s")
 local threshold=$((60 * 60 * 24))
@@ -216,4 +206,4 @@ fi
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 [[ -f "$HOME/.local/.zshrc" ]] && source "$HOME/.local/.zshrc"
-# zprof
+zprof
