@@ -52,6 +52,7 @@ eval "$(direnv hook zsh)"
 fpath+=($HOME/.pure)
 autoload -Uz promptinit; promptinit
 PURE_CMD_MAX_EXEC_TIME=10
+zstyle :prompt:pure:path color green
 zstyle :prompt:pure:git:stash show yes
 prompt pure
 
@@ -95,14 +96,10 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias lt='ls --tree'
-    alias rls='ls --color=auto | shuf | head -n 1'
     alias rcd='cd $(ls --color=never | shuf | head -n 1)'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
@@ -139,21 +136,21 @@ fi
 if type "rg" > /dev/null 2>&1; then
     alias grep='rg'
 fi
-if type "fd" > /dev/null 2>&1; then
-    alias find='fd'
-fi
 if type "lsd" > /dev/null 2>&1; then
     alias ls='lsd -l --blocks "git,user,group,name"'
     alias la='ls -A'
-    alias ll='lsd -alF'
+    alias ll='ls -alF'
+    alias lt='ls --tree'
+    alias rls='ls | shuf | head -n 1'
 else
     alias ll='ls -alF'
     alias la='ls -A'
+    alias lt='ls --tree'
+    alias rls='ls | shuf | head -n 1'
 fi
 
 if type "zoxide" > /dev/null 2>&1; then
     eval "$(zoxide init zsh)"
-    alias cd="z"
 fi
 
 if [[ -d "$HOME/.fzf" ]]; then

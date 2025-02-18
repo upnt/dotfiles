@@ -107,6 +107,10 @@ if [ ! -d "$HOME/.fzf" ]; then
 	~/.fzf/install --bin
 fi
 
+if [ ! -d "$HOME/.pure" ]; then
+	git clone --depth 1 https://github.com/sindresorhus/pure.git "$HOME/.pure"
+fi
+
 if [ -z "$(/usr/bin/which direnv)" ]; then
 	curl -sfL https://direnv.net/install.sh | bash
 fi
