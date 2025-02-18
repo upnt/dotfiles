@@ -49,9 +49,13 @@ fi
 eval "$(direnv hook zsh)"
 
 # Set up the prompt
-autoload -Uz promptinit
-promptinit
-prompt adam1
+fpath+=($HOME/.pure)
+autoload -Uz promptinit; promptinit
+PURE_CMD_MAX_EXEC_TIME=10
+zstyle :prompt:pure:path color green
+zstyle ':prompt:pure:prompt:*' color cyan
+zstyle :prompt:pure:git:stash show yes
+prompt pure
 
 setopt histignorealldups sharehistory
 
@@ -89,37 +93,6 @@ zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-prompt_precmd() {
-    PROMPT="$HEADER"$'\n'"$PNAME"
-}
-
-chpwd() {
-    local name_color=$'\e[36m'
-    local branch_color=$'\e[31m'
-    local reset=$'\e[m'
-    
-    local branch="$(git branch --show-current 2> /dev/null)"
-    PNAME="%B%{${name_color}%}%~%{${reset}%}%b"
-    if [ -n "$branch" ]; then
-       PNAME+=" on %B%{${branch_color}%}"
-       PNAME+=$'\ue725'
-       PNAME+=" ${branch}%{${reset}%}%b"
-    fi
-    PNAME+=$'\n'"%B"$'\u232A'"%b"
-    export PNAME
-}
-
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd prompt_precmd
-add-zsh-hook chpwd chpwd
-
-chpwd
-if [ -n "$VIRTUAL_ENV_PROMPT" ]; then
-    HEADER="%B%{${green}%}${VIRTUAL_ENV_PROMPT}%{${reset}%}%b"
-else
-    HEADER=""
-fi
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -206,4 +179,3 @@ fi
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 [[ -f "$HOME/.local/.zshrc" ]] && source "$HOME/.local/.zshrc"
-zprof

@@ -1,4 +1,3 @@
-zmodload zsh/zprof && zprof
 if [[ -d "$HOME/.fzf" ]]; then
   function _ftm_parse() {
       if (echo $1 | /usr/bin/grep -E "^\[alias\]" &>/dev/null); then
