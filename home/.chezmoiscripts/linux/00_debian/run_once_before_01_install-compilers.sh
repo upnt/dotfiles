@@ -2,18 +2,20 @@
 
 # cpp
 if [ -z "$(/usr/bin/which clang)" ]; then
-	sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
-fi
-
-for cmd in clang clang++ lldb clangd lld; do
-	if [ -z "$(/usr/bin/which "$cmd")" ]; then
-		_latest=$(/usr/bin/ls /usr/bin | /usr/bin/grep -P "${cmd//+/\+}-\d+$" | sort -V | tail -n 1)
-		if [ -n "$_latest" ]; then
-			echo "$_latest -> /usr/bin/$cmd"
-			sudo ln -s "$_latest" "/usr/bin/$cmd"
+	wget https://apt.llvm.org/llvm.sh
+	chmod +x llvm.sh
+	sudo ./llvm.sh all
+	rm ./llvm.sh
+	for cmd in clang clang++ lldb clangd lld; do
+		if [ -z "$(/usr/bin/which "$cmd")" ]; then
+			_latest=$(/usr/bin/ls /usr/bin | /usr/bin/grep -P "${cmd//+/\+}-\d+$" | sort -V | tail -n 1)
+			if [ -n "$_latest" ]; then
+				echo "$_latest -> /usr/bin/$cmd"
+				sudo ln -s "$_latest" "/usr/bin/$cmd"
+			fi
 		fi
-	fi
-done
+	done
+fi
 
 # python
 export PYENV_ROOT="$HOME/.pyenv"
