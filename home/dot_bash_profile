@@ -11,12 +11,6 @@ if [[ -d /opt/go-1.12.3 ]]; then
   export PATH="$(go env GOPATH)/bin:$PATH"
 fi
 
-if [[ -d /opt/gurobi1103 ]]; then
-  export GUROBI_HOME="/opt/gurobi1103/linux64"
-  export PATH="${PATH}:${GUROBI_HOME}/bin"
-  export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
-fi
-
 if [[ -d /opt/cisco ]]; then
   export PATH="${PATH}:/opt/cisco/secureclient/bin"
   export PATH="${PATH}:/opt/cisco/hostscan/bin/"
