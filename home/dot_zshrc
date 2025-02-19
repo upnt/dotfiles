@@ -16,6 +16,7 @@ local now=$(date +"%s")
 local updated=$(date -r ~/.zcompdump +"%s")
 local threshold=$((60 * 60 * 24))
 if [ $((${now} - ${updated})) -gt ${threshold} ]; then
+    echo "Create ~/.zcompdump"
     compinit
 else
     compinit -C
@@ -141,7 +142,7 @@ fi
 if type "lsd" > /dev/null 2>&1; then
     alias ls='lsd -l --blocks "git,user,group,name"'
     alias la='ls -A'
-    alias ll='ls -alF'
+    alias ll='lsd -alF'
     alias lt='ls --tree'
     alias rls='ls | shuf | head -n 1'
 else
