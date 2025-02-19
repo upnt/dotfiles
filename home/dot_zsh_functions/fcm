@@ -1,3 +1,4 @@
+#!/bin/zsh
 local pane=`tmux ls -F '[#{session_windows}] #S' |
 fzf --ansi --preview 'echo {} | cut -d " " -f 2- | xargs tmux capture-pane -ep -t | cat' |
 cut -d ' ' -f 2-`

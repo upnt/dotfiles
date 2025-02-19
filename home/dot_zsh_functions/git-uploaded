@@ -1,7 +1,19 @@
-if [ -n "$(git status -s)" ]; then
+#!/bin/zsh
+if [ -n "$1" ]; then
+    dir="$1"
+else
+    dir="."
+fi
+
+if ! git -C "$dir" rev-parse --is-inside-work-tree 1>/dev/null; then
+    return 1
+fi
+
+if [ -n "$(git -C "$dir" status -s)" ]; then
     echo "There are uncommited files"
 fi
-if [ -n "$(git status | grep 'ahead of')" ]; then
+if [ -n "$(git -C "$dir" status | grep 'ahead of')" ]; then
     echo "There are unpushed files"
 fi
+
 return 0

@@ -1,3 +1,4 @@
+#!/bin/zsh
 local repos=`gh repo list --json "nameWithOwner" | jq -r '.[]["nameWithOwner"]'`
 if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
     for i in `gh org list`

@@ -1,3 +1,4 @@
+#!/bin/zsh
 local file=`find . -t f -p --hidden --color=always --exclude=".git/" |
 sed -e 's#\\\\#/#g' |
 fzf --ansi --reverse --preview "git diff $@ {}" --preview-window=up:60%`
