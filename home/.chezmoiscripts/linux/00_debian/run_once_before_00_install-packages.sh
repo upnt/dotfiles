@@ -106,8 +106,8 @@ if [ ! -d "$HOME/.fzf" ]; then
 	~/.fzf/install --bin
 fi
 
-if [ ! -d "$HOME/.pure" ]; then
-	git clone --depth 1 https://github.com/sindresorhus/pure.git "$HOME/.pure"
+if [ ! -d "$HOME/.local/share/zinit/zinit.git" ]; then
+	bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 fi
 
 if [ -z "$(/usr/bin/which direnv)" ]; then
