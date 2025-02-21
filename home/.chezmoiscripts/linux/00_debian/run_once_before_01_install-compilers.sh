@@ -179,3 +179,10 @@ if [ ! -d /opt/go-1.12.3 ]; then
 	go install github.com/jesseduffield/lazygit@latest
 	go install github.com/x-motemen/ghq@latest
 fi
+
+if [ ! -d "$HOME/.local/zsh_local" ]; then
+	mkdir -p "$HOME/.local/zsh_local"
+	touch "$HOME/.local/zsh_local/.zshenv"
+	touch "$HOME/.local/zsh_local/.zshrc"
+	touch "$HOME/.local/zsh_local/.zprofile"
+fi

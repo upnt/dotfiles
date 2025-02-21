@@ -1,3 +1,4 @@
+#!/bin/zsh
 if [[ -d /opt/nvim-linux64 ]]; then
     export PATH="/opt/nvim-linux64/bin:$PATH"
 fi
@@ -111,4 +112,4 @@ export EDITOR=nvim
 export BIBINPUTS="$BIBINPUTS:$HOME/.local/bib"
 export BSTINPUTS="$BSTINPUTS:$HOME/.local/bst"
 
-[[ -f "$HOME/.local/.zprofile" ]] && source "$HOME/.local/.zprofile"
+[[ -f "$HOME/.local/zsh_local/.zprofile" ]] && source "$HOME/.local/zsh_local/.zprofile"

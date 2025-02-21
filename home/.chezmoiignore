@@ -14,15 +14,7 @@
 .icons/
 
 .zshenv
-.zshrc
-.zprofile
-.zsh_functions/
-.zsh_plugins/
-
 .profile
-.bashrc
-.bash_profile
-.bash_aliases
 
 {{- end }}
 

@@ -83,5 +83,4 @@ export LESS='-R'
 export EDITOR=nvim
 export GHQ_ROOT="$HOME/workspace"
 
-[[ -f "$HOME/._bash_profile" ]] && source "$HOME/._bash_profile"
-[[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
+[[ -f "$BDOTDIR/.bashrc" ]] && source "$BDOTDIR/.bashrc"

@@ -28,7 +28,7 @@ if ( type gclone &> /dev/null ); then
     project_list="  [create] clone from github\n$project_list"
 fi
 
-_alias=$(echo $project_list|fzf --preview='tree -d -L 3 $(_ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
+_alias=$(echo $project_list|fzf --preview='tree -d -L 3 $(__ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
 _alias=${_alias:2}
 
 local project_name  
@@ -50,7 +50,7 @@ if (echo ${_alias} | /usr/bin/grep -E "^\[create\]" &>/dev/null); then
       fi
   fi
 else
-    IFS="," read -r project_name project_dir <<< "$(_ftm_parse ${_alias})"
+    IFS="," read -r project_name project_dir <<< "$(__ftm_parse ${_alias})"
 fi
 
 if [[ -z $project_dir ]]; then

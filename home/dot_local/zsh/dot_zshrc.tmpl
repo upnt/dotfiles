@@ -1,5 +1,7 @@
+#!/bin/zsh
+
 # load functions
-fpath+="$HOME/.zsh_functions"
+fpath+="$ZDOTDIR/.zsh_functions"
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
@@ -60,8 +62,7 @@ if [[ -d "$PYENV_ROOT" ]]; then
 	# eval "$(pyenv virtualenv-init -)"
 	{{ output "pyenv" "virtualenv-init" "-" | trim }}
 	
-	# eval "$(pip completion --zsh)"
-	{{ output "pip" "completion" "--zsh" | trim }}
+	eval "$(pip completion --zsh)"
 fi
 
 if [[ -d "$NODENV_ROOT" ]]; then
@@ -181,13 +182,24 @@ fi
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-[[ -f "$HOME/.local/.zshrc" ]] && source "$HOME/.local/.zshrc"
-
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
-zinit light zsh-users/zsh-completions
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust \
+    zsh-users/zsh-completions \
+    sindresorhus/pure
+
+### End of Zinit's installer chunk
+
+[[ -f "$HOME/.local/zsh_local/.zshrc" ]] && source "$HOME/.local/zsh_local/.zshrc"
+
 # zprof
