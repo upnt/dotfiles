@@ -1,3 +1,4 @@
+$PATH=$([Environment]::GetEnvironmentVariable("PATH", "User"))
 If ("$(Get-Command deno -ErrorAction SilentlyContinue)" -eq "") {
 	irm https://deno.land/install.ps1 | iex
 }

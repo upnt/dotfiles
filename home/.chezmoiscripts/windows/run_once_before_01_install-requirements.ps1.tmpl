@@ -8,7 +8,6 @@ If (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 		Exit
 	}
 }
-
 chcp 65001
 Write-Output ""
 
@@ -47,6 +46,7 @@ try
 	__winget_install_id("GitHub.cli")
 	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\git.exe) )
 	{
+		$PATH = $([Environment]::GetEnvironmentVariable("PATH", "User"))
 		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name git.exe -Value $(Get-Command git).Source
 	}
 	__winget_install_id("7zip.7zip")
@@ -58,6 +58,7 @@ try
 	__winget_install_id("sharkdp.bat")
 	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\bat.exe) )
 	{
+		$PATH = $([Environment]::GetEnvironmentVariable("PATH", "User"))
 		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name bat.exe -Value $(Get-Command bat).Source
 	}
 	__winget_install_id("sharkdp.fd")
@@ -78,6 +79,9 @@ try
 {
 	Write-Output "An error occured."
 	Read-Host -Prompt "Press any key to exit"
+	$ErrorActionPreference = "Continue"
+	exit 1
 }
 
 $ErrorActionPreference = "Continue"
+exit 0
