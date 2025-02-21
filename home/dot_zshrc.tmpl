@@ -53,30 +53,40 @@ fi
 # load envs
 if [[ -d "$PYENV_ROOT" ]]; then
     fpath+="$PYENV_ROOT/completions"
-    eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
-	eval "$(pip completion --zsh)"
+    
+    # eval "$(pyenv init -)"
+    {{ output "pyenv" "init" "-" | trim }}
+    
+	# eval "$(pyenv virtualenv-init -)"
+	{{ output "pyenv" "virtualenv-init" "-" | trim }}
+	
+	# eval "$(pip completion --zsh)"
+	{{ output "pip" "completion" "--zsh" | trim }}
 fi
 
 if [[ -d "$NODENV_ROOT" ]]; then
     fpath+="$NODENV_ROOT/completions"
-    eval "$(nodenv init - zsh)"
+    # eval "$(nodenv init - zsh)"
+    {{ output "nodenv" "init" "-" "zsh" }}
 fi
 
 if [[ -d "$RBENV_ROOT" ]]; then
     fpath+="$RBENV_ROOT/completions"
-    eval "$(rbenv init -)"
+    # eval "$(rbenv init -)"
+    {{ output "rbenv" "init" "-" }}
 fi
 
 if [[ -d "$LUAENV_ROOT" ]]; then
     fpath+="$LUAENV_ROOT/completions"
-    eval "$(luaenv init -)"
+    # eval "$(luaenv init -)"
+    {{ output "luaenv" "init" "-" }}
 fi
 
 if [[ -d "$JENV_ROOT" ]]; then
     fpath+="$JENV_ROOT/completions"
     function _jenv_init() {
-        eval "$(jenv init -)"
+        # eval "$(jenv init -)"
+        {{ output "jenv" "init" "-" }}
         jenv enable-plugin export
     }
     function jenv() {
@@ -92,19 +102,13 @@ if [[ -d "$JENV_ROOT" ]]; then
 fi
 
 if [[ -d "$PLENV_ROOT" ]]; then
-    eval "$(plenv init -)"
+    # eval "$(plenv init -)"
+    {{ output "plenv" "init" "-" }}
 fi
 
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"
+{{ output "direnv" "hook" "zsh" }}
 
-# Set up the prompt
-fpath+=($HOME/.pure)
-autoload -Uz promptinit; promptinit
-PURE_CMD_MAX_EXEC_TIME=10
-zstyle :prompt:pure:path color cyan
-zstyle :prompt:pure:git:branch color red
-zstyle :prompt:pure:git:stash show yes
-prompt pure
 
 setopt histignorealldups sharehistory
 
@@ -153,7 +157,8 @@ else
 fi
 
 if type "zoxide" > /dev/null 2>&1; then
-    eval "$(zoxide init zsh)"
+    # eval "$(zoxide init zsh)"
+    {{ output "zoxide" "init" "zsh" }}
 fi
 
 if [[ -d "$HOME/.fzf" ]]; then
@@ -177,3 +182,11 @@ fi
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 [[ -f "$HOME/.local/.zshrc" ]] && source "$HOME/.local/.zshrc"
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
+zinit light zsh-users/zsh-completions

@@ -7,9 +7,10 @@ cut -d ' ' -f 2-`
 local in_tmux
 [[ -n "$TMUX" ]] && in_tmux=0 || in_tmux=1
 
-if [[ -n "$pane" ]];
+if [[ -n "$pane" ]]; then
     if [[ $in_tmux == 0 ]] ; then
         tmux switch-client -t $pane
     else;
         tmux attach-session -t $pane
+    fi
 fi
