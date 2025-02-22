@@ -190,16 +190,17 @@ zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust \
+zinit light sindresorhus/pure
+
+zinit wait lucid for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+ blockf \
     zsh-users/zsh-completions \
-    sindresorhus/pure
-
+ atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+    
 ### End of Zinit's installer chunk
-
 [[ -f "$HOME/.local/zsh_local/.zshrc" ]] && source "$HOME/.local/zsh_local/.zshrc"
 
 # zprof

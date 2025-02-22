@@ -106,8 +106,11 @@ if [ ! -d "$HOME/.fzf" ]; then
 	~/.fzf/install --bin
 fi
 
-if [ ! -d "$HOME/.local/share/zinit/zinit.git" ]; then
-	bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [ ! -d "$ZINIT_HOME" ]; then
+	mkdir -p "$(dirname "$ZINIT_HOME")"
+	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+	source "$ZINIT_HOME/zinit.zsh"
 fi
 
 if [ -z "$(/usr/bin/which direnv)" ]; then
