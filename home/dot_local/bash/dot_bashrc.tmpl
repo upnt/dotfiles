@@ -84,31 +84,59 @@ fi
 
 # load envs
 if [[ -d "$PYENV_ROOT" ]]; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
+    fpath+="$PYENV_ROOT/completions"
+    
+    # eval "$(pyenv init -)"
+    {{ output "pyenv" "init" "-" | trim }}
+    
+	# eval "$(pyenv virtualenv-init -)"
+	{{ output "pyenv" "virtualenv-init" "-" | trim }}
+	
+	eval "$(pip completion --zsh)"
 fi
 
 if [[ -d "$NODENV_ROOT" ]]; then
-  eval "$(nodenv init - zsh)"
+    fpath+="$NODENV_ROOT/completions"
+    # eval "$(nodenv init - zsh)"
+    {{ output "nodenv" "init" "-" "zsh" }}
 fi
 
 if [[ -d "$RBENV_ROOT" ]]; then
-  eval "$(rbenv init -)"
+    fpath+="$RBENV_ROOT/completions"
+    # eval "$(rbenv init -)"
+    {{ output "rbenv" "init" "-" }}
 fi
 
 if [[ -d "$LUAENV_ROOT" ]]; then
-  eval "$(luaenv init -)"
+    fpath+="$LUAENV_ROOT/completions"
+    # eval "$(luaenv init -)"
+    {{ output "luaenv" "init" "-" }}
 fi
 
 if [[ -d "$JENV_ROOT" ]]; then
-  eval "$(jenv init -)"
-  jenv enable-plugin export
+    fpath+="$JENV_ROOT/completions"
+    function _jenv_init() {
+        # eval "$(jenv init -)"
+        {{ output "jenv" "init" "-" }}
+        jenv enable-plugin export
+    }
+    function jenv() {
+        unset -f jenv
+        _jenv_init
+        jenv "$@"
+    }
+    function java() {
+        unset -f java
+        _jenv_init
+        java "$@"
+    }
 fi
 
 if [[ -d "$PLENV_ROOT" ]]; then
-  eval "$(plenv init -)"
+    # eval "$(plenv init -)"
+    {{ output "plenv" "init" "-" }}
 fi
 
-if [[ -d "$HOME/.fzf" ]]; then
-  eval "$(fzf --bash)"
-fi
+# eval "$(direnv hook zsh)"
+{{ output "direnv" "hook" "zsh" }}
+
