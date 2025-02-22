@@ -6,19 +6,19 @@ fpath+="$ZDOTDIR/.zsh_functions"
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
 
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+# Keep 1000 lines of history within the shell and save it to $ZDOTDIR/.zsh_history:
 HISTSIZE=1000
 SAVEHIST=1000
-HISTFILE=~/.zsh_history
+HISTFILE="$ZDOTDIR/.zsh_history"
 
 # Use modern completion system
 autoload -Uz compinit
 
 local now=$(date +"%s")
-local updated=$(date -r ~/.zcompdump +"%s")
+local updated=$(date -r "$ZDOTDIR/.zcompdump" +"%s")
 local threshold=$((60 * 60 * 24))
 if [ $((${now} - ${updated})) -gt ${threshold} ]; then
-    echo "Create ~/.zcompdump"
+    echo "Create $ZDOTDIR/.zcompdump"
     compinit
 else
     compinit -C
@@ -165,7 +165,8 @@ fi
 if [[ -d "$HOME/.fzf" ]]; then
     function fzf() {
         unfunction "$0"
-    	source <(fzf --zsh)
+    	# source <(fzf --zsh)
+        {{ output "fzf" "--zsh" }}
         alias fzf="$HOME/.fzf/bin/fzf-tmux -p 90%"
         $0 "$@"
     }
