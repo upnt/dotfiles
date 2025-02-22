@@ -5,41 +5,6 @@ foreach ($cmd in 'git', 'lsd', 'bat', 'rg', 'fd', 'zoxide')
     $_HAS.add($cmd, (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\$cmd.exe))
 }
 
-function prompt
-{
-    $path = (Get-Location).ToString().Replace($HOME, "~")
-    $branch = if ($_HAS['git'])
-    {
-        git branch --show-current 
-    } else
-    {
-        $null 
-    }
-
-    ## first line
-    Write-Host ""
-
-    ## second line
-    Write-Host "$Env:USERNAME" -ForeGroundColor Yellow -NoNewLine
-    Write-Host " $path" -ForeGroundColor Cyan -NoNewLine
-
-    if ($branch -and $host.UI.RawUI.WindowSize.Width -gt 70)
-    {
-        Write-Host " on " -ForeGroundColor White -NoNewLine
-        Write-Host "`u{e725} $branch " -ForeGroundColor Red -NoNewLine
-    }
-    Write-Host ""
-    if (($null -ne $Env:CONDA_PROMPT_MODIFIER) -And ($null -eq $Env:VIRTUAL_ENV))
-    {
-        Write-Host (
-            $Env:CONDA_PROMPT_MODIFIER.SubString(1, $Env:CONDA_PROMPT_MODIFIER.Length - 3)
-        ) -ForeGroundColor Magenta -NoNewLine
-    }
-    Write-Host "" -ForeGroundColor White -NoNewLine
-
-    return "`u{232A}"
-}
-
 if ( $_HAS['rg'] )
 {
     Set-Alias grep rg 
@@ -87,7 +52,9 @@ function gclone
         }
     }
 
-    $repo = (Write-Output $repos | fzf --ansi --reverse)
+    # $repo = (Write-Output $repos | fzf --ansi --reverse--preview='tree -d -L 3 (_ftm_parse (Write-Output {}).Substring(2)) | head -n 50')
+    # $repo = (Write-Output $repos | fzf --ansi --reverse--preview='Write-Output {}')
+    # $repo = (Write-Output $repos | fzf --ansi --reverse--preview='tree -d -L 3 $(_ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
     if ( -not ($repo -eq "" ) )
     {
         gh repo clone $repo $extraArgs
