@@ -192,9 +192,10 @@ zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
+
 zinit light sindresorhus/pure
 
-zinit wait lucid for \
+zinit wait lucid light-mode for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     zdharma-continuum/fast-syntax-highlighting \
  blockf \
