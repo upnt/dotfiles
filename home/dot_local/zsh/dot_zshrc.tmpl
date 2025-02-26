@@ -26,14 +26,19 @@ HISTFILE="$ZDOTDIR/.zsh_history"
 # Use modern completion system
 autoload -Uz compinit
 
-local now=$(date +"%s")
-local updated=$(date -r "$ZDOTDIR/.zcompdump" +"%s")
-local threshold=$((60 * 60 * 24))
-if [ $((${now} - ${updated})) -gt ${threshold} ]; then
+if [ -f "$ZDOTDIR/.zcompdump" ]; then
+    local now=$(date +"%s")
+    local updated=$(date -r "$ZDOTDIR/.zcompdump" +"%s")
+    local threshold=$((60 * 60 * 24))
+    if [ $((${now} - ${updated})) -gt ${threshold} ]; then
+        echo "Create $ZDOTDIR/.zcompdump"
+        compinit
+    else
+        compinit -C
+    fi
+else
     echo "Create $ZDOTDIR/.zcompdump"
     compinit
-else
-    compinit -C
 fi
 
 zstyle ':completion:*' auto-description 'specify: %d'
