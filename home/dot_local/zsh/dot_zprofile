@@ -90,8 +90,8 @@ if [[ -d "$HOME/.fzf" ]]; then
   PATH="/home/upnt/.fzf/bin:$PATH"
 fi
 
-if [[ -f "$HOME/.ghux_aliases" ]]; then
-    export GHUX_ALIASES_PATH="$HOME/.ghux_aliases"
+if [[ -f "$HOME/.ghuxrc" ]]; then
+    export GHUX_ALIASES_PATH="$HOME/.ghuxrc"
     export GHQ_ROOT="$HOME/workspace"
 fi
 
