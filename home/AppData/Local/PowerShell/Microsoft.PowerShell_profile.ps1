@@ -211,5 +211,5 @@ Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key 'Ctrl+k' -Function HistorySearchBackward
 
 $Env:GHQ_ROOT = "$HOME\workspace"
-$Env:GHUX_ALIASES_PATH = "$HOME\.ghux_aliases"
+$Env:GHUX_ALIASES_PATH = "$HOME\.ghuxrc"
 . $PSScriptRoot/chezmoi.ps1
