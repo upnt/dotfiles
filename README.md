@@ -25,10 +25,15 @@ iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~\.local\bin'"
 If you're a OneDrive user, simply add the following script to enhance your setup!
 Just drop it into
 `$HOME\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`,
-and you're good to go!
 
 ```powershell:Microsoft.PowerShell_profile.ps1
 . "$Home\AppData\Local\PowerShell\Microsoft.PowerShell_profile.ps1"
+Import-Module pure-pwsh
+```
+and install from the gallery
+
+```pwsh
+Install-Module pure-pwsh
 ```
 
 ### Debian (including WSL)
