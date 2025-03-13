@@ -92,8 +92,7 @@ fi
 if [[ -d "$JENV_ROOT" ]]; then
     fpath+="$JENV_ROOT/completions"
     function _jenv_init() {
-        # eval "$(jenv init -)"
-        {{ output "jenv" "init" "-" }}
+        eval "$(jenv init -)"
         jenv enable-plugin export
     }
     function jenv() {
