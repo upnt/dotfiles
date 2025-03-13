@@ -19,7 +19,8 @@ Dotfiles managed by chezmoi
 Set-ExecutionPolicy RemoteSigned
 winget install Git.Git
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~\.local\bin'"
-~\.local\bin\chezmoi init --apply upnt
+git clone https://github.com/upnt/dotfiles ~\.local\share\chezmoi
+~\.local\bin\chezmoi init 
 ```
 
 If you're a OneDrive user, simply add the following script to enhance your setup!
