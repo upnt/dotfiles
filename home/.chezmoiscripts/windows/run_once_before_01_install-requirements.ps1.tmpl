@@ -4,7 +4,7 @@ If (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 	If ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000)
 	{
 		$CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
-		Start-Process -Wait -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
+		Start-Process -Wait -FilePath pwsh.exe -Verb Runas -ArgumentList $CommandLine
 		Exit
 	}
 }
@@ -36,6 +36,9 @@ function __winget_install_ms($package)
 }
 
 $ErrorActionPreference = "Stop"
+if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links) ) {
+	mkdir $HOME\AppData\Local\Microsoft\WinGet\Links
+}
 
 try
 {
@@ -43,24 +46,14 @@ try
 	__winget_install_id("Microsoft.PowerShell")
 	__winget_install_id("Zen-Team.Zen-Browser")
 	__winget_install_id("Google.Chrome")
-	__winget_install_id("GitHub.cli")
-	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\git.exe) )
-	{
-		$PATH = $([Environment]::GetEnvironmentVariable("PATH", "User"))
-		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name git.exe -Value $(Get-Command git).Source
-	}
+	
 	__winget_install_id("7zip.7zip")
 	__winget_install_id("DevToys-app.DevToys")
 	__winget_install_id("Microsoft.PowerToys")
 	__winget_install_id("Neovim.Neovim")
 	__winget_install_id("equalsraf.neovim-qt")
 	__winget_install_id("lsd-rs.lsd")
-	__winget_install_id("sharkdp.bat")
-	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\bat.exe) )
-	{
-		$PATH = $([Environment]::GetEnvironmentVariable("PATH", "User"))
-		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name bat.exe -Value $(Get-Command bat).Source
-	}
+	
 	__winget_install_id("sharkdp.fd")
 	__winget_install_id("junegunn.fzf")
 	__winget_install_id("dandavison.delta")
@@ -72,6 +65,20 @@ try
 	__winget_install_id("GoLang.Go")
 	__winget_install_ms("Password Manager SafeInCloud")
 	__winget_install_ms("9P64KGF20H0T")
+
+	__winget_install_id("GitHub.cli")
+	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\git.exe) )
+	{
+		$PATH = [System.Environment]::GetEnvironmentVariable("PATH", "User")
+		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name git.exe -Value $(Get-Command git).Source
+	}
+
+	__winget_install_id("sharkdp.bat")
+	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\bat.exe) )
+	{
+		$Env:Path += [System.Environment]::GetEnvironmentVariable("PATH", "User")
+		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name bat.exe -Value $(Get-Command bat).Source
+	}
 	$Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 	Write-Output "Installed packages. Automatically exits after 5 seconds..."
 	Start-Sleep -Seconds 5
@@ -82,6 +89,7 @@ try
 	$ErrorActionPreference = "Continue"
 	exit 1
 }
+
 
 $ErrorActionPreference = "Continue"
 exit 0
