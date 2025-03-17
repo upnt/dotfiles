@@ -34,7 +34,7 @@ if ( $_HAS['lsd'] )
 {
     function _ls
     {
-        lsd -l --blocks "git,user,group,name" $args
+        lsd -l --blocks "git,name" $args
     }
     $null = (Set-Alias -Name ls -Value _ls)
     function ll
