@@ -1,6 +1,6 @@
 #!/bin/zsh
-if [[ -d /opt/nvim-linux64 ]]; then
-    export PATH="/opt/nvim-linux64/bin:$PATH"
+if [[ -d /opt/nvim-linux-x86_64 ]]; then
+    export PATH="/opt/nvim-linux-x86_64/bin:$PATH"
 fi
 
 if [[ -d /opt/apache-maven-3.9.9 ]]; then

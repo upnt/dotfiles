@@ -75,10 +75,11 @@ if [ -z "$(/usr/bin/which pwsh)" ]; then
 	rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
 fi
 
-if [ ! -d "/opt/nvim-linux64" ]; then
-	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-	sudo tar -C /opt -xzf nvim-linux64.tar.gz
-	rm nvim-linux64.tar.gz
+if [ ! -d "/opt/nvim-linux-x86_64" ]; then
+	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+	sudo rm -rf /opt/nvim
+	sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+	sudo rm nvim-linux-x86_64.tar.gz
 fi
 
 if [ ! -d "/opt/apache-maven-3.9.9" ]; then
