@@ -36,6 +36,7 @@ if [ ! -d "$PYENV_ROOT" ]; then
 
 	pip install -U pip
 	pip install -U poetry
+	poetry config virtualenvs.in-project true
 
 	pyenv virtualenv 2.7 py2nvim
 	pyenv activate py2nvim
