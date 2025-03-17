@@ -1,8 +1,20 @@
 ﻿$_HAS = @{}
 
+$oldPreference = $ErrorActionPreference
 foreach ($cmd in 'git', 'lsd', 'bat', 'rg', 'fd', 'zoxide')
 {
-    $_HAS.add($cmd, (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\$cmd.exe))
+    $ErrorActionPreference = 'stop'
+    try {
+        if(Get-Command $cmd) {
+            $_HAS.add($cmd, $true)
+        }
+    }
+    catch {
+        $_HAS.add($cmd, $false)
+    }
+    finally {
+        $ErrorActionPreference = $oldPreference
+    }
 }
 
 if ( $_HAS['rg'] )
