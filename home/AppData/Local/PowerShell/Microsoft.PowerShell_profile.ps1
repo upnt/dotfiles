@@ -33,14 +33,22 @@ if ( $_HAS['fd'] )
 if ( $_HAS['lsd'] )
 {
     $null = Set-Alias -Name ls -Value lsd -Option AllScope
+  alias ls='lsd -l --blocks "git,user,group,name"'
+    function ls
+    {
+        lsd -l --blocks "git,user,group,name" $args
+    }
     function ll
-    { ls --long $args 
+    {
+        ls --long $args 
     }
     function lt
-    { ls --tree $args 
+    {
+        ls --tree $args 
     }
     function la
-    { ls --all $args 
+    {
+        ls --all $args 
     }
 }
 
