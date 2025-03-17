@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install flatpak gnome-software-plugin-flatpak
+sudo apt-get install flatpak gnome-software-plugin-flatpak
 
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub io.github.zen_browser.zen
