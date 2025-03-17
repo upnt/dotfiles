@@ -32,7 +32,6 @@ if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links) ) {
 try
 {
 	Write-Output "Install pkgs..."
-	__winget_install_id("Microsoft.PowerShell")
 	__winget_install_id("Zen-Team.Zen-Browser")
 	__winget_install_id("Google.Chrome")
 	
@@ -41,31 +40,15 @@ try
 	__winget_install_id("Microsoft.PowerToys")
 	__winget_install_id("Neovim.Neovim")
 	__winget_install_id("equalsraf.neovim-qt")
-	__winget_install_id("lsd-rs.lsd")
 	
-	__winget_install_id("sharkdp.fd")
 	__winget_install_id("junegunn.fzf")
-	__winget_install_id("dandavison.delta")
-	__winget_install_id("BurntSushi.ripgrep.MSVC")
 	__winget_install_id("Discord.Discord")
-	__winget_install_id("Notion.Notion")
-	__winget_install_id("Notion.NotionCalendar")
 	__winget_install_id("jqlang.jq")
 	__winget_install_id("GoLang.Go")
+	__winget_install_id("rustlang.rustup")
 
 	__winget_install_id("GitHub.cli")
-	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\git.exe) )
-	{
-		$PATH = [System.Environment]::GetEnvironmentVariable("PATH", "User")
-		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name git.exe -Value $(Get-Command git).Source
-	}
 
-	__winget_install_id("sharkdp.bat")
-	if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links\bat.exe) )
-	{
-		$Env:Path += [System.Environment]::GetEnvironmentVariable("PATH", "User")
-		$null = New-Item -ItemType SymbolicLink -Path $HOME\AppData\Local\Microsoft\WinGet\Links -Name bat.exe -Value $(Get-Command bat).Source
-	}
 	$Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 	Write-Output "Installed packages. Automatically exits after 5 seconds..."
 	Start-Sleep -Seconds 5
