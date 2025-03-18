@@ -13,7 +13,7 @@ Write-Output ""
 
 function __winget_install_id($package)
 {
-	Write-Output "Install $package from winget"
+	Write-Output "Installing $package from winget"
 	$buf = winget install --allow-reboot --silent --accept-package-agreements --accept-source-agreements --disable-interactivity --id $package -s winget
 	if ($LASTEXITCODE -eq -1978335212)
 	{
@@ -24,32 +24,30 @@ function __winget_install_id($package)
 }
 
 
+$oldPreference = $ErrorActionPreference
 $ErrorActionPreference = "Stop"
-if ( -not (Test-Path $HOME\AppData\Local\Microsoft\WinGet\Links) ) {
-	mkdir $HOME\AppData\Local\Microsoft\WinGet\Links
-}
 
 try
 {
 	Write-Output "Install pkgs..."
-	__winget_install_id("Zen-Team.Zen-Browser")
+	Write-Output "Installing VisualStudio BuildTools"
+	winget install --id Microsoft.VisualStudio.2022.Community --override "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --focusedUi --wait"
 	__winget_install_id("Google.Chrome")
+	__winget_install_id("Zen-Team.Zen-Browser")
 	
 	__winget_install_id("7zip.7zip")
 	__winget_install_id("DevToys-app.DevToys")
 	__winget_install_id("Microsoft.PowerToys")
 	__winget_install_id("Neovim.Neovim")
 	__winget_install_id("equalsraf.neovim-qt")
+	__winget_install_id("GitHub.cli")
 	
-	__winget_install_id("junegunn.fzf")
 	__winget_install_id("Discord.Discord")
+	__winget_install_id("junegunn.fzf")
 	__winget_install_id("jqlang.jq")
 	__winget_install_id("GoLang.Go")
 	__winget_install_id("rustlang.rustup")
 
-	__winget_install_id("GitHub.cli")
-
-	$Env:PATH = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 	Write-Output "Installed packages. Automatically exits after 5 seconds..."
 	Start-Sleep -Seconds 5
 } catch
@@ -58,8 +56,8 @@ try
 	Read-Host -Prompt "Press any key to exit"
 	$ErrorActionPreference = "Continue"
 	exit 1
+} finally {
+	$ErrorActionPreference = $oldPreference
 }
 
-
-$ErrorActionPreference = "Continue"
 exit 0

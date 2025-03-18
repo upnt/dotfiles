@@ -31,14 +31,14 @@ if [ -f "$ZDOTDIR/.zcompdump" ]; then
     local updated=$(date -r "$ZDOTDIR/.zcompdump" +"%s")
     local threshold=$((60 * 60 * 24))
     if [ $((${now} - ${updated})) -gt ${threshold} ]; then
+        compinit -d $ZDOTDIR/.zcompdump
         echo "Create $ZDOTDIR/.zcompdump"
-        compinit
     else
         compinit -C
     fi
 else
+    compinit -d $ZDOTDIR/.zcompdump
     echo "Create $ZDOTDIR/.zcompdump"
-    compinit
 fi
 
 zstyle ':completion:*' auto-description 'specify: %d'
