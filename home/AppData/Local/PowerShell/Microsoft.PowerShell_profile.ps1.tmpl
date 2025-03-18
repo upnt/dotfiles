@@ -225,6 +225,8 @@ function ftm
 
 }
 
+{{ output "zoxide" "init" "powershell" }}
+
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key 'Ctrl+k' -Function HistorySearchBackward
