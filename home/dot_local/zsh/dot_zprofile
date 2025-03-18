@@ -16,8 +16,8 @@ if [[ -d /opt/go-1.12.3 ]]; then
     export PATH="$(go env GOPATH)/bin:$PATH"
 fi
 
-if [[ -d $HOME/.TinyTeX/bin/x86_64-linux ]]; then
-    export PATH="$PATH:$HOME/.TinyTeX/bin/x86_64-linux"
+if [[ -d $HOME/.texlive/latest/bin ]]; then
+    export PATH="$PATH:$HOME/.texlive/latest/bin/x86_64-linux"
 fi
 
 if [[ -d /opt/boost ]] then

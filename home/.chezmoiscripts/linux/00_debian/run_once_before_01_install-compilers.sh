@@ -162,9 +162,16 @@ if [ -z "$(which composer)" ]; then
 	php -r "unlink('composer-setup.php');"
 fi
 
-# tinytex
-if [ ! -d "$HOME/.TinyTeX" ]; then
-	wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+# texlive
+mkdir -p "$HOME/.texlive"
+if [ ! -d "$HOME/.texlive/latest" ]; then
+	wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+	mkdir tmp-install-tl && tar xzvf install-tl-unx.tar.gz -C tmp-install-tl --strip-components 1
+	cd tmp-install-tl || exit
+	perl ./install-tl --scheme basic --no-interaction --texdir "$HOME/.texlive/latest"
+	cd - || exit
+	rm install-tl-unx.tar.gz
+	rm -rf tmp-install-tl
 fi
 
 # golang (No goenv for backward compatibility)
