@@ -172,7 +172,7 @@ if [[ -d "$HOME/.fzf" ]]; then
         unfunction "$0"
     	# source <(fzf --zsh)
         {{ output "fzf" "--zsh" }}
-        alias fzf="$HOME/.fzf/bin/fzf-tmux -p 90%"
+        alias fzf="$HOME/.fzf/bin/fzf-tmux -p 90% --style full"
         fzf "$@"
     }
 
