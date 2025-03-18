@@ -36,7 +36,7 @@ if ( $_HAS['lsd'] )
     {
         lsd -l --blocks "git,name" $args
     }
-    $null = (Set-Alias -Name ls -Value _ls)
+    $null = (Set-Alias -Name ls -Value _ls -O AllScope)
     function ll
     {
         lsd --long $args
