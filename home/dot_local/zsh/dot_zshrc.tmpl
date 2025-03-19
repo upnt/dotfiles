@@ -172,8 +172,8 @@ if [[ -d "$HOME/.fzf" ]]; then
         unfunction "$0"
     	# source <(fzf --zsh)
         {{ output "fzf" "--zsh" }}
-        alias fzf="fzf -tmux 90% --style full"
-        fzf "$@"
+        alias fzf="fzf --tmux 90% --style full"
+        fzf --tmux 90% --style full "$@"
     }
 
     autoload -Uz gclone
