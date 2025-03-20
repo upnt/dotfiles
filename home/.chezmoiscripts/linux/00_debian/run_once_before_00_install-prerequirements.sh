@@ -102,16 +102,16 @@ if [ ! -d "/opt/boost" ]; then
 	rm boost_1_87_0.tar.gz
 fi
 
-if [ ! -d "$HOME/.fzf" ]; then
-	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
-	~/.fzf/install --bin
-fi
-
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
 	mkdir -p "$(dirname "$ZINIT_HOME")"
 	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 	source "$ZINIT_HOME/zinit.zsh"
+fi
+
+if [ ! -d "$HOME/.fzf" ]; then
+	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+	~/.fzf/install --bin
 fi
 
 if [ -z "$(/usr/bin/which direnv)" ]; then
