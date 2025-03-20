@@ -9,7 +9,7 @@ if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
         fi
     done
 fi
-local repo=`echo $repos | fzf --ansi --reverse | cut -f 1`
+local repo=`echo $repos | fzf --ansi | cut -f 1`
 if [ ! "$repo" = "" ]; then
     gh repo clone "$repo" $@
 fi
