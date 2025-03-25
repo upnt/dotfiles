@@ -18,6 +18,6 @@ $max_repeat = 10;
 $emulate_aux = 1;
 $aux_dir = ".tex_intermediates";
 
-$pdf_previewer = 'zathura %S';
+$pdf_previewer = '/mnt/c/Windows/explorer.exe %S';
 $pdf_update_method = 3;
 
