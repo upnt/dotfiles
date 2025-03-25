@@ -77,11 +77,6 @@ if [[ -d "$PLENV_ROOT" ]]; then
     export PATH="$PLENV_ROOT/bin:$PATH"
 fi
 
-export DIRENV_ROOT="$HOME/.direnv"
-if [[ -d "$DIRENV_ROOT" ]]; then
-    export PATH="$DIRENV_ROOT/bin:$PATH"
-fi
-
 if [[ -d "$HOME/.local/bin" ]]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
