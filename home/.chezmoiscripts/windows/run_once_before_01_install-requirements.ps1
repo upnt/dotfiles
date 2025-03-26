@@ -34,17 +34,18 @@ try
 	winget install --id Microsoft.VisualStudio.2022.Community --override "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --focusedUi --wait"
 	__winget_install_id("Google.Chrome")
 	__winget_install_id("Zen-Team.Zen-Browser")
-	__winget_install_id("SumatraPDF.SumatraPDF")
 	
 	__winget_install_id("7zip.7zip")
 	__winget_install_id("DevToys-app.DevToys")
 	__winget_install_id("Microsoft.PowerToys")
 	__winget_install_id("GitHub.cli")
+
 	__winget_install_id("Discord.Discord")
 	__winget_install_id("SlackTechnologies.Slack")
 
 	__winget_install_id("Neovim.Neovim")
 	__winget_install_id("equalsraf.neovim-qt")
+	__winget_install_id("SumatraPDF.SumatraPDF")
 	
 	__winget_install_id("junegunn.fzf")
 	__winget_install_id("jqlang.jq")
