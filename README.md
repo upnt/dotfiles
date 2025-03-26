@@ -21,7 +21,7 @@ winget install Git.Git -s winget
 winget install Microsoft.Powershell -s winget
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~\.local\bin'"
 git clone https://github.com/upnt/dotfiles ~\.local\share\chezmoi
-~\.local\bin\chezmoi init 
+~\.local\bin\chezmoi init
 ```
 
 If you're a OneDrive user, simply add the following script to enhance your setup!
@@ -32,11 +32,18 @@ Just drop it into
 . "$Home\AppData\Local\PowerShell\Microsoft.PowerShell_profile.ps1"
 Import-Module pure-pwsh
 ```
+
 and install from the gallery
 
 ```pwsh
 Install-Module pure-pwsh
 ```
+
+#### Other effective applications
+
+- LINE
+- Zoom Workplace
+- Edison Mail
 
 ### Debian (including WSL)
 
