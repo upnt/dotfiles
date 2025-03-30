@@ -53,13 +53,20 @@ try
 	__winget_install_id("rustlang.rustup")
 
 	Write-Output "Installed packages. Automatically exits after 5 seconds..."
+	$_Success = $true
 	Start-Sleep -Seconds 5
 } catch
 {
 	Write-Output "An error occured."
 	Read-Host -Prompt "Press any key to exit"
 	$ErrorActionPreference = "Continue"
+	$_Success = $false
 } finally {
 	$ErrorActionPreference = $oldPreference
+}
+
+if ($_Success) {
 	exit 0
+} else {
+	exit 1
 }
