@@ -59,9 +59,7 @@ try
 	Write-Output "An error occured."
 	Read-Host -Prompt "Press any key to exit"
 	$ErrorActionPreference = "Continue"
-	exit 1
 } finally {
 	$ErrorActionPreference = $oldPreference
+	exit 0
 }
-
-exit 0
