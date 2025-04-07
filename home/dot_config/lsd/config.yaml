@@ -10,9 +10,11 @@ classic: false
 # layout.
 # Possible values: permission, user, group, context, size, date, name, inode, links, git
 blocks:
-  - git
+  - permission
   - user
   - group
+  - size
+  - date
   - name
 
 # == Color ==
@@ -87,7 +89,7 @@ recursion:
 # == Size ==
 # Specifies the format of the size column.
 # Possible values: default, short, bytes
-size: bytes
+size: default
 
 # == Permission ==
 # Specify the format of the permission column
