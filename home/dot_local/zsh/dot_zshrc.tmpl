@@ -150,16 +150,20 @@ if type "rg" > /dev/null 2>&1; then
     alias grep='rg'
 fi
 if type "lsd" > /dev/null 2>&1; then
-    alias ls='lsd -l --blocks "git,user,group,name"'
+    alias ls='lsd'
+    alias lt='ls --tree --depth 2 --blocks "name"'
+    alias rls='ls -r'
+    alias rla='ls -rA'
+    
     alias la='ls -A'
-    alias ll='lsd -alF'
-    alias lt='ls --tree'
-    alias rls='ls | shuf | head -n 1'
+    alias ll='ls -lA'
 else
-    alias ll='ls -alF'
-    alias la='ls -A'
     alias lt='ls --tree'
     alias rls='ls | shuf | head -n 1'
+    alias rla='ls -A | shuf | head -n 1'
+    
+    alias ll='ls -lA'
+    alias la='ls -A'
 fi
 
 if type "zoxide" > /dev/null 2>&1; then
