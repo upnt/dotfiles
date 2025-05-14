@@ -1,5 +1,12 @@
 #!/bin/bash
 
+echo "install envs"
+
+# direnv
+if [ -z "$(/usr/bin/which direnv)" ]; then
+	curl -sfL https://direnv.net/install.sh | bash
+fi
+
 # python
 export PYENV_ROOT="$HOME/.pyenv"
 if [ ! -d "$PYENV_ROOT" ]; then

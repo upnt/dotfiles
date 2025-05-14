@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "install texlives"
+
 # texlive
 mkdir -p "$HOME/.texlive"
 if [ ! -d "$HOME/.texlive/2022" ]; then
