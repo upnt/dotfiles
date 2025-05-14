@@ -9,18 +9,18 @@ if [ ! -d "$HOME/.texlive/2022" ]; then
 	wget https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/install-tl-unx.tar.gz
 	mkdir "$_tmp_dir" && tar xzvf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
 	cd "$_tmp_dir" || exit
-	env TEXDIR="$HOME/.texlive/2022" perl ./install-tl --scheme basic --no-gui --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
+	perl ./install-tl --profile "{{ config.workingTree }}/.config/texlive2022.profile" --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
 	cd - || exit
 	rm install-tl-unx.tar.gz
 	rm -rf "$_tmp_dir"
 fi
 
-if [ ! -d "$HOME/.texlive/latest" ]; then
-	_tmp_dir="tmp-tl-latest"
+if [ ! -d "$HOME/.texlive/2025" ]; then
+	_tmp_dir="tmp-tl-2025"
 	wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 	mkdir "$_tmp_dir" && tar xzvf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
 	cd "$_tmp_dir" || exit
-	perl ./install-tl --scheme basic --no-interaction --texdir "$HOME/.texlive/latest"
+	perl ./install-tl --profile "{{ config.workingTree }}/.config/texlive2025.profile"
 	cd - || exit
 	rm install-tl-unx.tar.gz
 	rm -rf "$_tmp_dir"
