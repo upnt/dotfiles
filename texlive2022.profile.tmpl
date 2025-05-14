@@ -2,12 +2,12 @@
 # It will NOT be updated and reflects only the
 # installation profile at installation time.
 selected_scheme scheme-minimal
-TEXDIR ~/.texlive/2022
+TEXDIR {{ .chezmoi.homeDir }}/.texlive/2022
 TEXMFCONFIG ~/.texlive2022/texmf-config
-TEXMFHOME ~/texmf
-TEXMFLOCAL ~/.texlive/texmf-local
-TEXMFSYSCONFIG ~/.texlive/2022/texmf-config
-TEXMFSYSVAR ~/.texlive/2022/texmf-var
+TEXMFHOME {{ .chezmoi.homeDir }}/texmf
+TEXMFLOCAL {{ .chezmoi.homeDir }}/.texlive/texmf-local
+TEXMFSYSCONFIG ~/.texlive2022/texmf-config
+TEXMFSYSVAR {{ .chezmoi.homeDir }}/.texlive/2022/texmf-var
 TEXMFVAR ~/.texlive2022/texmf-var
 binary_x86_64-linux 1
 instopt_adjustpath 0

@@ -7,7 +7,7 @@ flatpak install flathub io.github.zen_browser.zen
 
 if [ -z "$(which goneovim)" ]; then
   wget https://github.com/akiyosi/goneovim/releases/download/v0.6.8/goneovim-v0.6.8-linux.tar.bz2 >/dev/null
-  tar xvf goneovim-v0.6.8-linux.tar.bz2 >/dev/null
+  tar xf goneovim-v0.6.8-linux.tar.bz2 >/dev/null
   sudo mv goneovim-v0.6.8-linux/goneovim /usr/local/bin/
   rm goneovim-v0.6.8-linux.tar.bz2
   rm -rf goneovim-v0.6.8-linux
