@@ -14,7 +14,7 @@ Dotfiles managed by chezmoi
 ## Installation
 
 ### Windows PowerShell
-
+#### main apps
 ```powershell
 Set-ExecutionPolicy RemoteSigned
 winget install Git.Git -s winget
