@@ -96,21 +96,23 @@ if [[ -d "$PYENV_ROOT" ]]; then
 	eval "$(pyenv virtualenv-init -)"
     {{ end }}
     
-	eval "$(pip completion --zsh)"
+	eval "$(pip completion --bash)"
 fi
 
 if [[ -d "$NODENV_ROOT" ]]; then
     fpath+="$NODENV_ROOT/completions"
-    # eval "$(nodenv init - zsh)"
+    
+    # eval "$(nodenv init - bash)"
     {{ if (lookPath "nodenv") }}
-    {{ output "nodenv" "init" "-" "zsh" }}
+    {{ output "nodenv" "init" "-" "bash" }}
     {{ else }}
-    eval "$(nodenv init - zsh)"
+    eval "$(nodenv init - bash)"
     {{ end }}
 fi
 
 if [[ -d "$RBENV_ROOT" ]]; then
     fpath+="$RBENV_ROOT/completions"
+    
     # eval "$(rbenv init -)"
     {{ if (lookPath "rbenv") }}
     {{ output "rbenv" "init" "-" }}
@@ -121,6 +123,7 @@ fi
 
 if [[ -d "$LUAENV_ROOT" ]]; then
     fpath+="$LUAENV_ROOT/completions"
+    
     # eval "$(luaenv init -)"
     {{ if (lookPath "luaenv") }}
     {{ output "luaenv" "init" "-" }}
@@ -158,8 +161,8 @@ fi
 
 # eval "$(direnv hook zsh)"
 {{ if (lookPath "direnv") }}
-    {{ output "direnv" "hook" "zsh" }}
+{{ output "direnv" "hook" "zsh" }}
 {{ else }}
-    eval "$(direnv hook zsh)"
+eval "$(direnv hook zsh)"
 {{ end }}
 
