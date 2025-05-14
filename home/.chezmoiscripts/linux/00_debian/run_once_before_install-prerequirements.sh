@@ -1,5 +1,4 @@
 #!/bin/bash
-# pwsh
 ###################################
 # Prerequisites
 # Install pre-requisite packages.
@@ -47,11 +46,11 @@ sudo apt-get install -y build-essential zlib1g-dev \
 	libxcb-dri2-0-dev libxcb-util-dev libxcb-shm0-dev libxcb-res0-dev \
 	libxcb-shape0-dev libxcb-render-util0-dev libxcb-xvmc0-dev libxcb-ewmh-dev libxcb-render0-dev \
 	libxcb-cursor-dev libxcb-randr0-dev libxcb-xinput-dev libxcb-dpms0-dev libxcb-record0-dev \
-	libxcb-screensaver0-dev libxcb-keysyms1-dev libxcb-icccm4-dev \
+	libxcb-screensaver0-dev libxcb-keysyms1-dev libxcb-icccm4-dev libevent-dev ncurses-dev pkg-config \
 	libxcb-util0-dev libxcb-glx0-dev libxcb-xrm-dev libxcb-xtest0-dev libtbb-dev \
 	libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake ninja-build scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
-	lsb-release software-properties-common gnupg zathura xdotool zsh tmux jq zathura xsel tree
+	lsb-release software-properties-common gnupg zathura xdotool zsh jq zathura xsel tree
 echo "installed"

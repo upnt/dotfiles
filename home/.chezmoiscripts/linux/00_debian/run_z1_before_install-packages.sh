@@ -38,8 +38,18 @@ if [ ! -d "$ZINIT_HOME" ]; then
 	source "$ZINIT_HOME/zinit.zsh"
 fi
 
+# tmux
+if [ ! -d "$HOME/.tmux/bin" ]; then
+	mkdir -p "$HOME/.tmux"
+	git clone https://github.com/tmux/tmux.git "$HOME/.tmux/bin"
+	cd "$HOME/.tmux/bin" || return 1
+	sh autogen.sh
+	./configure && make
+	cd - || return 1
+fi
+
 # fzf
 if [ ! -d "$HOME/.fzf" ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
-	~/.fzf/install --bin
+	"$HOME/.fzf/install" --bin
 fi
