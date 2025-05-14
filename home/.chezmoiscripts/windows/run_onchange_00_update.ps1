@@ -10,4 +10,4 @@ If (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 chcp 65001
 winget update --all
-exit 0
+Exit 0
