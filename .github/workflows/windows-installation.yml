@@ -33,5 +33,5 @@ jobs:
           [System.Environment]::GetEnvironmentVariable("Path","Machine") | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           [System.Environment]::GetEnvironmentVariable("Path","User") | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           git clone https://github.com/upnt/dotfiles ~\.local\share\chezmoi
-          ~\.local\bin\chezmoi init 
+          & "$HOME\.local\bin\chezmoi" init
         shell: pwsh
