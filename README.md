@@ -19,8 +19,8 @@ Dotfiles managed by chezmoi
 Set-ExecutionPolicy RemoteSigned
 winget install Git.Git -s winget
 winget install Microsoft.Powershell -s winget
-iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~\.local\bin'"
-git clone https://github.com/upnt/dotfiles ~\.local\share\chezmoi
+iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$HOME\.local\bin'"
+git clone https://github.com/upnt/dotfiles "$HOME\.local\share\chezmoi"
 & "$HOME\.local\bin\chezmoi" init
 ```
 
