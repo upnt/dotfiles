@@ -29,4 +29,6 @@ if [ ! -d "$HOME/.texlive/2025" ]; then
 	rm -rf "$_tmp_dir"
 fi
 
-ln -s "$HOME/.texlive/shims" "$HOME/.texlive/2025"
+if [ ! -e "$HOME/.texlive/shims" ]; then
+	ln -s "$HOME/.texlive/2025" "$HOME/.texlive/shims" 
+fi
