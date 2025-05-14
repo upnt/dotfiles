@@ -197,7 +197,11 @@ if [[ -d "$HOME/.fzf" ]]; then
     function fzf() {
         unfunction "$0"
     	# source <(fzf --zsh)
+        {{ if (lookPath "fzf") }}
         {{ output "fzf" "--zsh" }}
+        {{ else }}
+        source <(fzf --zsh)
+        {{ end }}
         # alias fzf="fzf --tmux 90% --style full"
         alias fzf="fzf-tmux -d 90% --style full"
         fzf --tmux 90% --style full "$@"

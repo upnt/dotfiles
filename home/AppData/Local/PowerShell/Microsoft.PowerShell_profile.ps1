@@ -225,11 +225,7 @@ function ftm
 
 }
 
-{{ if (lookPath "zoxide") }}
-{{ output "zoxide" "init" "powershell" }}
-{{ else }}
 zoxide init powershell
-{{ end }}
 
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
