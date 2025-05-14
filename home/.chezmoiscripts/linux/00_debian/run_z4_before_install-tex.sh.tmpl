@@ -25,3 +25,5 @@ if [ ! -d "$HOME/.texlive/2025" ]; then
 	rm install-tl-unx.tar.gz
 	rm -rf "$_tmp_dir"
 fi
+
+ln -s "$HOME/.texlive/shims" "$HOME/.texlive/2025"
