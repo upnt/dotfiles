@@ -87,14 +87,10 @@ if [[ -d "$PYENV_ROOT" ]]; then
     fpath+="$PYENV_ROOT/completions"
     
     # eval "$(pyenv init -)"
+    {{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "init" "-" | trim }}
+    
 	# eval "$(pyenv virtualenv-init -)"
-    {{ if (lookPath "pyenv") }}
-    {{ output "pyenv" "init" "-" | trim }}
-	{{ output "pyenv" "virtualenv-init" "-" | trim }}
-    {{ else }}
-    eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
-    {{ end }}
+    {{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "virtualenv-init" "-" | trim }}
     
 	eval "$(pip completion --bash)"
 fi
@@ -103,33 +99,21 @@ if [[ -d "$NODENV_ROOT" ]]; then
     fpath+="$NODENV_ROOT/completions"
     
     # eval "$(nodenv init - bash)"
-    {{ if (lookPath "nodenv") }}
-    {{ output "nodenv" "init" "-" "bash" }}
-    {{ else }}
-    eval "$(nodenv init - bash)"
-    {{ end }}
+    {{ output (joinPath (.chezmoi.homeDir) ".nodenv/bin/nodenv") "init" "-" "bash" | trim }}
 fi
 
 if [[ -d "$RBENV_ROOT" ]]; then
     fpath+="$RBENV_ROOT/completions"
     
     # eval "$(rbenv init -)"
-    {{ if (lookPath "rbenv") }}
-    {{ output "rbenv" "init" "-" }}
-    {{ else }}
-    eval "$(rbenv init -)"
-    {{ end }}
+    {{ output (joinPath (.chezmoi.homeDir) ".rbenv/bin/rbenv") "init" "-" | trim }}
 fi
 
 if [[ -d "$LUAENV_ROOT" ]]; then
     fpath+="$LUAENV_ROOT/completions"
     
     # eval "$(luaenv init -)"
-    {{ if (lookPath "luaenv") }}
-    {{ output "luaenv" "init" "-" }}
-    {{ else }}
-    eval "$(luaenv init -)"
-    {{ end }}
+    {{ output (joinPath (.chezmoi.homeDir) ".luaenv/bin/luaenv") "init" "-" | trim }}
 fi
 
 if [[ -d "$JENV_ROOT" ]]; then
@@ -152,17 +136,8 @@ fi
 
 if [[ -d "$PLENV_ROOT" ]]; then
     # eval "$(plenv init -)"
-    {{ if (lookPath "plenv") }}
-    {{ output "plenv" "init" "-" }}
-    {{ else }}
-    eval "$(plenv init -)"
-    {{ end }}
+    {{ output (joinPath (.chezmoi.homeDir) ".plenv/bin/plenv") "init" "-" | trim }}
 fi
 
-# eval "$(direnv hook zsh)"
-{{ if (lookPath "direnv") }}
-{{ output "direnv" "hook" "zsh" }}
-{{ else }}
-eval "$(direnv hook zsh)"
-{{ end }}
+eval "$(direnv hook bash)"
 
