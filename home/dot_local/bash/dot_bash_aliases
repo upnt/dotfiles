@@ -66,13 +66,8 @@ else
   alias la='ls -A'
 fi
 
-if type "zoxide" >/dev/null 2>&1; then
-  eval "$(zoxide init bash)"
-  alias cd="z"
-fi
-
 if type "fzf-tmux -p" >/dev/null 2>&1; then
-  alias fzf="fzf-tmux -p 90%"
+  alias fzf="fzf --tmux 90% --style full"
 fi
 
 if type "fzf" >/dev/null 2>&1; then

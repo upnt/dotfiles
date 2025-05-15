@@ -163,11 +163,6 @@ fi
 
 alias la='ls -a'
 
-if type "zoxide" > /dev/null 2>&1; then
-    # eval "$(zoxide init zsh)"
-    {{ output (joinPath (.chezmoi.homeDir) ".cargo/bin/zoxide") "init" "zsh" }}
-fi
-
 if [[ -d "$HOME/.fzf" ]]; then
     function fzf() {
         unfunction "$0"

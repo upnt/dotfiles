@@ -1,7 +1,7 @@
 ﻿$_HAS = @{}
 
 $oldPreference = $ErrorActionPreference
-foreach ($cmd in 'git', 'lsd', 'bat', 'rg', 'fd', 'zoxide')
+foreach ($cmd in 'git', 'lsd', 'bat', 'rg', 'fd')
 {
     $ErrorActionPreference = 'stop'
     try {
@@ -225,7 +225,6 @@ function ftm
 
 }
 
-zoxide init powershell
 
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
