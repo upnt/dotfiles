@@ -5,7 +5,7 @@ sudo apt-get update
 sudo apt-get full-upgrade -y
 sudo apt-get autoremove
 
-if [ -d "$HOME/.tmux" ]; then
+if [ -d "$HOME/.tmux/bin" ]; then
   cd ~/.tmux/bin || exit 1
   git fetch
   
