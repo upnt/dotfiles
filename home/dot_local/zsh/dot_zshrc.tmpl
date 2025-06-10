@@ -58,66 +58,6 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-# load envs
-if [[ -d "$PYENV_ROOT" ]]; then
-    fpath+="$PYENV_ROOT/completions"
-    
-    # eval "$(pyenv init -)"
-    {{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "init" "-" | trim }}
-    
-	# eval "$(pyenv virtualenv-init -)"
-    {{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "virtualenv-init" "-" | trim }}
-	
-	eval "$(pip completion --zsh)"
-fi
-
-if [[ -d "$NODENV_ROOT" ]]; then
-    fpath+="$NODENV_ROOT/completions"
-    
-    # eval "$(nodenv init - zsh)"
-    {{ output (joinPath (.chezmoi.homeDir) ".nodenv/bin/nodenv") "init" "-" "zsh" | trim }}
-fi
-
-if [[ -d "$RBENV_ROOT" ]]; then
-    fpath+="$RBENV_ROOT/completions"
-    
-    # eval "$(rbenv init -)"
-    {{ output (joinPath (.chezmoi.homeDir) ".rbenv/bin/rbenv") "init" "-" | trim }}
-fi
-
-if [[ -d "$LUAENV_ROOT" ]]; then
-    fpath+="$LUAENV_ROOT/completions"
-    
-    # eval "$(luaenv init -)"
-    {{ output (joinPath (.chezmoi.homeDir) ".luaenv/bin/luaenv") "init" "-" | trim }}
-fi
-
-if [[ -d "$JENV_ROOT" ]]; then
-    fpath+="$JENV_ROOT/completions"
-    function _jenv_init() {
-        eval "$(jenv init -)"
-        jenv enable-plugin export
-    }
-    function jenv() {
-        unset -f jenv
-        _jenv_init
-        jenv "$@"
-    }
-    function java() {
-        unset -f java
-        _jenv_init
-        java "$@"
-    }
-fi
-
-if [[ -d "$PLENV_ROOT" ]]; then
-    # eval "$(plenv init -)"
-    {{ output (joinPath (.chezmoi.homeDir) ".plenv/bin/plenv") "init" "-" | trim }}
-fi
-
-eval "$(direnv hook zsh)"
-
-
 setopt histignorealldups sharehistory
 
 # alias
@@ -183,6 +123,69 @@ fi
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+if [[ -n "$FAST_ZSH_LOAD" ]]; then
+    return
+fi
+
+# load envs
+if [[ -d "$PYENV_ROOT" ]]; then
+    fpath+="$PYENV_ROOT/completions"
+    
+    # eval "$(pyenv init -)"
+    {{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "init" "-" | trim }}
+    
+	# eval "$(pyenv virtualenv-init -)"
+    {{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "virtualenv-init" "-" | trim }}
+	
+	eval "$(pip completion --zsh)"
+fi
+
+if [[ -d "$NODENV_ROOT" ]]; then
+    fpath+="$NODENV_ROOT/completions"
+    
+    # eval "$(nodenv init - zsh)"
+    {{ output (joinPath (.chezmoi.homeDir) ".nodenv/bin/nodenv") "init" "-" "zsh" | trim }}
+fi
+
+if [[ -d "$RBENV_ROOT" ]]; then
+    fpath+="$RBENV_ROOT/completions"
+    
+    # eval "$(rbenv init -)"
+    {{ output (joinPath (.chezmoi.homeDir) ".rbenv/bin/rbenv") "init" "-" | trim }}
+fi
+
+if [[ -d "$LUAENV_ROOT" ]]; then
+    fpath+="$LUAENV_ROOT/completions"
+    
+    # eval "$(luaenv init -)"
+    {{ output (joinPath (.chezmoi.homeDir) ".luaenv/bin/luaenv") "init" "-" | trim }}
+fi
+
+if [[ -d "$JENV_ROOT" ]]; then
+    fpath+="$JENV_ROOT/completions"
+    function _jenv_init() {
+        eval "$(jenv init -)"
+        jenv enable-plugin export
+    }
+    function jenv() {
+        unset -f jenv
+        _jenv_init
+        jenv "$@"
+    }
+    function java() {
+        unset -f java
+        _jenv_init
+        java "$@"
+    }
+fi
+
+if [[ -d "$PLENV_ROOT" ]]; then
+    # eval "$(plenv init -)"
+    {{ output (joinPath (.chezmoi.homeDir) ".plenv/bin/plenv") "init" "-" | trim }}
+fi
+
+eval "$(direnv hook zsh)"
 
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
