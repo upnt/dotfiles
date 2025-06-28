@@ -4,4 +4,4 @@ If ("$(Get-Command deno -ErrorAction SilentlyContinue)" -eq "") {
 }
 
 go install github.com/x-motemen/ghq@latest
-cargo install lsd bat ripgrep git-delta fd-find --locked
+cargo install lsd bat ripgrep git-delta fd-find bottom --locked
