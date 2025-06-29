@@ -78,10 +78,3 @@ if [ ! -d "$HOME/.local/zsh_local" ]; then
 	touch "$HOME/.local/zsh_local/.zshrc"
 	touch "$HOME/.local/zsh_local/.zprofile"
 fi
-
-# java
-if [ ! -d "/opt/apache-maven-3.9.9" ]; then
-	wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
-	sudo tar xzf apache-maven-3.9.9-bin.tar.gz -C /opt
-	rm apache-maven-3.9.9-bin.tar.gz
-fi
