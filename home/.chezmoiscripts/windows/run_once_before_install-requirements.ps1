@@ -36,7 +36,6 @@ try
 	__winget_install_id("Microsoft.PowerToys")
 	__winget_install_id("GitHub.cli")
 
-	__winget_install_id("Discord.Discord")
 	__winget_install_id("SlackTechnologies.Slack")
 
 	__winget_install_id("Neovim.Neovim")
