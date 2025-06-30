@@ -40,8 +40,10 @@ and install from the gallery
 Install-Module pure-pwsh
 ```
 
-#### Other effective applications
+#### Other effective applications (insufficient winget supports)
 
+- OBS Studio
+- Discord
 - LINE
 - Zoom Workplace
 - Edison Mail
