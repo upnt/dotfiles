@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "install packages"
+echo "Install packages..."
 # setup
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
 
@@ -9,7 +9,7 @@ fi
 
 # pwsh
 if [ -z "$(/usr/bin/which pwsh)" ]; then
-	sudo apt-get update
+	sudo apt-get update -yqq
 	# Download the Microsoft repository GPG keys
 	wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/powershell-lts_7.4.6-1.deb_amd64.deb
 
@@ -53,3 +53,4 @@ if [ ! -d "$HOME/.fzf" ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
 	"$HOME/.fzf/install" --bin
 fi
+echo "Done."

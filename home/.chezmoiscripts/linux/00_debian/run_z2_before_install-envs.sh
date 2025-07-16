@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "install envs"
+echo "Install envs..."
 
 # direnv
 if [ -z "$(/usr/bin/which direnv)" ]; then
@@ -127,3 +127,5 @@ if [ ! -d "$PLENV_ROOT" ]; then
 
 	cpanm -n Neovim::Ext
 fi
+
+echo "Done."

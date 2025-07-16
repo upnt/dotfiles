@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "install texlives"
 
 # texlive
 mkdir -p "$HOME/.texlive"
 if [ ! -d "$HOME/.texlive/2022" ]; then
+	echo "Install texlive 2022..."
 	_tmp_dir="tmp-tl-2022"
 	_tmp_profile="tmp-texlive2022.profile"
 	wget https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/install-tl-unx.tar.gz
@@ -16,9 +16,11 @@ if [ ! -d "$HOME/.texlive/2022" ]; then
 	rm install-tl-unx.tar.gz
 	rm -rf "$_tmp_dir"
 	rm "$_tmp_profile"
+	echo "Done."
 fi
 
 if [ ! -d "$HOME/.texlive/2025" ]; then
+	echo "Install texlive 2025..."
 	_tmp_dir="tmp-tl-2025"
 	wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 	mkdir "$_tmp_dir" && tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
@@ -27,6 +29,7 @@ if [ ! -d "$HOME/.texlive/2025" ]; then
 	cd - || exit
 	rm install-tl-unx.tar.gz
 	rm -rf "$_tmp_dir"
+	echo "Done."
 fi
 
 if [ ! -e "$HOME/.texlive/shims" ]; then

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "install compilers"
+echo "Install compilers..."
 
 # cpp
 if [ -z "$(/usr/bin/which clang)" ]; then
@@ -78,3 +78,5 @@ if [ ! -d "$HOME/.local/zsh_local" ]; then
 	touch "$HOME/.local/zsh_local/.zshrc"
 	touch "$HOME/.local/zsh_local/.zprofile"
 fi
+
+echo "Done."
