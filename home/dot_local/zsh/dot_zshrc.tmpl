@@ -208,8 +208,9 @@ fi
 if [[ -d "$PLENV_ROOT" ]]; then
     # eval "$(plenv init -)"
     {{ output (joinPath (.chezmoi.homeDir) ".plenv/bin/plenv") "init" "-" | trim }}
-    # eval "$(direnv hook zsh)"
-    {{ output (joinPath (.chezmoi.homeDir) ".plenv/shims/direnv") "hook" "zsh" | trim }}
 fi
+
+# eval "$(direnv hook zsh)"
+{{ output (joinPath (.chezmoi.homeDir) ".local/bin/direnv") "hook" "zsh" | trim }}
 
 # zprof

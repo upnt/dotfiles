@@ -4,7 +4,7 @@ echo "Install envs..."
 
 # direnv
 if [ -z "$(/usr/bin/which direnv)" ]; then
-	curl -sfL https://direnv.net/install.sh | bash
+	curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash
 fi
 
 # python
