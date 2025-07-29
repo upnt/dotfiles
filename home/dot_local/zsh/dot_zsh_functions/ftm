@@ -1,4 +1,5 @@
 #!/bin/zsh
+local session_name=${1:-workspace}
 local _project_list
 local _project_status
 _project_list=()
@@ -28,7 +29,7 @@ if ( type gclone &> /dev/null ); then
     project_list="  [create] clone from github\n$project_list"
 fi
 
-_alias=$(echo $project_list|fzf --preview='tree -d -L 3 $(__ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
+_alias=$(echo $project_list|fzf --tmux 90% --style full --preview='tree -d -L 3 $(__ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
 _alias=${_alias:2}
 
 local project_name  
@@ -53,34 +54,22 @@ else
     IFS="," read -r project_name project_dir <<< "$(__ftm_parse ${_alias})"
 fi
 
-if [[ -z $project_dir ]]; then
+if [[ -z $project_name ]]; then
     [[ -n $CURSOR ]] && zle redisplay
     return 1
 fi
 
 # if you in tmux sesion
-local in_tmux
-[[ -n $TMUX ]] && in_tmux=0 || in_tmux=1
-
-local tmux_list=$(tmux list-session 2>/dev/null)
-
-# tmuxに既にfzfで選択したプロジェクトのセッションが存在するかどうか
-if  ! (echo $tmux_list | /usr/bin/grep -E "^$project_name" &>/dev/null); then
-    (cd $(eval echo ${project_dir}) && TMUX=; tmux new-session -ds $project_name 2>/dev/null) > /dev/null # cdした後lsしちゃうので
+if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux new-session -d -s "$session_name" -n "$project_name" -c "$project_dir"
+else
+    tmux new-window -t "$session_name:" -n "$project_name" -c "$project_dir"
 fi
 
-
-if [[ $in_tmux == 0 ]] ; then
-    if [[ -n "$CONTEXT" ]]; then
-        BUFFER="tmux switch-client -t $project_name"&& zle accept-line && zle redisplay
-    elif [[ -n "$project_name" ]]; then
-        tmux switch-client -t $project_name
-    fi
-else;
-    
-    if [[ -n "$CONTEXT" ]]; then
-        BUFFER="tmux attach-session -t $project_name"&& zle accept-line && zle redisplay
-    elif [[ -n "$project_name" ]]; then
-        tmux attach-session -t $project_name
-    fi
+if [[ -n $TMUX ]]; then
+    tmux switch-client -t "$session_name"
+else
+    tmux attach-session -t "$session_name"
 fi
+
+tmux select-window -t "$project_name"

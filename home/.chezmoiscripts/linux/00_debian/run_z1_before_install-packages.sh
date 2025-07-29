@@ -48,6 +48,18 @@ if [ ! -d "$HOME/.tmux/bin" ]; then
 	cd - || return 1
 fi
 
+if [ ! -d "$HOME/.tmux/scripts" ]; then
+	mkdir -p "$HOME/.tmux/scripts"
+	cat > "$HOME/.tmux/scripts/new-window.sh" << 'EOF'
+#!/bin/zsh
+
+fpath=(~/.local/zsh/.zsh_functions $fpath)
+autoload -Uz ftm
+ftm
+EOF
+	chmod u+x "$HOME/.tmux/scripts/new-window.sh"
+fi
+
 # fzf
 if [ ! -d "$HOME/.fzf" ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
