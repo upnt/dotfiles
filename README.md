@@ -16,8 +16,6 @@ Dotfiles managed by chezmoi
 
 ### Windows PowerShell
 
-#### main apps
-
 ```powershell
 Set-ExecutionPolicy RemoteSigned
 winget install Git.Git -s winget
@@ -70,7 +68,7 @@ The development environment is lightweight and fast because it is designed for W
 
   ![ui](./images/windows_ui.png)
 
-- [x] Git and GitHub cli support
+- [x] Git and GitHub cli
 - [x] GUI applications for development
 
 ### Debian (including WSL)
@@ -84,6 +82,6 @@ The development environment provides a consistent interface and workflow across 
 
   ![ui](./images/linux_ui.png)
 
-- [x] Git and GitHub cli support
+- [x] Git and GitHub cli
 - [x] Some compilers
-- [x] GUI applications for development
+- [x] GUI applications for development (only Linux GUI)
