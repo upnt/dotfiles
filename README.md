@@ -1,8 +1,7 @@
 # dotfiles
 
 [![CodeQL](https://github.com/upnt/dotfiles/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/github-code-scanning/codeql)
-[![Windows PowerShell](https://github.com/upnt/dotfiles/actions/workflows/windows-installation.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/windows-installation.yml)
-[![Ubuntu](https://github.com/upnt/dotfiles/actions/workflows/ubuntu-installation.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/ubuntu-installation.yml)
+[![Installation](https://github.com/upnt/dotfiles/actions/workflows/installation.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/installation.yml)
 
 Dotfiles managed by chezmoi
 

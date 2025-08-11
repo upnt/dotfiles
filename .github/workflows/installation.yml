@@ -1,4 +1,4 @@
-name: installation
+name: Installation
 
 on:
   pull_request:
