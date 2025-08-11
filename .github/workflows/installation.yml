@@ -19,7 +19,7 @@ jobs:
         run: chezmoi init --apply upnt
 
   windows-test:
-    runs-on: windows-latest
+    runs-on: windows-2025
     steps:
       - uses: actions/checkout@v4
 

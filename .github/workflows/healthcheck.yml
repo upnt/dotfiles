@@ -34,7 +34,7 @@ jobs:
           command -v tmux || true
 
   windows:
-    runs-on: windows-latest
+    runs-on: windows-2025
     steps:
       - uses: actions/checkout@v4
 
