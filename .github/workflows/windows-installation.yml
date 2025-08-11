@@ -4,8 +4,6 @@ name: Windows PowerShell
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
@@ -17,9 +15,6 @@ jobs:
   windows-test:
     runs-on: windows-latest
     steps:
-      - name: Install winget
-        uses: Cyberboss/install-winget@v1
-
       - name: Install chezmoi
         run: |
           $binDir = "$HOME\.local\bin"
