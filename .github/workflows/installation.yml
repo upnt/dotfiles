@@ -7,6 +7,8 @@ on:
 
 jobs:
   ubuntu-test:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,6 +21,8 @@ jobs:
         run: chezmoi init --apply upnt
 
   windows-test:
+    permissions:
+      contents: read
     runs-on: windows-2025
     steps:
       - uses: actions/checkout@v4
