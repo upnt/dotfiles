@@ -15,7 +15,9 @@ Dotfiles managed by chezmoi
 ## Installation
 
 ### Windows PowerShell
+
 #### main apps
+
 ```powershell
 Set-ExecutionPolicy RemoteSigned
 winget install Git.Git -s winget
@@ -62,9 +64,13 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 
 The setup is lightweight and fast because it is designed that you develop in WSL.
 
-- [x] Graphical, fast terminal
+- [x] Graphical UI
+
+  - Fast and minimal editor (Neovim with denops)
+
+  ![ui](./images/windows_ui.png)
+
 - [x] Git and GitHub cli support
-- [x] Fast and minimal editor (Neovim)
 - [x] GUI applications for development
 
 ### Debian (including WSL)
@@ -74,9 +80,13 @@ Even if you are using a new language,
 you can immediately set up a development environment,
 where you can develop with the same feeling as in the previous language.
 
-- [x] Graphical, fast terminal
+- [x] Graphical UI
+
+  - Graphical, highly functional editor (Neovim with AstroNvim)
+  - Repository management on tmux with fzf
+
+  ![ui](./images/linux_ui.png)
+
 - [x] Git and GitHub cli support
-- [x] Graphical, highly functional editor (Neovim using LSP)
-- [x] Repository management on tmux using ghux
-- [x] Some compilers installed by asdf
+- [x] Some compilers
 - [x] GUI applications for development
