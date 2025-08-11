@@ -62,7 +62,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply upnt
 
 ### Windows PowerShell
 
-The setup is lightweight and fast because it is designed that you develop in WSL.
+The development environment is lightweight and fast because it is designed for WSL.
 
 - [x] Graphical UI
 
@@ -75,10 +75,7 @@ The setup is lightweight and fast because it is designed that you develop in WSL
 
 ### Debian (including WSL)
 
-The setup is such that all languages can be developed in the same environment.
-Even if you are using a new language,
-you can immediately set up a development environment,
-where you can develop with the same feeling as in the previous language.
+The development environment provides a consistent interface and workflow across all languages.
 
 - [x] Graphical UI
 
