@@ -50,7 +50,7 @@ fi
 
 if [ ! -d "$HOME/.tmux/scripts" ]; then
 	mkdir -p "$HOME/.tmux/scripts"
-	cat > "$HOME/.tmux/scripts/new-window.sh" << 'EOF'
+	cat >"$HOME/.tmux/scripts/new-window.sh" <<'EOF'
 #!/bin/zsh
 
 fpath=(~/.local/zsh/.zsh_functions $fpath)
@@ -66,3 +66,15 @@ if [ ! -d "$HOME/.fzf" ]; then
 	"$HOME/.fzf/install" --bin
 fi
 echo "Done."
+
+# direnv
+if [ -z "$(/usr/bin/which direnv)" ]; then
+	curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash
+fi
+
+if [ ! -d "$HOME/.local/zsh_local" ]; then
+	mkdir -p "$HOME/.local/zsh_local"
+	touch "$HOME/.local/zsh_local/.zshenv"
+	touch "$HOME/.local/zsh_local/.zshrc"
+	touch "$HOME/.local/zsh_local/.zprofile"
+fi

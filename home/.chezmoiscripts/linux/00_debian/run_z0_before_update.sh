@@ -11,7 +11,7 @@ if [ -d "$HOME/.tmux/bin" ]; then
   git fetch
 
   LOCAL=$(git rev-parse HEAD)
-  REMOTE=$(git rev-parse @{u})
+  REMOTE=$(git rev-parse "@{u}")
 
   if [ "$LOCAL" != "$REMOTE" ]; then
     echo "Update tmux..."
@@ -31,7 +31,7 @@ if [ -d "$HOME/.fzf" ]; then
   git fetch
 
   LOCAL=$(git rev-parse HEAD)
-  REMOTE=$(git rev-parse @{u})
+  REMOTE=$(git rev-parse "@{u}")
 
   if [ "$LOCAL" != "$REMOTE" ]; then
     echo "Update fzf"
