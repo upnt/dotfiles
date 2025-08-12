@@ -13,12 +13,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install chezmoi
-        run: |
-          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
       - name: Initialize chezmoi
-        run: chezmoi init --apply upnt --branch nightly
+        env:
+          HOME: ${{ github.workspace }}/.ci-home
+        run: |
+          mkdir -p "$HOME"
+          chezmoi init --no-tty --source "$GITHUB_WORKSPACE"
+          chezmoi apply
 
   windows-test:
     permissions:
@@ -28,21 +31,19 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install chezmoi
-        run: |
-          $binDir = "$HOME\.local\bin"
-          New-Item -ItemType Directory -Force -Path $binDir
-          iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '$binDir'"
-          echo "$binDir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          if (-Not (Test-Path "$binDir\chezmoi.exe")) {
-            throw "chezmoi installation failed!"
-          }
         shell: pwsh
+        run: winget install --id twpayne.chezmoi -e --source winget
+
+      - name: Install git
+        shell: pwsh
+        run: winget install Git.Git -s winget
 
       - name: Install packages
-        run: |
-          winget install Git.Git -s winget
-          [System.Environment]::GetEnvironmentVariable("Path","Machine") | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          [System.Environment]::GetEnvironmentVariable("Path","User") | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          git clone https://github.com/upnt/dotfiles "$HOME\.local\share\chezmoi"
-          & "$HOME\.local\bin\chezmoi" init
         shell: pwsh
+        env:
+          HOME: ${{ github.workspace }}/.ci-home
+          USERPROFILE: ${{ github.workspace }}/.ci-home
+        run: |
+          New-Item -ItemType Directory -Force -Path $env:HOME | Out-Null
+          chezmoi init --no-tty --source "$env:GITHUB_WORKSPACE"
+          chezmoi apply
