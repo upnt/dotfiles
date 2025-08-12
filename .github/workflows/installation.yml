@@ -18,7 +18,7 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Initialize chezmoi
-        run: chezmoi init --apply upnt
+        run: chezmoi init --apply upnt --branch nightly
 
   windows-test:
     permissions:
