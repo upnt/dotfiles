@@ -1,10 +1,18 @@
 #!/bin/bash
 
-echo "Update packages..."
-sudo apt-get update -yqq
-sudo apt-get upgrade -yqq
+LOG="/tmp/updates.log"
+
+run() {
+  local msg="$1"
+  shift
+  echo ".${msg}"
+  "$@" >>"$LOG" 2>&1
+}
+
+echo "Updating packages"
+sudo apt-get update -yq
+sudo apt-get upgrade -yq
 sudo apt-get autoremove
-echo "Done."
 
 if [ -d "$HOME/.tmux/bin" ]; then
   cd ~/.tmux/bin || exit 1
@@ -14,11 +22,12 @@ if [ -d "$HOME/.tmux/bin" ]; then
   REMOTE=$(git rev-parse "@{u}")
 
   if [ "$LOCAL" != "$REMOTE" ]; then
-    echo "Update tmux..."
-    git pull
-    sh autogen.sh
-    ./configure && make
-    echo "Done."
+    run "Updating tmux" \
+      git pull
+    run "autogen tmux" \
+      sh autogen.sh
+    run "configure tmux" \
+      ./configure && make
   else
     echo "tmux is already up to date."
   fi
@@ -34,9 +43,8 @@ if [ -d "$HOME/.fzf" ]; then
   REMOTE=$(git rev-parse "@{u}")
 
   if [ "$LOCAL" != "$REMOTE" ]; then
-    echo "Update fzf"
-    git pull && ./install --bin
-    echo "Done."
+    run "Update fzf" \
+      git pull && ./install --bin
   else
     echo "fzf is already up to date"
   fi

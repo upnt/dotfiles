@@ -1,13 +1,24 @@
 #!/bin/bash
 
-sudo apt-get install flatpak gnome-software-plugin-flatpak
+LOG="/tmp/install_packages.log"
+
+run() {
+  local msg="$1"
+  shift
+  echo ".${msg}"
+  "$@" >>"$LOG" 2>&1
+}
+
+sudo apt-get install -yq flatpak gnome-software-plugin-flatpak
 
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub io.github.zen_browser.zen
 
 if [ -z "$(which goneovim)" ]; then
-  wget https://github.com/akiyosi/goneovim/releases/download/v0.6.8/goneovim-v0.6.8-linux.tar.bz2 >/dev/null
-  tar xf goneovim-v0.6.8-linux.tar.bz2 >/dev/null
+  run "Downloading goneovim v0.6.8" \
+    wget https://github.com/akiyosi/goneovim/releases/download/v0.6.8/goneovim-v0.6.8-linux.tar.bz2 >/dev/null
+  run "Extracting goneovim v0.6.8" \
+    tar xf goneovim-v0.6.8-linux.tar.bz2 >/dev/null
   sudo mv goneovim-v0.6.8-linux/goneovim /usr/local/bin/
   rm goneovim-v0.6.8-linux.tar.bz2
   rm -rf goneovim-v0.6.8-linux
@@ -15,14 +26,17 @@ fi
 
 if [ -n "$(which update-desktop-database)" ]; then
   export PATH="$HOME/.cargo/bin:$PATH"
-  cargo install alacritty
+  run "Installing Alacritty" \
+    cargo install alacritty
   mkdir -p "$HOME/.local/share/applications/"
   if [ ! -f "$HOME/.local/share/applications/Alacritty.desktop" ]; then
     sudo ln -s "$(which alacritty)" /usr/bin/alacritty
-    git clone https://github.com/alacritty/alacritty.git ~/alacritty --single-branch -b master --depth 1
+    run "Downloading Alacritty.desktop" \
+      git clone https://github.com/alacritty/alacritty.git ~/alacritty --single-branch -b master --depth 1
 
     sudo ln -s "$(which alacritty)" /usr/local/bin
-    sudo desktop-file-install ~/alacritty/extra/linux/Alacritty.desktop --dir="$HOME/.local/share/applications"
+    run "Installing Alacritty.desktop" \
+      sudo desktop-file-install ~/alacritty/extra/linux/Alacritty.desktop --dir="$HOME/.local/share/applications"
 
     sudo mkdir -p /usr/local/share/man/man1
     sudo mkdir -p /usr/local/share/man/man5
@@ -36,9 +50,11 @@ if [ -n "$(which update-desktop-database)" ]; then
   fi
 
   if [ ! -f "$HOME/.local/share/applications/Goneovim.desktop" ]; then
-    git clone https://github.com/akiyosi/goneovim.git ~/goneovim --single-branch -b master --depth 1
+    run "Downloading goneovim.desktop" \
+      git clone https://github.com/akiyosi/goneovim.git ~/goneovim --single-branch -b master --depth 1
     mv ~/goneovim/cmd/goneovim/goneovim.desktop ~/goneovim/cmd/goneovim/Goneovim.desktop
-    sudo desktop-file-install ~/goneovim/cmd/goneovim/Goneovim.desktop --dir="$HOME/.local/share/applications"
+    run "Downloading goneovim.desktop" \
+      sudo desktop-file-install ~/goneovim/cmd/goneovim/Goneovim.desktop --dir="$HOME/.local/share/applications"
 
     rm -rf ~/goneovim
   fi
