@@ -33,7 +33,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubc
 
 # Install packages
 echo "Installing packages"
-sudo apt-get install -yqq build-essential zlib1g-dev \
+sudo apt-get install -y build-essential zlib1g-dev \
 	libgdbm-dev libnss3-dev libssl-dev libffi-dev \
 	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
 	libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt1-dev \
