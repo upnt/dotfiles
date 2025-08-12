@@ -17,7 +17,7 @@ jobs:
 
       - name: Initialize chezmoi
         run: |
-          chezmoi init --no-tty -C "${{ github.workspace }}"
+          chezmoi init -C "${{ github.workspace }}"
           chezmoi apply
 
   windows-test:
@@ -32,13 +32,8 @@ jobs:
         run: winget install --id twpayne.chezmoi -e --source winget
           --accept-source-agreements --accept-package-agreements --disable-interactivity
 
-      - name: Install git
-        shell: pwsh
-        run: winget install Git.Git -s winget
-          --accept-source-agreements --accept-package-agreements --disable-interactivity
-
       - name: Install packages
         shell: pwsh
         run: |
-          chezmoi init --no-tty -C "${{ github.workspace }}"
+          chezmoi init -C "${{ github.workspace }}"
           chezmoi apply
