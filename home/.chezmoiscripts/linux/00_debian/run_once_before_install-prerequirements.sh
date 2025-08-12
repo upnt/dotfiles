@@ -12,13 +12,13 @@ run() {
 ###################################
 # Update packages.
 run "Updating packages" \
-	sudo apt-get update
+	sudo apt-get update -y
 run "Upgrading packages" \
-	sudo apt-get upgrade -yqq
+	sudo apt-get upgrade -y
 
 # Install pre-requisite packages.
 run "Installing Prerequisites" \
-	sudo apt-get install curl wget
+	sudo apt-get install -y curl wget ca-certificates
 
 # Install docker
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -27,15 +27,19 @@ run "Installing docker keyring" \
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 echo \
 	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" |
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" |
 	sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
 # Install github cli
-sudo mkdir -p -m 755 /etc/apt/keyrings
+sudo mkdir -p -m 0755 /etc/apt/keyrings
 run "Installing github-cli keyring" \
 	wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
 sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+
+# Reupdate packages.
+run "Reupdating packages" \
+	sudo apt-get update -y
 
 # Install packages
 sudo apt-get install -yq build-essential zlib1g-dev \
