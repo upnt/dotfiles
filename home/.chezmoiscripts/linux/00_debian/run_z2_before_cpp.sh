@@ -1,12 +1,21 @@
 #!/bin/bash
 
-echo "Installing cpp"
+LOG="/tmp/install_cpp.log"
+
+run() {
+	local msg="$1"
+	shift
+	echo ".${msg}"
+	"$@" >>"$LOG" 2>&1
+}
 
 # cpp
 if [ -z "$(/usr/bin/which clang)" ]; then
-	wget https://apt.llvm.org/llvm.sh
+	run "Downloading llvm" \
+		wget https://apt.llvm.org/llvm.sh
 	chmod +x llvm.sh
-	sudo ./llvm.sh all
+	run "Installing llvm" \
+		sudo ./llvm.sh all
 	rm ./llvm.sh
 	for cmd in clang clang++ lldb clangd lld; do
 		if [ -z "$(/usr/bin/which "$cmd")" ]; then
@@ -20,12 +29,16 @@ if [ -z "$(/usr/bin/which clang)" ]; then
 fi
 
 if [ ! -d "/opt/boost" ]; then
-	wget https://archives.boost.io/release/1.87.0/source/boost_1_87_0.tar.gz
+	run "Downloading boost 1.87.0" \
+		wget https://archives.boost.io/release/1.87.0/source/boost_1_87_0.tar.gz
 	if [ "$(sha256sum boost_1_87_0.tar.gz | awk '{print $1}')" = "f55c340aa49763b1925ccf02b2e83f35fdcf634c9d5164a2acb87540173c741d" ]; then
-		sudo tar xzf boost_1_87_0.tar.gz -C /opt
+		run "Extracting boost 1.87.0" \
+			sudo tar xzf boost_1_87_0.tar.gz -C /opt
 		cd /opt/boost_1_87_0 || return
-		sudo ./bootstrap.sh
-		sudo ./b2 install --prefix=/opt/boost
+		run "boost 1.87.0 bootstrap" \
+			sudo ./bootstrap.sh
+		run "Installing boost 1.87.0" \
+			sudo ./b2 install --prefix=/opt/boost
 		cd - || return
 	else
 		echo "Invalid hash value for boost_1_87_0.tar.gz"
