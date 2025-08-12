@@ -16,6 +16,9 @@ jobs:
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
       - name: Initialize chezmoi
+        env:
+          HOME: ${{ github.workspace }}/.ci-home
+          GITHUB_WORKSPACE: ${{ github.workspace }}
         run: |
           mkdir -p "$HOME"
           chezmoi init --no-tty --source "$GITHUB_WORKSPACE"
@@ -40,6 +43,10 @@ jobs:
 
       - name: Install packages
         shell: pwsh
+        env:
+          HOME: ${{ github.workspace }}/.ci-home
+          USERPROFILE: ${{ github.workspace }}/.ci-home
+          GITHUB_WORKSPACE: ${{ github.workspace }}
         run: |
           New-Item -ItemType Directory -Force -Path $env:HOME | Out-Null
           chezmoi init --no-tty --source "$env:GITHUB_WORKSPACE"
