@@ -17,7 +17,7 @@ jobs:
 
       - name: Initialize chezmoi
         run: |
-          chezmoi init --no-tty --source "${{ github.workspace }}"
+          chezmoi init --no-tty -C "${{ github.workspace }}"
           chezmoi apply
 
   windows-test:
@@ -40,5 +40,5 @@ jobs:
       - name: Install packages
         shell: pwsh
         run: |
-          chezmoi init --no-tty --source "${{ github.workspace }}"
+          chezmoi init --no-tty -C "${{ github.workspace }}"
           chezmoi apply
