@@ -16,7 +16,7 @@ jobs:
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
       - name: Initialize chezmoi
-        run: chezmoi init -C "${{ github.workspace }}" --apply
+        run: chezmoi init -S "${{ github.workspace }}" --apply
 
   windows-test:
     permissions:
