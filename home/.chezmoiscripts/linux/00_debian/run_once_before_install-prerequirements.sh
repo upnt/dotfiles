@@ -10,12 +10,11 @@ echo "Done."
 
 # Prerequisites
 # Install pre-requisite packages.
-echo "Install Prerequisites..."
+echo "Installing Prerequisites"
 sudo apt-get install -yqq curl wget
-echo "Done."
 
 # docker
-echo "Install docker..."
+echo "Installing docker"
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -26,15 +25,14 @@ echo \
 echo "Done."
 
 # github cli
-echo "Install github-cli..."
+echo "Installing github-cli"
 sudo mkdir -p -m 755 /etc/apt/keyrings
 wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
 sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
-echo "Done."
 
 # Install packages
-echo "Install packages..."
+echo "Installing packages"
 sudo apt-get install -yqq build-essential zlib1g-dev \
 	libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
 	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \

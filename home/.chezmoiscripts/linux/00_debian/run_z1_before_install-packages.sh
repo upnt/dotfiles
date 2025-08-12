@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Install packages..."
+echo "Installing packages"
 # setup
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
 
@@ -65,7 +65,6 @@ if [ ! -d "$HOME/.fzf" ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
 	"$HOME/.fzf/install" --bin
 fi
-echo "Done."
 
 # direnv
 if [ -z "$(/usr/bin/which direnv)" ]; then
