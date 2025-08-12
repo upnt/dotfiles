@@ -27,12 +27,12 @@ jobs:
 
       - name: Install chezmoi
         shell: pwsh
-        run: winget install --id twpayne.chezmoi -e --source winget
-          --accept-source-agreements --accept-package-agreements --disable-interactivity
+        run: |
+          winget install --id twpayne.chezmoi -e --source winget \
+            --accept-source-agreements --accept-package-agreements --disable-interactivity
+          $chezmoiPath = "$env:LOCALAPPDATA\Microsoft\WinGet\Links"
+          echo "$chezmoiPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Install packages
         shell: pwsh
-        run: |
-          [System.Environment]::GetEnvironmentVariable("Path","Machine") | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          [System.Environment]::GetEnvironmentVariable("Path","User") | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          chezmoi init -C "${{ github.workspace }}" --apply
+        run: chezmoi init -S "${{ github.workspace }}" --apply
