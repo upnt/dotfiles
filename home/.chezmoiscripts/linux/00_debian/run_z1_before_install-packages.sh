@@ -86,6 +86,7 @@ fi
 
 # direnv
 if [ -z "$(/usr/bin/which direnv)" ]; then
+	mkdir -p "$HOME/.local/bin"
 	run "Installing direnv" \
 		curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash
 fi
