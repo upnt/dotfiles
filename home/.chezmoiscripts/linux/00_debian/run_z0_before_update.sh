@@ -27,7 +27,7 @@ if [ -d "$HOME/.tmux/bin" ]; then
     run "autogen tmux" \
       sh autogen.sh
     run "configure tmux" \
-      ./configure && make
+      ./configure && run "compile tmux" make
   else
     echo "tmux is already up to date."
   fi

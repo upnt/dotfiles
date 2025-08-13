@@ -57,10 +57,10 @@ if [ ! -d "$HOME/.tmux/bin" ]; then
 	run "Downloading tmux" \
 		git clone https://github.com/tmux/tmux.git "$HOME/.tmux/bin"
 	cd "$HOME/.tmux/bin" || return 1
-	run "tmux autogen" \
+	run "autogen tmux" \
 		sh autogen.sh
-	run "tmux configure" \
-		./configure && make
+	run "configure tmux" \
+		./configure && run "compile tmux" make
 	cd - || return 1
 fi
 
