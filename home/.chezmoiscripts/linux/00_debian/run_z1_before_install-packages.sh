@@ -1,5 +1,12 @@
 #!/bin/bash
-echo "Installing packages"
+LOG="/tmp/ubuntu_install_packages.log"
+
+run() {
+	local msg="$1"
+	shift
+	echo ".${msg}"
+	"$@" >>"$LOG" 2>&1
+}
 # setup
 current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
 
@@ -11,12 +18,14 @@ fi
 if [ -z "$(/usr/bin/which pwsh)" ]; then
 	sudo apt-get update -yqq
 	# Download the Microsoft repository GPG keys
-	wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/powershell-lts_7.4.6-1.deb_amd64.deb
+	run "Downloading pwsh" \
+		wget -P ~ https://github.com/PowerShell/PowerShell/releases/download/v7.4.6/powershell-lts_7.4.6-1.deb_amd64.deb
 
 	# Register the Microsoft repository GPG keys
 	sudo dpkg -i ~/powershell-lts_7.4.6-1.deb_amd64.deb
 
-	sudo apt-get install -f
+	run "Installing pwsh" \
+		sudo apt-get install -f
 
 	# Delete the Microsoft repository GPG keys file
 	rm ~/powershell-lts_7.4.6-1.deb_amd64.deb
@@ -24,9 +33,11 @@ fi
 
 # neovim
 if [ ! -d "/opt/nvim-linux-x86_64" ]; then
-	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+	run "Downloading neovim" \
+		curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 	sudo rm -rf /opt/nvim
-	sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+	run "Extracting neovim" \
+		sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 	sudo rm nvim-linux-x86_64.tar.gz
 fi
 
@@ -34,17 +45,22 @@ fi
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
 	mkdir -p "$(dirname "$ZINIT_HOME")"
-	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-	source "$ZINIT_HOME/zinit.zsh"
+	run "Downloading zinit" \
+		git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+	run "Installing zinit" \
+		source "$ZINIT_HOME/zinit.zsh"
 fi
 
 # tmux
 if [ ! -d "$HOME/.tmux/bin" ]; then
 	mkdir -p "$HOME/.tmux"
-	git clone https://github.com/tmux/tmux.git "$HOME/.tmux/bin"
+	run "Downloading tmux" \
+		git clone https://github.com/tmux/tmux.git "$HOME/.tmux/bin"
 	cd "$HOME/.tmux/bin" || return 1
-	sh autogen.sh
-	./configure && make
+	run "tmux autogen" \
+		sh autogen.sh
+	run "tmux configure" \
+		./configure && make
 	cd - || return 1
 fi
 
@@ -62,13 +78,16 @@ fi
 
 # fzf
 if [ ! -d "$HOME/.fzf" ]; then
-	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
-	"$HOME/.fzf/install" --bin
+	run "Downloading fzf" \
+		git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+	run "Installing fzf" \
+		"$HOME/.fzf/install" --bin
 fi
 
 # direnv
 if [ -z "$(/usr/bin/which direnv)" ]; then
-	curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash
+	run "Installing direnv" \
+		curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash
 fi
 
 if [ ! -d "$HOME/.local/zsh_local" ]; then
