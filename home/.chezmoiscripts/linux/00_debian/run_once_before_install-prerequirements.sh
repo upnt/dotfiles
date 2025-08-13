@@ -9,6 +9,8 @@ run() {
 	"$@" >>"$LOG" 2>&1
 }
 
+trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
+
 ###################################
 # Update packages.
 run "Updating packages" \

@@ -9,6 +9,8 @@ run() {
 	"$@" >>"$LOG" 2>&1
 }
 
+trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
+
 # cpp
 if [ -z "$(/usr/bin/which clang)" ]; then
 	run "Downloading llvm" \

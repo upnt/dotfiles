@@ -211,6 +211,13 @@ if [[ -d "$PLENV_ROOT" ]]; then
 fi
 
 # eval "$(direnv hook zsh)"
-{{ output (joinPath (.chezmoi.homeDir) ".local/bin/direnv") "hook" "zsh" | trim }}
+{{- $direnv := joinPath .chezmoi.homeDir ".local/bin/direnv" -}}
+{{- if (isExecutable $direnv) -}}
+{{ output $direnv "hook" "zsh" }}
+{{- else if (lookPath "direnv") -}}
+{{ output (lookPath "direnv") "hook" "zsh" }}
+{{- else -}}
+# direnv not found; skipping hook
+{{- end -}}
 
 # zprof
