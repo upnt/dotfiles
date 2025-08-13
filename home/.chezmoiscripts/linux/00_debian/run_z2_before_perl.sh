@@ -16,10 +16,8 @@ export PLENV_ROOT="$HOME/.plenv"
 if [ ! -d "$PLENV_ROOT" ]; then
 	export PATH="$PLENV_ROOT/bin:$PATH"
 
-	run "Installing plenv" \
-		git clone https://github.com/tokuhirom/plenv.git "$PLENV_ROOT"
-	run "Installing perl-build" \
-		git clone https://github.com/tokuhirom/Perl-Build.git "$PLENV_ROOT/plugins/perl-build/"
+	git clone https://github.com/tokuhirom/plenv.git "$PLENV_ROOT"
+	git clone https://github.com/tokuhirom/Perl-Build.git "$PLENV_ROOT/plugins/perl-build/"
 	eval "$(plenv init -)"
 
 	run "Installing perl 5.22" \

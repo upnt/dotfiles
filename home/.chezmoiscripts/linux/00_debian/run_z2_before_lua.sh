@@ -16,14 +16,10 @@ export LUAENV_ROOT="$HOME/.luaenv"
 if [ ! -d "$LUAENV_ROOT" ]; then
 	export PATH="$LUAENV_ROOT/bin:$PATH"
 
-	run "Downloading luaenv" \
-		git clone https://github.com/cehoffman/luaenv.git "$LUAENV_ROOT"
-	run "Downloading lua-build" \
-		git clone https://github.com/cehoffman/lua-build.git "$LUAENV_ROOT/plugins/lua-build"
-	run "Downloading luarocks" \
-		git clone https://github.com/xpol/luaenv-luarocks.git "$LUAENV_ROOT/plugins/luaenv-luarocks"
-	run "Downloading luaenv-update" \
-		git clone https://github.com/Sharparam/luaenv-update.git "$LUAENV_ROOT/plugins/luaenv-update"
+	git clone https://github.com/cehoffman/luaenv.git "$LUAENV_ROOT"
+	git clone https://github.com/cehoffman/lua-build.git "$LUAENV_ROOT/plugins/lua-build"
+	git clone https://github.com/xpol/luaenv-luarocks.git "$LUAENV_ROOT/plugins/luaenv-luarocks"
+	git clone https://github.com/Sharparam/luaenv-update.git "$LUAENV_ROOT/plugins/luaenv-update"
 	eval "$(luaenv init - zsh)"
 
 	run "Installing lua 5.1.5" \

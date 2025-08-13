@@ -16,12 +16,9 @@ export RBENV_ROOT="$HOME/.rbenv"
 if [ ! -d "$RBENV_ROOT" ]; then
 	export PATH="$RBENV_ROOT/bin:$PATH"
 
-	run "Installing rbenv" \
-		git clone https://github.com/rbenv/rbenv.git "$RBENV_ROOT"
-	run "Installing ruby-build" \
-		git clone https://github.com/rbenv/ruby-build.git "$RBENV_ROOT/plugins/ruby-build"
-	run "Installing rbenv-update" \
-		git clone https://github.com/rkh/rbenv-update.git "$RBENV_ROOT/plugins/rbenv-update"
+	git clone https://github.com/rbenv/rbenv.git "$RBENV_ROOT"
+	git clone https://github.com/rbenv/ruby-build.git "$RBENV_ROOT/plugins/ruby-build"
+	git clone https://github.com/rkh/rbenv-update.git "$RBENV_ROOT/plugins/rbenv-update"
 	eval "$(rbenv init - zsh)"
 
 	run "Installing ruby 3.3.4" \

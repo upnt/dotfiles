@@ -45,8 +45,7 @@ fi
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
 	mkdir -p "$(dirname "$ZINIT_HOME")"
-	run "Downloading zinit" \
-		git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 	run "Installing zinit" \
 		source "$ZINIT_HOME/zinit.zsh"
 fi
@@ -54,8 +53,7 @@ fi
 # tmux
 if [ ! -d "$HOME/.tmux/bin" ]; then
 	mkdir -p "$HOME/.tmux"
-	run "Downloading tmux" \
-		git clone https://github.com/tmux/tmux.git "$HOME/.tmux/bin"
+	git clone https://github.com/tmux/tmux.git "$HOME/.tmux/bin"
 	cd "$HOME/.tmux/bin" || return 1
 	run "autogen tmux" \
 		sh autogen.sh
@@ -78,8 +76,7 @@ fi
 
 # fzf
 if [ ! -d "$HOME/.fzf" ]; then
-	run "Downloading fzf" \
-		git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
 	run "Installing fzf" \
 		"$HOME/.fzf/install" --bin
 fi
