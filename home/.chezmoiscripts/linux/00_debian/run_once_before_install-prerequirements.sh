@@ -46,7 +46,7 @@ run "Reupdating packages" \
 	sudo apt-get update -y
 
 # Install packages
-sudo apt-get install -yq build-essential zlib1g-dev \
+sudo apt-get install -yqq build-essential zlib1g-dev \
 	libgdbm-dev libnss3-dev libssl-dev libffi-dev \
 	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
 	libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt1-dev \
