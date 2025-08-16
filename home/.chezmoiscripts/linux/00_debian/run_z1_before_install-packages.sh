@@ -80,7 +80,9 @@ fi
 if [ ! -x "$HOME/.local/bin/direnv" ]; then
 	echo ".Installing direnv"
 	mkdir -p "$HOME/.local/bin"
-	curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash
+	run "Installing direnv" sh -c '
+		curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash
+	'
 fi
 
 if [ ! -d "$HOME/.local/zsh_local" ]; then
