@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 LOG="/tmp/install_tex.log"
 
@@ -14,30 +15,36 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 # texlive
 mkdir -p "$HOME/.texlive"
 if [ ! -d "$HOME/.texlive/2022" ]; then
-	_tmp_dir="tmp-tl-2022"
-	_tmp_profile="tmp-texlive2022.profile"
+	_tmp_dir=$(mktemp -d "tl-2022")
+	_tmp_profile=$(mktemp --suffix=.profile "tl-2022")
+	
 	run "Downloading texlive 2022" \
 		wget https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/install-tl-unx.tar.gz
 	mkdir "$_tmp_dir" && tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
-	cd "$_tmp_dir" || exit
-	~/.local/bin/chezmoi execute-template <"{{ .chezmoi.workingTree }}/texlive2022.profile.tmpl" >$_tmp_profile
-	run "Installing texlive 2022" \
-		sudo perl ./install-tl --profile "$_tmp_profile" --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
-	cd - || exit
+	(
+		cd "$_tmp_dir" || exit
+		~/.local/bin/chezmoi execute-template <"{{ .chezmoi.workingTree }}/texlive2022.profile.tmpl" >$_tmp_profile
+		run "Installing texlive 2022" \
+			sudo perl ./install-tl --profile "$_tmp_profile" --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
+	)
+	
 	rm install-tl-unx.tar.gz
 	rm -rf "$_tmp_dir"
 	rm "$_tmp_profile"
 fi
 
 if [ ! -d "$HOME/.texlive/2025" ]; then
-	_tmp_dir="tmp-tl-2025"
-	run "Downloading texlive 2022" \
+	_tmp_dir=$(mktemp -d "tl-2025")
+	
+	run "Downloading texlive 2025" \
 		wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 	mkdir "$_tmp_dir" && tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
-	cd "$_tmp_dir" || exit
-	run "Installing texlive 2022" \
+	(
+		cd "$_tmp_dir" || exit
+		run "Installing texlive 2025" \
 		sudo perl ./install-tl --profile "{{ .chezmoi.workingTree }}/texlive2025.profile"
-	cd - || exit
+	)
+		
 	rm install-tl-unx.tar.gz
 	rm -rf "$_tmp_dir"
 fi

@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+
 LOG="/tmp/ubuntu_install_packages.log"
 
 run() {
@@ -81,7 +83,7 @@ if [ ! -d "$HOME/.fzf" ]; then
 fi
 
 # direnv
-if [ -z "$(/usr/bin/which direnv)" ]; then
+if [ ! -x "$HOME/.local/bin/direnv" ]; then
 	echo ".Installing direnv"
 	mkdir -p "$HOME/.local/bin"
 	curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash

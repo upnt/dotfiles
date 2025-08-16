@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 LOG="/tmp/install_prerequirements.log"
 
