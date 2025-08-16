@@ -18,9 +18,7 @@ if [ ! -d "$NODENV_ROOT" ]; then
 	git clone https://github.com/nodenv/nodenv.git "$NODENV_ROOT"
 	git clone https://github.com/nodenv/node-build.git "$NODENV_ROOT/plugins/node-build"
 	git clone https://github.com/nodenv/nodenv-update.git "$NODENV_ROOT/plugins/nodenv-update"
-	run "Installing nodenv" sh -c '
 	cd ~/.nodenv && src/configure && make -C src
-	'
 
 	eval "$(nodenv init - zsh)"
 	nodenv install 20.17.0
