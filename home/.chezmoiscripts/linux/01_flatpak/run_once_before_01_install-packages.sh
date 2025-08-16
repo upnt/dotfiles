@@ -13,7 +13,8 @@ run() {
 sudo apt-get install -yq flatpak gnome-software-plugin-flatpak
 
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-sudo flatpak install -y flathub io.github.zen_browser.zen
+run "Installing zen" \
+  sudo flatpak install -y flathub io.github.zen_browser.zen
 
 if [ -z "$(which goneovim)" ]; then
   run "Downloading goneovim v0.6.8" \

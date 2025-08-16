@@ -9,12 +9,6 @@ run() {
 	echo ".${msg}"
 	"$@" >>"$LOG" 2>&1
 }
-# setup
-current_shell=$(grep "^$(whoami)" /etc/passwd | cut -d":" -f7)
-
-if [ "$current_shell" != "/usr/bin/zsh" ]; then
-	chsh -s "$(/usr/bin/which zsh)"
-fi
 
 # pwsh
 if [ -z "$(/usr/bin/which pwsh)" ]; then
