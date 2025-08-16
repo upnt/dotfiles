@@ -43,7 +43,7 @@ if [ ! -d "$ZINIT_HOME" ]; then
 	mkdir -p "$(dirname "$ZINIT_HOME")"
 	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 	run "Installing zinit" \
-		source "$ZINIT_HOME/zinit.zsh"
+		zsh -i -c "source \"$ZINIT_HOME/zinit.zsh\""
 fi
 
 # tmux
