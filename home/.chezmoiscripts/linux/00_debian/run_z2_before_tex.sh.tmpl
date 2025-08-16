@@ -15,8 +15,8 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 # texlive
 mkdir -p "$HOME/.texlive"
 if [ ! -d "$HOME/.texlive/2022" ]; then
-	_tmp_dir=$(mktemp -d "tl-2022.XXXXXX")
-	_tmp_profile=$(mktemp "tl-2022.XXXXXX.profile")
+	_tmp_dir=$(mktemp -d)
+	_tmp_profile=$(mktemp)
 	
 	run "Downloading texlive 2022" \
 		wget https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/install-tl-unx.tar.gz
@@ -34,7 +34,7 @@ if [ ! -d "$HOME/.texlive/2022" ]; then
 fi
 
 if [ ! -d "$HOME/.texlive/2025" ]; then
-	_tmp_dir=$(mktemp -d "tl-2025.XXXXXX")
+	_tmp_dir=$(mktemp -d)
 	
 	run "Downloading texlive 2025" \
 		wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
