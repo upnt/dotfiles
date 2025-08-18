@@ -16,11 +16,11 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 mkdir -p "$HOME/.texlive"
 if [ ! -d "$HOME/.texlive/2022" ]; then
 	_tmp_dir=$(mktemp -d)
-	_tmp_profile=$(mktemp)
+	_tmp_profile=$(mktemp -u)
 	
 	run "Downloading texlive 2022" \
 		wget https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/install-tl-unx.tar.gz
-	mkdir "$_tmp_dir" && tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
+	tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
 	(
 		cd "$_tmp_dir" || exit
 		~/.local/bin/chezmoi execute-template <"{{ .chezmoi.workingTree }}/texlive2022.profile.tmpl" >$_tmp_profile
@@ -38,7 +38,7 @@ if [ ! -d "$HOME/.texlive/2025" ]; then
 	
 	run "Downloading texlive 2025" \
 		wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-	mkdir "$_tmp_dir" && tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
+	tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
 	(
 		cd "$_tmp_dir" || exit
 		run "Installing texlive 2025" \
