@@ -25,7 +25,7 @@ if [ ! -d "$HOME/.texlive/2022" ]; then
 		cd "$_tmp_dir" || exit
 		chezmoi execute-template <"{{ .chezmoi.workingTree }}/texlive2022.profile.tmpl" >$_tmp_profile
 		run "Installing texlive 2022" \
-			sudo perl ./install-tl --profile "$_tmp_profile" --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
+			SUDO_COMMAND=/usr/bin/perl ./install-tl --profile "$_tmp_profile" --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
 	)
 	
 	rm install-tl-unx.tar.gz
