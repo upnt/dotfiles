@@ -23,6 +23,8 @@ if [ ! -d "$HOME/.texlive/2022" ]; then
 	tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
 	(
 		cd "$_tmp_dir" || exit
+		ls
+		which perl
 		chezmoi execute-template <"{{ .chezmoi.workingTree }}/texlive2022.profile.tmpl" >$_tmp_profile
 		run "Installing texlive 2022" \
 			SUDO_COMMAND="$(which perl)" ./install-tl --profile "$_tmp_profile" --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
