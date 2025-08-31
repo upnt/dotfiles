@@ -1,5 +1,4 @@
 #!/bin/bash
-set -euo pipefail
 
 LOG="/tmp/install_tex.log"
 
@@ -10,16 +9,15 @@ run() {
 	"$@" >>"$LOG" 2>&1
 }
 
-trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
-
 export PLENV_ROOT="$HOME/.plenv"
 export PATH="$PLENV_ROOT/bin:$PATH"
 eval "$(plenv init -)"
 plenv rehash
 		
 # texlive
-mkdir -p "$HOME/.texlive"
-if [ ! -d "$HOME/.texlive/2022" ]; then
+export TEXLIVE_ROOT="$HOME/.texlive"
+mkdir -p "$TEXLIVE_ROOT"
+if [ ! -d "$TEXLIVE_ROOT/2022" ]; then
 	_tmp_dir=$(mktemp -d)
 	_tmp_profile=$(mktemp -u)
 	
@@ -28,9 +26,9 @@ if [ ! -d "$HOME/.texlive/2022" ]; then
 	tar xzf install-tl-unx.tar.gz -C "$_tmp_dir" --strip-components 1
 	(
 		cd "$_tmp_dir" || exit
-		chezmoi execute-template <"{{ .chezmoi.workingTree }}/texlive2022.profile.tmpl" >$_tmp_profile
-		run "Installing texlive 2022" \
-			SUDO_COMMAND="$(which perl)" ./install-tl --profile "$_tmp_profile" --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
+		chezmoi execute-template <"{{ .chezmoi.workingTree }}/texlive2022.profile.tmpl" >"$_tmp_profile"
+		SUDO_COMMAND="$(which perl)" run "Installing texlive 2022" \
+			./install-tl --profile "$_tmp_profile" --repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final/
 	)
 	
 	rm install-tl-unx.tar.gz
@@ -38,7 +36,7 @@ if [ ! -d "$HOME/.texlive/2022" ]; then
 	rm "$_tmp_profile"
 fi
 
-if [ ! -d "$HOME/.texlive/2025" ]; then
+if [ ! -d "$TEXLIVE_ROOT/2025" ]; then
 	_tmp_dir=$(mktemp -d)
 	
 	run "Downloading texlive 2025" \
@@ -47,13 +45,13 @@ if [ ! -d "$HOME/.texlive/2025" ]; then
 	(
 		cd "$_tmp_dir" || exit
 		run "Installing texlive 2025" \
-		sudo perl ./install-tl --profile "{{ .chezmoi.workingTree }}/texlive2025.profile"
+		SUDO_COMMAND="$(which perl)" ./install-tl --profile "{{ .chezmoi.workingTree }}/texlive2025.profile"
 	)
 		
 	rm install-tl-unx.tar.gz
 	rm -rf "$_tmp_dir"
 fi
 
-if [ ! -e "$HOME/.texlive/shims" ]; then
-	ln -s "$HOME/.texlive/2025" "$HOME/.texlive/shims" 
+if [ ! -e "$TEXLIVE_ROOT/shims" ]; then
+	ln -s "$TEXLIVE_ROOT/2025" "$TEXLIVE_ROOT/shims" 
 fi
