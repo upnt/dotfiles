@@ -23,16 +23,6 @@ run "Upgrading packages" \
 run "Installing Prerequisites" \
 	sudo apt-get install -y curl wget ca-certificates
 
-# Install docker
-sudo install -m 0755 -d /etc/apt/keyrings
-run "Installing docker keyring" \
-	sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-echo \
-	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" |
-	sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
-
 # Install github cli
 (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) &&
 	sudo mkdir -p -m 755 /etc/apt/keyrings &&
@@ -68,5 +58,4 @@ sudo apt-get install -yqq build-essential zlib1g-dev \
 	libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake ninja-build scdoc git gh \
-	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin maven \
 	lsb-release software-properties-common gnupg zathura xdotool zsh jq zathura xsel tree
