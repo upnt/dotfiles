@@ -35,6 +35,7 @@ try
 	__winget_install_id("DevToys-app.DevToys")
 	__winget_install_id("Microsoft.PowerToys")
 	__winget_install_id("GitHub.cli")
+	__winget_install_id("Docker.DockerDesktop")
 
 	__winget_install_id("SlackTechnologies.Slack")
 
