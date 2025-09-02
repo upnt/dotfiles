@@ -1,42 +1,54 @@
 #!/bin/bash
+set -euo pipefail
+
+LOG="/tmp/install_prerequirements.log"
+
+run() {
+	local msg="$1"
+	shift
+	echo ".${msg}"
+	"$@" >>"$LOG" 2>&1
+}
+
+trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
+
 ###################################
 # Update packages.
-echo "Update package-list..."
-sudo apt-get update -yqq
-echo "Done."
-echo "Upgrade packages..."
-sudo apt-get upgrade -yqq
-echo "Done."
+run "Updating packages" \
+	sudo apt-get update -y
+run "Upgrading packages" \
+	sudo apt-get upgrade -y
 
-# Prerequisites
 # Install pre-requisite packages.
-echo "Install Prerequisites..."
-sudo apt-get install -yqq curl wget
-echo "Done."
+run "Installing Prerequisites" \
+	sudo apt-get install -y curl wget ca-certificates
 
-# docker
-echo "Install docker..."
+# Install docker
 sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+run "Installing docker keyring" \
+	sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 echo \
 	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" |
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" |
 	sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
-echo "Done."
 
-# github cli
-echo "Install github-cli..."
-sudo mkdir -p -m 755 /etc/apt/keyrings
-wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
-sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
-echo "Done."
+# Install github cli
+(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) &&
+	sudo mkdir -p -m 755 /etc/apt/keyrings &&
+	out=$(mktemp) && wget -nv -O"$out" https://cli.github.com/packages/githubcli-archive-keyring.gpg &&
+	cat "$out" | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
+	sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg &&
+	sudo mkdir -p -m 755 /etc/apt/sources.list.d &&
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+
+# Reupdate packages.
+run "Reupdating packages" \
+	sudo apt-get update -y
 
 # Install packages
-echo "Install packages..."
 sudo apt-get install -yqq build-essential zlib1g-dev \
-	libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
+	libgdbm-dev libnss3-dev libssl-dev libffi-dev \
 	libcurl4-openssl-dev libxml2-dev libjpeg-dev libonig-dev \
 	libreadline-dev libzip-dev libtidy-dev libmcrypt-dev libxslt1-dev \
 	bison gettext libgd-dev libedit-dev libicu-dev libmysqlclient-dev \
@@ -58,4 +70,3 @@ sudo apt-get install -yqq build-essential zlib1g-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake ninja-build scdoc git gh \
 	docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin maven \
 	lsb-release software-properties-common gnupg zathura xdotool zsh jq zathura xsel tree
-echo "Done."

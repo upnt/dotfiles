@@ -1,0 +1,37 @@
+name: Installation
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ubuntu-test:
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Initialize chezmoi
+        run: chezmoi init -S "${{ github.workspace }}" --apply
+
+  windows-test:
+    permissions:
+      contents: read
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        shell: pwsh
+        run: |
+          winget install --id twpayne.chezmoi -e --source winget --accept-source-agreements --accept-package-agreements --disable-interactivity
+          $chezmoiPath = "$env:LOCALAPPDATA\Microsoft\WinGet\Links"
+          echo "$chezmoiPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Install packages
+        shell: pwsh
+        run: chezmoi init -S "${{ github.workspace }}" --apply
