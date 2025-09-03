@@ -18,7 +18,9 @@ jobs:
 
       - name: Dry-run apply
         run: |
-          chezmoi init -S .
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
+          chezmoi init
           chezmoi doctor
           chezmoi apply --dry-run --verbose
 
@@ -52,7 +54,9 @@ jobs:
       - name: Dry-run apply
         shell: pwsh
         run: |
-          chezmoi init -S .
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
+          chezmoi init
           chezmoi doctor
           chezmoi apply --dry-run --verbose
 
