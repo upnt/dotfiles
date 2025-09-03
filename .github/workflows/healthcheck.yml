@@ -1,4 +1,4 @@
-name: healthcheck
+name: Healthcheck
 on:
   schedule: [{ cron: "0 0 * * 1" }]
   workflow_dispatch:
@@ -13,12 +13,9 @@ jobs:
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
-      - name: Dry-run apply in isolated HOME
-        env:
-          HOME: ${{ github.workspace }}/.ci-home
+      - name: Dry-run apply
         run: |
-          mkdir -p "$HOME"
-          chezmoi init --no-tty --promptString='' .
+          chezmoi init -S "${{ github.workspace }}"
           chezmoi doctor
           chezmoi apply --dry-run --verbose
 
@@ -44,13 +41,17 @@ jobs:
 
       - name: Install chezmoi
         shell: pwsh
-        run: winget install --id twpayne.chezmoi -e --source winget
+        run: |
+          winget install --id twpayne.chezmoi -e --source winget
+          $chezmoiPath = "$env:LOCALAPPDATA\Microsoft\WinGet\Links"
+          echo "$chezmoiPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-      - name: Dry-run apply in isolated HOME
+      - name: Dry-run apply
         shell: pwsh
         run: |
-          $env:HOME = "$pwd\.ci-home"
-          New-Item -ItemType Directory -Force -Path $env:HOME | Out-Null
+          chezmoi init -S "${{ github.workspace }}"
+          chezmoi doctor
+          chezmoi apply --dry-run --verbose
 
       - name: Winget upgrade check
         shell: pwsh
@@ -63,7 +64,4 @@ jobs:
       - name: Somke tests (PATH / tools)
         shell: pwsh
         run: |
-          Get-Command pwsh -ErrorAction SilentlyContinue | Out-Null
-          Get-Command zsh -ErrorAction SilentlyContinue | Out-Null
           Get-Command nvim -ErrorAction SilentlyContinue | Out-Null
-          Get-Command tmux -ErrorAction SilentlyContinue | Out-Null
