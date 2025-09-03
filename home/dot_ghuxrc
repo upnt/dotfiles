@@ -1,2 +1,3 @@
+root,$HOME
 nvim,$HOME/.config/nvim
 chezmoi,$HOME/.local/share/chezmoi
