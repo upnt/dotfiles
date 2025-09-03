@@ -19,7 +19,7 @@ jobs:
 
       - name: Dry-run apply
         run: |
-          chezmoi init -S "${{ github.workspace }}"
+          ls ~/.local/share/chezmoi
           chezmoi doctor
           chezmoi apply --dry-run --verbose
 
@@ -55,7 +55,7 @@ jobs:
       - name: Dry-run apply
         shell: pwsh
         run: |
-          chezmoi init -S "${{ github.workspace }}"
+          ls ~/.local/share/chezmoi
           chezmoi doctor
           chezmoi apply --dry-run --verbose
 
