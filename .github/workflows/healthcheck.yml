@@ -10,20 +10,15 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: /home/runner
     steps:
       - uses: actions/checkout@v5
-        with:
-          path: .local/share/chezmoi
       
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
       - name: Dry-run apply
         run: |
-          ls ~/.local/share/chezmoi
+          chezmoi init -S .
           chezmoi doctor
           chezmoi apply --dry-run --verbose
 
@@ -57,7 +52,7 @@ jobs:
       - name: Dry-run apply
         shell: pwsh
         run: |
-          ls ~/.local/share/chezmoi
+          chezmoi init -S .
           chezmoi doctor
           chezmoi apply --dry-run --verbose
 
