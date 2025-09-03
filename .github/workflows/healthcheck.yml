@@ -12,9 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /home/runner/.local/share/chezmoi
+        working-directory: /home/runner
     steps:
       - uses: actions/checkout@v5
+        with:
+          path: .local/share/chezmoi
       
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
