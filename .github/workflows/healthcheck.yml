@@ -10,10 +10,12 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: /home/runner/.local/share/chezmoi
     steps:
-      - uses: actions/checkout@v4
-        with:
-          path: ~/.local/share/chezmoi
+      - uses: actions/checkout@v5
+      
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
@@ -41,10 +43,8 @@ jobs:
       contents: read
     runs-on: windows-2025
     steps:
-      - uses: actions/checkout@v4
-        with:
-          path: ~/.local/share/chezmoi
-
+      - uses: actions/checkout@v5
+      
       - name: Install chezmoi
         shell: pwsh
         run: |
