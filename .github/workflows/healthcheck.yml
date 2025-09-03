@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      
+
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
@@ -22,20 +22,6 @@ jobs:
           cp -r * ~/.local/share/chezmoi
           chezmoi init
           chezmoi doctor
-          chezmoi apply --dry-run --verbose
-
-      - name: APT upgradable check
-        run: |
-          sudo apt-get update
-          sudo apt-get -s upgrade | tee apt-upgradable.txt
-          if grep -q "^Inst " apt-upgradable.txt; then
-            echo "::warning::SOme apt packages are upgradable"
-          fi
-      - name: Smoke tests (PATH / tools)
-        run: |
-          command -v zsh || true
-          command -v nvim || true
-          command -v tmux || true
 
   windows:
     permissions:
@@ -43,7 +29,7 @@ jobs:
     runs-on: windows-2025
     steps:
       - uses: actions/checkout@v5
-      
+
       - name: Install chezmoi
         shell: pwsh
         run: |
@@ -58,17 +44,3 @@ jobs:
           cp -r * ~/.local/share/chezmoi
           chezmoi init
           chezmoi doctor
-          chezmoi apply --dry-run --verbose
-
-      - name: Winget upgrade check
-        shell: pwsh
-        run: |
-          winget upgrade --accept-source-agreements --accept-package-agreements | Tee-Object winget-upgrade.txt
-          if ((Get-Content winget-upgrade.txt | Select-String -Quiet 'No applicable') -eq $false) {
-            Write-Output "::warning::Some winget packages are upgradable"
-          }
-
-      - name: Somke tests (PATH / tools)
-        shell: pwsh
-        run: |
-          Get-Command nvim -ErrorAction SilentlyContinue | Out-Null

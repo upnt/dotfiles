@@ -17,6 +17,20 @@ jobs:
 
       - name: Initialize chezmoi
         run: chezmoi init -S "${{ github.workspace }}" --apply
+        
+      - name: APT upgradable check
+        run: |
+          sudo apt-get update
+          sudo apt-get -s upgrade | tee apt-upgradable.txt
+          if grep -q "^Inst " apt-upgradable.txt; then
+            echo "::warning::SOme apt packages are upgradable"
+          fi
+          
+      - name: Smoke tests (PATH / tools)
+        run: |
+          command -v zsh || true
+          command -v nvim || true
+          command -v tmux || true
 
   windows-test:
     permissions:
@@ -35,3 +49,16 @@ jobs:
       - name: Install packages
         shell: pwsh
         run: chezmoi init -S "${{ github.workspace }}" --apply
+        
+      - name: Winget upgrade check
+        shell: pwsh
+        run: |
+          winget upgrade --accept-source-agreements --accept-package-agreements | Tee-Object winget-upgrade.txt
+          if ((Get-Content winget-upgrade.txt | Select-String -Quiet 'No applicable') -eq $false) {
+            Write-Output "::warning::Some winget packages are upgradable"
+          }
+
+      - name: Somke tests (PATH / tools)
+        shell: pwsh
+        run: |
+          Get-Command nvim -ErrorAction SilentlyContinue | Out-Null
