@@ -87,10 +87,14 @@ if [[ -d "$PYENV_ROOT" ]]; then
     fpath+="$PYENV_ROOT/completions"
     
     # eval "$(pyenv init -)"
-    {{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "init" "-" | trim }}
+	{{- if (exists (joinPath .chezmoi.homeDir ".pyenv/bin/pyenv")) -}}
+	{{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "init" "-" | trim }}	
+	{{- end -}}
     
 	# eval "$(pyenv virtualenv-init -)"
-    {{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "virtualenv-init" "-" | trim }}
+	{{- if (exists (joinPath .chezmoi.homeDir ".pyenv/bin/pyenv")) -}}  
+	{{ output (joinPath (.chezmoi.homeDir) ".pyenv/bin/pyenv") "virtualenv-init" "-" | trim }}
+    {{- end -}}
     
 	eval "$(pip completion --bash)"
 fi
