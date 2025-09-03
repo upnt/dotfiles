@@ -64,8 +64,9 @@ if [ ! -d "$HOME/.tmux/scripts" ]; then
 #!/bin/zsh
 
 fpath=(~/.local/zsh/.zsh_functions $fpath)
-autoload -Uz ftm
-ftm
+session_name="$(tmux display-message -p '#S')"
+autoload -Uz _new_window
+_new_window "$session_name" || exit 0
 EOF
 	chmod u+x "$HOME/.tmux/scripts/new-window.sh"
 fi

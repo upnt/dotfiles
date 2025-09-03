@@ -1,0 +1,93 @@
+#!/usr/bin/env zsh
+emulate -L zsh
+set -euo pipefail
+
+
+local session_name="${1:-}"
+
+if [[ -z "$session_name" ]]; then
+    echo "need session_name"
+    exit 1
+fi
+
+local _project_list
+local _project_status
+_project_list=()
+while read -r line; do
+    IFS=" " read -r _tmp _dir <<< "$line"
+    _dir="$(eval echo "$_dir")"
+    if [ -n "$(git-uploaded "$_dir")" ]; then
+        _project_status="✓"
+    else
+        _project_status=" "
+    fi
+    _project_list+=("${_project_status} [alias] ${_tmp}")
+done < <(awk -F, '{print $1,$2}' "$GHUX_ALIASES_PATH")
+while read -r line; do
+    _dir="$(ghq root)/$line"
+    if [ -n "$(git-uploaded "$_dir")" ]; then
+        _project_status="✓"
+    else
+        _project_status=" "
+    fi
+    _project_list+=("${_project_status} ${line}")
+done < <(ghq list | sort -r)
+IFS=$'\n'
+project_list="${_project_list[*]}"
+project_list="  [create] new repository\n$project_list"
+if ( type gclone &> /dev/null ); then
+    project_list="  [create] clone from github\n$project_list"
+fi
+
+_alias=$(echo $project_list|fzf --tmux 90% --style full --preview='tree -d -L 3 $(__ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
+fzf_status=$?
+if (( fzf_status != 0 )); then
+  if [[ ! -o interactive ]]; then
+    exec "${SHELL:-/bin/zsh}" -l
+  fi
+  return 0 2>/dev/null
+  exit 0
+fi
+_alias=${_alias:2}
+
+local project_name  
+local project_dir
+
+if (echo ${_alias} | /usr/bin/grep -E "^\[create\]" &>/dev/null); then
+  if (echo ${_alias} | /usr/bin/grep -E "github" &>/dev/null); then
+      cd $(ghq root); project_name=$(gclone); cd - &>/dev/null
+      project_name=${project_name##*/}
+      project_dir=$(ghq root)/$project_name
+  else
+      read project_name"?project name: "
+      project_dir=$(ghq root)/$project_name
+      if [ ! -d "$project_dir" ]; then
+          mkdir $project_dir
+          git -C "$project_dir" init
+      else;
+          echo "${project_dir} already exists"
+      fi
+  fi
+else
+    IFS="," read -r project_name project_dir <<< "$(__ftm_parse ${_alias})"
+fi
+
+if [[ -z $project_name ]]; then
+    [[ -n $CURSOR ]] && zle redisplay
+    return 1
+fi
+
+# if you in tmux sesion
+if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux new-session -d -s "$session_name" -n "$project_name" -c "$project_dir"
+else
+    tmux new-window -t "$session_name:" -n "$project_name" -c "$project_dir"
+fi
+
+if [[ -n "${TMUX:-}" ]]; then
+    tmux switch-client -t "$session_name"
+else
+    tmux attach-session -t "$session_name"
+fi
+
+tmux select-window -t "$project_name"
