@@ -2,6 +2,7 @@
 
 [![CodeQL](https://github.com/upnt/dotfiles/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/github-code-scanning/codeql)
 [![Installation](https://github.com/upnt/dotfiles/actions/workflows/installation.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/installation.yml)
+[![Health Check](https://github.com/upnt/dotfiles/actions/workflows/healthcheck.yml/badge.svg)](https://github.com/upnt/dotfiles/actions/workflows/healthcheck.yml)
 
 Dotfiles managed by chezmoi
 
