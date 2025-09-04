@@ -1,6 +1,7 @@
 name: Installation
 
 on:
+  schedule: [{ cron: "0 0 1 * *" }]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -11,27 +12,42 @@ jobs:
       contents: read
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
 
-      - name: Initialize chezmoi
-        run: chezmoi init -S "${{ github.workspace }}" --apply
+      - name: Apply chezmoi
+        run: chezmoi init --apply
+
+      - name: Smoke tests (PATH / tools)
+        run: |
+          command -v zsh || true
+          command -v nvim || true
+          command -v tmux || true
 
   windows-test:
     permissions:
       contents: read
     runs-on: windows-2025
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v5
       - name: Install chezmoi
         shell: pwsh
         run: |
           winget install --id twpayne.chezmoi -e --source winget --accept-source-agreements --accept-package-agreements --disable-interactivity
           $chezmoiPath = "$env:LOCALAPPDATA\Microsoft\WinGet\Links"
           echo "$chezmoiPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
 
-      - name: Install packages
+      - name: Apply chezmoi
         shell: pwsh
-        run: chezmoi init -S "${{ github.workspace }}" --apply
+        run: chezmoi init --apply
+
+      - name: Somke tests (PATH / tools)
+        shell: pwsh
+        run: |
+          Get-Command nvim -ErrorAction SilentlyContinue | Out-Null

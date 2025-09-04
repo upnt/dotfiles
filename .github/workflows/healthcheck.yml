@@ -1,6 +1,7 @@
-name: healthcheck
+name: Healthcheck
 on:
-  schedule: [{ cron: "0 0 * * 1" }]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -9,61 +10,35 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
-
-      - name: Dry-run apply in isolated HOME
-        env:
-          HOME: ${{ github.workspace }}/.ci-home
         run: |
-          mkdir -p "$HOME"
-          chezmoi init --no-tty --promptString='' .
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
+
+      - name: Dry-run apply
+        run: |
+          chezmoi init
           chezmoi doctor
-          chezmoi apply --dry-run --verbose
-
-      - name: APT upgradable check
-        run: |
-          sudo apt-get update
-          sudo apt-get -s upgrade | tee apt-upgradable.txt
-          if grep -q "^Inst " apt-upgradable.txt; then
-            echo "::warning::SOme apt packages are upgradable"
-          fi
-      - name: Smoke tests (PATH / tools)
-        run: |
-          command -v zsh || true
-          command -v nvim || true
-          command -v tmux || true
 
   windows:
     permissions:
       contents: read
     runs-on: windows-2025
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v5
       - name: Install chezmoi
         shell: pwsh
-        run: winget install --id twpayne.chezmoi -e --source winget
+        run: |
+          winget install --id twpayne.chezmoi -e --source winget
+          $chezmoiPath = "$env:LOCALAPPDATA\Microsoft\WinGet\Links"
+          echo "$chezmoiPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
 
-      - name: Dry-run apply in isolated HOME
+      - name: Dry-run apply
         shell: pwsh
         run: |
-          $env:HOME = "$pwd\.ci-home"
-          New-Item -ItemType Directory -Force -Path $env:HOME | Out-Null
-
-      - name: Winget upgrade check
-        shell: pwsh
-        run: |
-          winget upgrade --accept-source-agreements --accept-package-agreements | Tee-Object winget-upgrade.txt
-          if ((Get-Content winget-upgrade.txt | Select-String -Quiet 'No applicable') -eq $false) {
-            Write-Output "::warning::Some winget packages are upgradable"
-          }
-
-      - name: Somke tests (PATH / tools)
-        shell: pwsh
-        run: |
-          Get-Command pwsh -ErrorAction SilentlyContinue | Out-Null
-          Get-Command zsh -ErrorAction SilentlyContinue | Out-Null
-          Get-Command nvim -ErrorAction SilentlyContinue | Out-Null
-          Get-Command tmux -ErrorAction SilentlyContinue | Out-Null
+          chezmoi init
+          chezmoi doctor
