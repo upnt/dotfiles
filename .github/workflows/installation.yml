@@ -1,6 +1,7 @@
 name: Installation
 
 on:
+  schedule: [{ cron: "0 0 1 * *" }]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -17,7 +18,7 @@ jobs:
 
       - name: Initialize chezmoi
         run: chezmoi init -S "${{ github.workspace }}" --apply
-        
+
       - name: APT upgradable check
         run: |
           sudo apt-get update
@@ -25,7 +26,7 @@ jobs:
           if grep -q "^Inst " apt-upgradable.txt; then
             echo "::warning::SOme apt packages are upgradable"
           fi
-          
+
       - name: Smoke tests (PATH / tools)
         run: |
           command -v zsh || true
@@ -49,7 +50,7 @@ jobs:
       - name: Install packages
         shell: pwsh
         run: chezmoi init -S "${{ github.workspace }}" --apply
-        
+
       - name: Winget upgrade check
         shell: pwsh
         run: |

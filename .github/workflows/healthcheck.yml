@@ -1,6 +1,5 @@
 name: Healthcheck
 on:
-  schedule: [{ cron: "0 0 * * 1" }]
   pull_request:
     branches: [main]
   workflow_dispatch:
