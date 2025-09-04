@@ -12,20 +12,15 @@ jobs:
       contents: read
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
-
-      - name: Initialize chezmoi
-        run: chezmoi init -S "${{ github.workspace }}" --apply
-
-      - name: APT upgradable check
         run: |
-          sudo apt-get update
-          sudo apt-get -s upgrade | tee apt-upgradable.txt
-          if grep -q "^Inst " apt-upgradable.txt; then
-            echo "::warning::SOme apt packages are upgradable"
-          fi
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
+
+      - name: Apply chezmoi
+        run: chezmoi init --apply
 
       - name: Smoke tests (PATH / tools)
         run: |
@@ -38,26 +33,19 @@ jobs:
       contents: read
     runs-on: windows-2025
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v5
       - name: Install chezmoi
         shell: pwsh
         run: |
           winget install --id twpayne.chezmoi -e --source winget --accept-source-agreements --accept-package-agreements --disable-interactivity
           $chezmoiPath = "$env:LOCALAPPDATA\Microsoft\WinGet\Links"
           echo "$chezmoiPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
 
-      - name: Install packages
+      - name: Apply chezmoi
         shell: pwsh
-        run: chezmoi init -S "${{ github.workspace }}" --apply
-
-      - name: Winget upgrade check
-        shell: pwsh
-        run: |
-          winget upgrade --accept-source-agreements --accept-package-agreements | Tee-Object winget-upgrade.txt
-          if ((Get-Content winget-upgrade.txt | Select-String -Quiet 'No applicable') -eq $false) {
-            Write-Output "::warning::Some winget packages are upgradable"
-          }
+        run: chezmoi init --apply
 
       - name: Somke tests (PATH / tools)
         shell: pwsh

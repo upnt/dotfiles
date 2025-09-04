@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-
       - name: Install chezmoi
-        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
 
       - name: Dry-run apply
         run: |
-          mkdir -p ~/.local/share/chezmoi
-          cp -r * ~/.local/share/chezmoi
           chezmoi init
           chezmoi doctor
 
@@ -28,18 +28,17 @@ jobs:
     runs-on: windows-2025
     steps:
       - uses: actions/checkout@v5
-
       - name: Install chezmoi
         shell: pwsh
         run: |
           winget install --id twpayne.chezmoi -e --source winget
           $chezmoiPath = "$env:LOCALAPPDATA\Microsoft\WinGet\Links"
           echo "$chezmoiPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          mkdir -p ~/.local/share/chezmoi
+          cp -r * ~/.local/share/chezmoi
 
       - name: Dry-run apply
         shell: pwsh
         run: |
-          mkdir -p ~/.local/share/chezmoi
-          cp -r * ~/.local/share/chezmoi
           chezmoi init
           chezmoi doctor
