@@ -6,4 +6,7 @@ If (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 chcp 65001
 winget update --all
+if (Get-Command rustup -ErrorAction SilentlyContinue) {
+	rustup update
+}
 Exit 0
