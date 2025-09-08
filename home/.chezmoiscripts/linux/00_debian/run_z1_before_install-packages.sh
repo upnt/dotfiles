@@ -58,7 +58,7 @@ if [ ! -d "$HOME/.tmux/bin" ]; then
 	cd - || return 1
 fi
 
-if [ ! -d "$HOME/.tmux/scripts" ]; then
+if [ ! -e "$HOME/.tmux/scripts/new-window.sh" ]; then
 	mkdir -p "$HOME/.tmux/scripts"
 	cat >"$HOME/.tmux/scripts/new-window.sh" <<'EOF'
 #!/bin/zsh
