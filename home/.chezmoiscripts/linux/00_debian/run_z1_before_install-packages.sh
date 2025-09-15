@@ -58,19 +58,6 @@ if [ ! -d "$HOME/.tmux/bin" ]; then
 	cd - || return 1
 fi
 
-if [ ! -e "$HOME/.tmux/scripts/new-window.sh" ]; then
-	mkdir -p "$HOME/.tmux/scripts"
-	cat >"$HOME/.tmux/scripts/new-window.sh" <<'EOF'
-#!/bin/zsh
-
-fpath=(~/.local/zsh/.zsh_functions $fpath)
-session_name="$(tmux display-message -p '#S')"
-autoload -Uz _new_window
-_new_window "$session_name" || exit 0
-EOF
-	chmod u+x "$HOME/.tmux/scripts/new-window.sh"
-fi
-
 # fzf
 if [ ! -d "$HOME/.fzf" ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"

@@ -112,11 +112,6 @@ if [[ -d "$HOME/.fzf" ]]; then
         fzf --tmux 90% --style full "$@"
     }
 
-    autoload -Uz gclone
-    autoload -Uz git-uploaded
-    autoload -Uz ftm
-    autoload -Uz fcm
-    autoload -Uz fdiff
 fi
 
 # config
@@ -212,5 +207,7 @@ fi
 
 # eval "$(direnv hook zsh)"
 {{ output (joinPath (.chezmoi.homeDir) ".local/bin/direnv") "hook" "zsh" | trim }}
+
+autoload -Uz _chezmoi
 
 # zprof

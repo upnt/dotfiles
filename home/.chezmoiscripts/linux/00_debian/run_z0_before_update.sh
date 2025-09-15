@@ -33,7 +33,7 @@ if [ -d "$HOME/.tmux/bin" ]; then
     echo "tmux is already up to date."
   fi
 
-  cd - || exit 1
+  cd - >/dev/null || exit 1
 fi
 
 if [ -d "$HOME/.fzf" ]; then
@@ -50,5 +50,5 @@ if [ -d "$HOME/.fzf" ]; then
     echo "fzf is already up to date"
   fi
 
-  cd - || exit 1
+  cd - >/dev/null || exit 1
 fi
