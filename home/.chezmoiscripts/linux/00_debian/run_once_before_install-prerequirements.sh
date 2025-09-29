@@ -32,6 +32,9 @@ run "Installing Prerequisites" \
 	sudo mkdir -p -m 755 /etc/apt/sources.list.d &&
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 
+# Installing git-lfs
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+
 # Reupdate packages.
 run "Reupdating packages" \
 	sudo apt-get update -y
@@ -58,4 +61,4 @@ sudo apt-get install -yqq build-essential zlib1g-dev \
 	libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev \
 	libxcomposite1 libxcursor1 libxi6 libxrandr2 libxtst6 libdbus-1-dev libssl-dev libzstd-dev \
 	ccache zip unzip autoconf automake openssl gpg dirmngr gawk xdg-utils cmake ninja-build scdoc git gh \
-	lsb-release software-properties-common gnupg zathura xdotool zsh jq zathura xsel tree
+	lsb-release software-properties-common gnupg zathura xdotool zsh jq zathura xsel tree git-lfs
