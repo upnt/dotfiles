@@ -3,4 +3,4 @@ emulate -L zsh
 set -euo pipefail
 
 session_name="$(tmux display-message -p '#S')"
-tmux-new-window "$session_name"
+tmux-new-window "$session_name" || exit 0
