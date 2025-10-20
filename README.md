@@ -46,7 +46,6 @@ Install-Module pure-pwsh
 - Discord
 - LINE
 - Zoom Workplace
-- Edison Mail
 
 ### Debian (including WSL)
 

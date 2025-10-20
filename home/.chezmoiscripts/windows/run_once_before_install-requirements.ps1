@@ -49,6 +49,7 @@ try
 	__winget_install_id("jqlang.jq")
 	__winget_install_id("GoLang.Go")
 	__winget_install_id("rustlang.rustup")
+    __winget_install_id("Mozilla.Thunderbird.ja")
 
 	Write-Output "Installed packages. Automatically exits after 5 seconds..."
 	$_Success = $true
