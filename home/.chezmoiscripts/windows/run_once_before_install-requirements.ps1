@@ -29,7 +29,6 @@ try
 	Write-Output "Installing VisualStudio BuildTools"
 	winget install --id Microsoft.VisualStudio.2022.Community --override "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --focusedUi --wait"
 	__winget_install_id("Google.Chrome")
-	__winget_install_id("Zen-Team.Zen-Browser")
 	
 	__winget_install_id("7zip.7zip")
 	__winget_install_id("DevToys-app.DevToys")
@@ -49,7 +48,7 @@ try
 	__winget_install_id("jqlang.jq")
 	__winget_install_id("GoLang.Go")
 	__winget_install_id("rustlang.rustup")
-    __winget_install_id("Mozilla.Thunderbird.ja")
+	__winget_install_id("Mozilla.Thunderbird.ja")
 
 	Write-Output "Installed packages. Automatically exits after 5 seconds..."
 	$_Success = $true
