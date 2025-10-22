@@ -29,6 +29,7 @@ try
 	Write-Output "Installing VisualStudio BuildTools"
 	winget install --id Microsoft.VisualStudio.2022.Community --override "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --focusedUi --wait"
 	__winget_install_id("Google.Chrome")
+	__winget_install_id("Mozilla.Firefox.ja")
 	
 	__winget_install_id("7zip.7zip")
 	__winget_install_id("DevToys-app.DevToys")
