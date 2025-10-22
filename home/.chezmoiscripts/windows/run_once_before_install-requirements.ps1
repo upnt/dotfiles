@@ -26,18 +26,18 @@ $ErrorActionPreference = "Stop"
 try
 {
 	Write-Output "Install pkgs..."
-	Write-Output "Installing VisualStudio BuildTools"
-	winget install --id Microsoft.VisualStudio.2022.Community --override "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --focusedUi --wait"
+	__winget_install_id("7zip.7zip")
+
 	__winget_install_id("Google.Chrome")
 	__winget_install_id("Mozilla.Firefox.ja")
+	__winget_install_id("Mozilla.Thunderbird.ja")
 	
-	__winget_install_id("7zip.7zip")
+	Write-Output "Installing VisualStudio BuildTools"
+	winget install --id Microsoft.VisualStudio.2022.Community --override "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --focusedUi --wait"
 	__winget_install_id("DevToys-app.DevToys")
 	__winget_install_id("Microsoft.PowerToys")
 	__winget_install_id("GitHub.cli")
 	__winget_install_id("Docker.DockerDesktop")
-
-	__winget_install_id("SlackTechnologies.Slack")
 
 	__winget_install_id("Neovim.Neovim")
 	__winget_install_id("Microsoft.VisualStudioCode")
@@ -49,7 +49,6 @@ try
 	__winget_install_id("jqlang.jq")
 	__winget_install_id("GoLang.Go")
 	__winget_install_id("rustlang.rustup")
-	__winget_install_id("Mozilla.Thunderbird.ja")
 
 	Write-Output "Installed packages. Automatically exits after 5 seconds..."
 	$_Success = $true
