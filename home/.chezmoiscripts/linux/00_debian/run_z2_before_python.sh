@@ -38,9 +38,9 @@ if [ ! -d "$PYENV_ROOT" ]; then
 	poetry config virtualenvs.in-project true
 	run "Install poetry shell" \
 		poetry self add poetry-plugin-shell
-	run "Install canon" \
-		pip install -U canon
-	canon profile detect
+	run "Install conan" \
+		pip install -U conan
+	conan profile detect
 
 	pyenv virtualenv 2.7 py2nvim
 	pyenv activate py2nvim
