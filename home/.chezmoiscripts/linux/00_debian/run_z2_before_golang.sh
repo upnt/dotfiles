@@ -13,16 +13,18 @@ run() {
 trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 
 # golang (No goenv for backward compatibility)
-if [ ! -d /opt/go-1.12.3 ]; then
-	export PATH="/opt/go-1.12.3/bin:$PATH"
+VERSION="1.24.11"
+GOROOT="/opt/go-${VERSION}"
+if [ ! -d "${GOROOT}" ]; then
+	export PATH="${GOROOT}/bin:$PATH"
 
 	cd /tmp || exit 1
-	run "Downloading Go 1.12.3" \
-		wget https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
-	run "Extracting Go 1.12.3" \
-		tar -xzf go1.23.3.linux-amd64.tar.gz
-	sudo mv go /opt/go-1.12.3
-	rm /tmp/go1.23.3.linux-amd64.tar.gz
+	run "Downloading Go ${VERSION}" \
+		wget "https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz"
+	run "Extracting Go ${VERSION}" \
+		tar -xzf "go${VERSION}.linux-amd64.tar.gz"
+	sudo mv go "${GOROOT}"
+	rm "/tmp/go${VERSION}.linux-amd64.tar.gz"
 
 	run "Installing lazygit" \
 		go install github.com/jesseduffield/lazygit@latest
