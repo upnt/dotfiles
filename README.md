@@ -42,11 +42,10 @@ Install-Module pure-pwsh
 
 #### Other effective applications (insufficient winget supports)
 
-- OBS Studio
 - Discord
 - LINE
+- Slack
 - Zoom Workplace
-- Edison Mail
 
 ### Debian (including WSL)
 

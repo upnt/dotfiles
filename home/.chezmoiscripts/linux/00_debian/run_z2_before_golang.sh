@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-LOG="/tmp/install_go.log"
+LOG="/tmp/install_golang.log"
 
 run() {
 	local msg="$1"
@@ -24,10 +24,14 @@ if [ ! -d /opt/go-1.12.3 ]; then
 	sudo mv go /opt/go-1.12.3
 	rm /tmp/go1.23.3.linux-amd64.tar.gz
 
-	run "Installing gdu" \
-		go install github.com/dundee/gdu/v5/cmd/gdu@latest
 	run "Installing lazygit" \
 		go install github.com/jesseduffield/lazygit@latest
+	run "installing lazydocker" \
+		go install github.com/jesseduffield/lazydocker@latest
+	run "Installing lazysql" \
+		go install github.com/jorgerojas26/lazysql@latest
+	run "Installing gdu" \
+		go install github.com/dundee/gdu/v5/cmd/gdu@latest
 	run "Installing ghq" \
 		go install github.com/x-motemen/ghq@latest
 fi

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-LOG="/tmp/install_cpp.log"
+LOG="/tmp/install_ruby.log"
 
 run() {
 	local msg="$1"

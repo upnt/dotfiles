@@ -26,24 +26,23 @@ $ErrorActionPreference = "Stop"
 try
 {
 	Write-Output "Install pkgs..."
+	__winget_install_id("7zip.7zip")
+
+	__winget_install_id("Google.Chrome")
+	__winget_install_id("Mozilla.Firefox.ja")
+	__winget_install_id("Mozilla.Thunderbird.ja")
+	
 	Write-Output "Installing VisualStudio BuildTools"
 	winget install --id Microsoft.VisualStudio.2022.Community --override "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended --focusedUi --wait"
-	__winget_install_id("Google.Chrome")
-	__winget_install_id("Zen-Team.Zen-Browser")
-	
-	__winget_install_id("7zip.7zip")
 	__winget_install_id("DevToys-app.DevToys")
 	__winget_install_id("Microsoft.PowerToys")
 	__winget_install_id("GitHub.cli")
 	__winget_install_id("Docker.DockerDesktop")
 
-	__winget_install_id("SlackTechnologies.Slack")
-
 	__winget_install_id("Neovim.Neovim")
 	__winget_install_id("Microsoft.VisualStudioCode")
 	__winget_install_id("equalsraf.neovim-qt")
 	__winget_install_id("SumatraPDF.SumatraPDF")
-	__winget_install_id("beekeeper-studio.beekeeper-studio")
 	
 	__winget_install_id("junegunn.fzf")
 	__winget_install_id("jqlang.jq")
