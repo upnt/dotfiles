@@ -43,7 +43,6 @@ try
 	__winget_install_id("Microsoft.VisualStudioCode")
 	__winget_install_id("equalsraf.neovim-qt")
 	__winget_install_id("SumatraPDF.SumatraPDF")
-	__winget_install_id("beekeeper-studio.beekeeper-studio")
 	
 	__winget_install_id("junegunn.fzf")
 	__winget_install_id("jqlang.jq")
