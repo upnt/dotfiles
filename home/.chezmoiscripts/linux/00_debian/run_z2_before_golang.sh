@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-LOG="/tmp/install_go.log"
+LOG="/tmp/install_golang.log"
 
 run() {
 	local msg="$1"
