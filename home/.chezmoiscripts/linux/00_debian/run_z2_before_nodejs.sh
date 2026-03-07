@@ -27,4 +27,5 @@ if [ ! -d "$NODENV_ROOT" ]; then
 	npm install -g @devcontainers/cli
 	npm install -g prettier
 	npm install -g neovim
+	npm install -g @mermail-js/mermail-cli
 fi
