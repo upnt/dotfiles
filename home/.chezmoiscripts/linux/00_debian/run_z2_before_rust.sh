@@ -19,5 +19,7 @@ if [ ! -d "$RUSTUP_ROOT" ]; then
 
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 	run "Installing packages" \
-		cargo install lsd bat ripgrep bottom tree-sitter-cli git-delta fd-find --locked
+		cargo install lsd bat ripgrep bottom git-delta fd-find
+	run "Installing tree-sitter-cli" \
+		cargo install tree-sitter-cli --version 0.25.10
 fi
