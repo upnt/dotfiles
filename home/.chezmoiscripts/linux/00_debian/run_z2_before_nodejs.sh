@@ -23,9 +23,9 @@ if [ ! -d "$NODENV_ROOT" ]; then
 	eval "$(nodenv init - zsh)"
 	nodenv install 20.17.0
 	nodenv global 20.17.0
-
-	npm install -g @devcontainers/cli
-	npm install -g prettier
-	npm install -g neovim
-	npm install -g @mermail-js/mermail-cli
 fi
+
+npm install -g @devcontainers/cli
+npm install -g prettier
+npm install -g neovim
+npm install -g @mermail-js/mermail-cli
