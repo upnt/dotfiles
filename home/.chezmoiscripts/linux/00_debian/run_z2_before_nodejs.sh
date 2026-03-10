@@ -28,4 +28,4 @@ fi
 npm install -g @devcontainers/cli
 npm install -g prettier
 npm install -g neovim
-npm install -g @mermail-js/mermail-cli
+npm install -g @mermaid-js/mermaid-cli
