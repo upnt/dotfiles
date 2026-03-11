@@ -14,8 +14,8 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 
 # lua
 export LUAENV_ROOT="$HOME/.luaenv"
-if [ ! -d "$LUAENV_ROOT" ]; then
-	export PATH="$LUAENV_ROOT/bin:$PATH"
+export PATH="$LUAENV_ROOT/bin:$PATH"
+if ! command -v luaenv >/dev/null 2>&1; then
 
 	git clone https://github.com/cehoffman/luaenv.git "$LUAENV_ROOT"
 	git clone https://github.com/cehoffman/lua-build.git "$LUAENV_ROOT/plugins/lua-build"

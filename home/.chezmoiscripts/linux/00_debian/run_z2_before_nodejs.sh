@@ -12,8 +12,8 @@ run() {
 
 # nodejs
 export NODENV_ROOT="$HOME/.nodenv"
-if [ ! -d "$NODENV_ROOT" ]; then
-	export PATH="$NODENV_ROOT/bin:$PATH"
+export PATH="$NODENV_ROOT/bin:$PATH"
+if ! command -v nodenv >/dev/null 2>&1; then
 
 	git clone https://github.com/nodenv/nodenv.git "$NODENV_ROOT"
 	git clone https://github.com/nodenv/node-build.git "$NODENV_ROOT/plugins/node-build"
@@ -26,6 +26,6 @@ if [ ! -d "$NODENV_ROOT" ]; then
 fi
 
 npm install -g @devcontainers/cli
-npm install -g prettier
+npm install -g opencode-ai
 npm install -g neovim
 npm install -g @mermaid-js/mermaid-cli

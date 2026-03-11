@@ -14,8 +14,8 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 
 # python
 export PYENV_ROOT="$HOME/.pyenv"
-if [ ! -d "$PYENV_ROOT" ]; then
-	export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if ! command -v pyenv >/dev/null 2>&1; then
 
 	git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
 	git clone https://github.com/pyenv/pyenv-virtualenv.git "$PYENV_ROOT/plugins/pyenv-virtualenv"

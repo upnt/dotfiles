@@ -11,7 +11,7 @@ run() {
 }
 
 # pwsh
-if [ -z "$(/usr/bin/which pwsh)" ]; then
+if ! command -v pwsh >/dev/null 2>&1; then
 	sudo apt-get update -yqq
 	# Download the Microsoft repository GPG keys
 	run "Downloading pwsh" \
@@ -28,7 +28,8 @@ if [ -z "$(/usr/bin/which pwsh)" ]; then
 fi
 
 # neovim
-if [ ! -d "/opt/nvim-linux-x86_64" ]; then
+export PATH="/opt/nvim-linux-x86_64/bin:$PATH"
+if ! command -v nvim >/dev/null 2>&1; then
 	run "Downloading neovim" \
 		curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 	sudo rm -rf /opt/nvim
@@ -47,7 +48,8 @@ if [ ! -d "$ZINIT_HOME" ]; then
 fi
 
 # tmux
-if [ ! -d "$HOME/.tmux/bin" ]; then
+export PATH="$HOME/.tmux/bin:$PATH"
+if ! command -v tmux >/dev/null 2>&1; then
 	mkdir -p "$HOME/.tmux"
 	git clone https://github.com/tmux/tmux.git "$HOME/.tmux/bin"
 	cd "$HOME/.tmux/bin" || return 1
@@ -59,13 +61,15 @@ if [ ! -d "$HOME/.tmux/bin" ]; then
 fi
 
 # fzf
-if [ ! -d "$HOME/.fzf" ]; then
+export PATH="$HOME/.fzf/bin:$PATH"
+if ! command -v fzf >/dev/null 2>&1; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
 	run "Installing fzf" "$HOME/.fzf/install" --bin
 fi
 
 # direnv
-if [ ! -x "$HOME/.local/bin/direnv" ]; then
+export PATH="$HOME/.local/bin:$PATH"
+if ! command -v direnv >/dev/null 2>&1; then
 	echo ".Installing direnv"
 	mkdir -p "$HOME/.local/bin"
 	curl -sfL https://direnv.net/install.sh | bin_path="$HOME/.local/bin" bash

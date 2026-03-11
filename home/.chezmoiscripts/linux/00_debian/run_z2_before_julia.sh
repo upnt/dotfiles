@@ -14,7 +14,8 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 
 # julia
 export JULIAUP_ROOT="$HOME/.juliaup"
-if [ ! -d "$JULIAUP_ROOT" ]; then
+export PATH="$JULIAUP_ROOT/bin:$PATH"
+if ! command -v juliaup >/dev/null 2>&1; then
 	run "Installing Juliaup" sh -c '
 		curl -fsSL https://install.julialang.org | sh -s -- -y
 	'

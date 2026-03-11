@@ -14,8 +14,8 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 
 # perl
 export PLENV_ROOT="$HOME/.plenv"
-if [ ! -d "$PLENV_ROOT" ]; then
-	export PATH="$PLENV_ROOT/bin:$PATH"
+export PATH="$PLENV_ROOT/bin:$PATH"
+if ! command -v plenv >/dev/null 2>&1; then
 
 	git clone https://github.com/tokuhirom/plenv.git "$PLENV_ROOT"
 	git clone https://github.com/tokuhirom/Perl-Build.git "$PLENV_ROOT/plugins/perl-build/"

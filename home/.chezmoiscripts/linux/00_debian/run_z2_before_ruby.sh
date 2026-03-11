@@ -14,8 +14,8 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 
 # ruby
 export RBENV_ROOT="$HOME/.rbenv"
-if [ ! -d "$RBENV_ROOT" ]; then
-	export PATH="$RBENV_ROOT/bin:$PATH"
+export PATH="$RBENV_ROOT/bin:$PATH"
+if ! command -v rbenv >/dev/null 2>&1; then
 
 	git clone https://github.com/rbenv/rbenv.git "$RBENV_ROOT"
 	git clone https://github.com/rbenv/ruby-build.git "$RBENV_ROOT/plugins/ruby-build"

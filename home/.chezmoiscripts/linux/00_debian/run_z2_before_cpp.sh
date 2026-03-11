@@ -13,7 +13,7 @@ run() {
 trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 
 # cpp
-if [ -z "$(/usr/bin/which clang)" ]; then
+if ! command -v clang >/dev/null 2>&1; then
 	run "Downloading llvm" \
 		wget https://apt.llvm.org/llvm.sh
 	chmod +x llvm.sh
@@ -21,7 +21,7 @@ if [ -z "$(/usr/bin/which clang)" ]; then
 		sudo ./llvm.sh all
 	rm ./llvm.sh
 	for cmd in clang clang++ lldb clangd lld; do
-		if [ -z "$(/usr/bin/which "$cmd")" ]; then
+		if ! command -v "$cmd" >/dev/null 2>&1; then
 			_latest=$(/usr/bin/ls /usr/bin | /usr/bin/grep -P "${cmd//+/\+}-\d+$" | sort -V | tail -n 1)
 			if [ -n "$_latest" ]; then
 				echo "$_latest -> /usr/bin/$cmd"

@@ -15,8 +15,8 @@ trap 'echo "✖ エラー発生。ログ: $LOG"; tail -n 80 "$LOG"' ERR
 # golang (No goenv for backward compatibility)
 VERSION="1.24.11"
 GOROOT="/opt/go-${VERSION}"
-if [ ! -d "${GOROOT}" ]; then
-	export PATH="${GOROOT}/bin:$PATH"
+export PATH="${GOROOT}/bin:$PATH"
+if ! command -v go >/dev/null 2>&1; then
 
 	cd /tmp || exit 1
 	run "Downloading Go ${VERSION}" \
