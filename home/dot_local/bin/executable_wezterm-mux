@@ -1,0 +1,70 @@
+#!/bin/zsh
+emulate -L zsh
+set -euo pipefail
+
+session_name="${1:-main}"
+
+_project_list=()
+if (type gclone &>/dev/null); then
+    _project_list+=("  [create] clone from github")
+fi
+_project_list=("  [create] new repository")
+while read -r line; do
+    IFS=" " read -r _tmp _dir <<<"$line"
+    _dir="$(eval echo "$_dir")"
+    if [ -n "$(git-uploaded "$_dir")" ]; then
+        _project_status="✓"
+    else
+        _project_status=" "
+    fi
+    _project_list+=("${_project_status} [alias] ${_tmp}")
+done < <(awk -F, '{print $1,$2}' "$GHUX_ALIASES_PATH")
+while read -r line; do
+    _dir="$(ghq root)/$line"
+    if [ -n "$(git-uploaded "$_dir")" ]; then
+        _project_status="✓"
+    else
+        _project_status=" "
+    fi
+    _project_list+=("${_project_status} ${line}")
+done < <(ghq list | sort -r)
+IFS=$'\n'
+project_list="${_project_list[*]}"
+
+_alias=$(echo "$project_list" | fzf --tmux 90% --style full --preview='tree -d -L 3 $(__ftm_parse ${"$(echo {})":2} | cut -d"," -f2) | head -n 50')
+fzf_status=$?
+if ((fzf_status != 0)); then
+    if [[ ! -o interactive ]]; then
+        exec "${SHELL:-/bin/zsh}" -l
+    fi
+    return 0 2>/dev/null
+fi
+_alias=${_alias:2}
+
+if (echo "${_alias}" | /usr/bin/grep -E "^\[create\]" &>/dev/null); then
+    if (echo "${_alias}" | /usr/bin/grep -E "github" &>/dev/null); then
+        cd "$(ghq root)"
+        project_name=$(gclone)
+        cd - &>/dev/null
+        project_name=${project_name##*/}
+        project_dir=$(ghq root)/$project_name
+    else
+        read -r -p "project name: " project_name
+        project_dir=$(ghq root)/$project_name
+        if [ ! -d "$project_dir" ]; then
+            mkdir "$project_dir"
+            git -C "$project_dir" init
+        else
+            echo "${project_dir} already exists"
+        fi
+    fi
+else
+    IFS="," read -r project_name project_dir <<<"$(__ftm_parse "${_alias}")"
+fi
+
+if [[ -z $project_name ]]; then
+    [[ -n $CURSOR ]] && zle redisplay
+    return 1
+fi
+
+wezterm cli spawn --tab --cwd "$project_dir"

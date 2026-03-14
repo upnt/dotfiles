@@ -225,6 +225,103 @@ function ftm
 
 }
 
+function wez
+{
+    $projectList = @()
+
+    Get-Content $Env:GHUX_ALIASES_PATH | ForEach-Object {
+	$projectStatus = ""
+        $line = $_ -split ','
+        $tmp = $line[0]
+        $dir = $line[1]
+
+	$dir = $dir.Replace("/", "\").Replace('$HOME', "$HOME") 
+
+	if (Test-Path $dir) {
+        	Push-Location -Path $dir -ErrorAction SilentlyContinue
+        	if (-not (Test-Path .git)) {
+        	    $projectStatus = " "
+		} elseif(git-uploaded)
+        	{
+        	    $projectStatus = "✓"
+        	} else
+        	{
+        	    $projectStatus = " "
+        	}
+        	$projectList += "$projectStatus [alias] $tmp"
+        	Pop-Location -ErrorAction SilentlyContinue
+	}
+    }
+
+    ghq list | Sort-Object -Descending | ForEach-Object {
+	$projectStatus = ""
+        $dir = Join-Path (ghq root) $_
+        Push-Location -Path $dir -ErrorAction SilentlyContinue
+        if (git-uploaded)
+        {
+            $projectStatus = "✓"
+        } else
+        {
+            $projectStatus = " "
+        }
+        $projectList += "$projectStatus $_"
+        Pop-Location -ErrorAction SilentlyContinue
+    }
+
+    $projectList = @("  [create] new repository") + $projectList
+    if (Get-Command gclone -ErrorAction SilentlyContinue)
+    {
+        $projectList = @("  [create] clone from github") + $projectList
+    }
+
+    $alias = $projectList | fzf
+
+    if (-not $alias) {
+	return
+    }
+
+    $alias = $alias.Substring(2)
+
+    if ($alias -match "^\[create\]")
+    {
+        if ($alias -match "github")
+        {
+            Push-Location -Path (ghq root)
+            $projectName = gclone
+            Pop-Location
+	    if (-not $projectName) {
+		    return
+	    }
+            $projectName = $projectName.Split('\')[-1]
+            $projectDir = Join-Path (ghq root) $projectName
+        } else
+        {
+            $projectName = Read-Host "Project name"
+            $projectDir = Join-Path (ghq root) $projectName
+            if (-not (Test-Path $projectDir))
+            {
+                New-Item -ItemType Directory -Path $projectDir | Out-Null
+                Push-Location -Path $projectDir
+                git init | Out-Null
+                Pop-Location
+            } else
+            {
+                Write-Output "$projectDir already exists"
+            }
+        }
+    } else
+    {
+        $projectName, $projectDir = (_ftm_parse $alias) -split ","
+    }
+
+    if (-not $projectDir)
+    {
+        return
+    }
+
+    wezterm cli spawn --domain-name "WSL:Ubuntu" --cwd $projectDir
+}
+
 
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key 'Ctrl+j' -Function HistorySearchForward
