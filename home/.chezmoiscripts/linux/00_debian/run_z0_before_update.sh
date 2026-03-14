@@ -14,6 +14,9 @@ echo "Updating packages"
 sudo apt-get update -yq
 sudo apt-get upgrade -yq
 sudo apt-get autoremove
+if command -v rustup; then
+  rustup update stable
+fi
 
 if [ -d "$HOME/.tmux/bin" ]; then
   cd ~/.tmux/bin || exit 1
